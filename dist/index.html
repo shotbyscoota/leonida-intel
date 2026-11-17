@@ -156,7 +156,7 @@ main>section{position:relative;min-height:100svh;padding-block:clamp(90px,10vw,1
 .head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(30px,4vw,56px)}
 .head .kicker{display:inline-block;margin-bottom:16px}
 
-/* ---------- SCOOTA TV ---------- */
+/* ---------- SX TV ---------- */
 #tv{background:var(--ink)}
 #tv .kicker{color:var(--teal)}
 .tv-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:28px;align-items:start}
@@ -245,7 +245,7 @@ main>section{position:relative;min-height:100svh;padding-block:clamp(90px,10vw,1
 
 /* ---------- LEONIDA regions ---------- */
 #leonida{background:var(--ink)}
-#leonida h2 .script{color:var(--orange);font-size:.42em;display:block;margin-bottom:.06em;padding-bottom:.18em;text-shadow:0 0 18px rgba(255,138,31,.6)}
+#leonida h2 .script{color:var(--orange);font-size:.42em;display:block;margin-bottom:.3em;padding-bottom:.1em;text-shadow:0 0 18px rgba(255,138,31,.6)}
 .regions{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(200px,19vw,300px);gap:14px}
 .region{position:relative;overflow:hidden;background:#000;text-decoration:none;isolation:isolate}
 .region img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .7s var(--ease),filter .5s}
@@ -465,6 +465,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   .share .btn,.cal .btn{width:100%;justify-content:center}
   footer .cols3{grid-template-columns:1fr}
   .mast .meta{text-align:left}
+  .lead h3{font-size:clamp(2rem,9vw,2.6rem)}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -485,7 +486,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   <div class="wrap">
     <a class="brand" href="#hero" aria-label="Leonida Intel, back to top"><b>Leonida</b><i>Intel</i></a>
     <nav id="nav" aria-label="Sections">
-      <a href="#tv">Scoota TV</a><a href="#wire">The Wire</a><a href="#leonida">Leonida</a><a href="#facts">Rap sheet</a><a href="#prep">The job</a><a href="#first">Who's first</a>
+      <a href="#tv">SX TV</a><a href="#wire">The Wire</a><a href="#leonida">Leonida</a><a href="#facts">Rap sheet</a><a href="#prep">The job</a><a href="#first">Who's first</a>
     </nav>
     <div class="heat" title="Heat rises as your midnight gets closer">
       <small>Heat</small>
@@ -537,9 +538,9 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
     <div class="head">
       <div>
         <span class="tear teal">Channel 06 · on air</span>
-        <h2 class="poster" id="tv-h">Scoota <span class="neon">TV</span></h2>
+        <h2 class="poster" id="tv-h">SX <span class="neon">TV</span></h2>
       </div>
-      <p class="lede">Scoota's clips from the streets of Leonida, plus every official GTA VI drop from Rockstar the minute it posts.</p>
+      <p class="lede">The SX Exclusive reel next to every official GTA VI drop from Rockstar, the minute it posts. New SX uploads land here on their own.</p>
     </div>
     <div class="tv-grid">
       <div>
@@ -550,13 +551,13 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
       </div>
       <div class="side">
         <div class="tabs" role="tablist" aria-label="Video lists">
-          <button role="tab" id="tab-mine" aria-selected="true" aria-controls="panel-mine">Scoota's clips</button>
+          <button role="tab" id="tab-mine" aria-selected="true" aria-controls="panel-mine">SX clips</button>
           <button role="tab" id="tab-off" aria-selected="false" aria-controls="panel-off" tabindex="-1">Official drops</button>
         </div>
         <div role="tabpanel" id="panel-mine" aria-labelledby="tab-mine"></div>
         <div role="tabpanel" id="panel-off" aria-labelledby="tab-off" hidden></div>
         <div class="channel">
-          <a class="btn" id="sub" href="https://www.youtube.com/@ShotByScoota?sub_confirmation=1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z" fill="#ff0033"/></svg>Subscribe to Scoota</a>
+          <a class="btn" id="sub" href="https://www.youtube.com/@SXExclusive?sub_confirmation=1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z" fill="#ff0033"/></svg>Subscribe to SX Exclusive</a>
         </div>
       </div>
     </div>
@@ -712,7 +713,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
     <div class="cols3">
       <div>
         <a class="brand" href="#hero"><b>Leonida</b><i>Intel</i></a>
-        <p>An unofficial fan desk for GTA VI launch week, run by Scoota. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks.</p>
+        <p>An unofficial fan desk for GTA VI launch week, from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks.</p>
       </div>
       <div>
         <h3>Sources</h3>
@@ -727,8 +728,8 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
       <div>
         <h3>The desk</h3>
         <ul>
-          <li><a href="https://www.youtube.com/@ShotByScoota" target="_blank" rel="noopener">Scoota on YouTube</a></li>
-          <li><a href="#tv">Scoota TV</a></li>
+          <li><a href="https://www.youtube.com/@SXExclusive" target="_blank" rel="noopener">SX Exclusive on YouTube</a></li>
+          <li><a href="#tv">SX TV</a></li>
           <li><a href="#wire">The Wire</a></li>
           <li><a href="#prep">Launch prep list</a></li>
         </ul>

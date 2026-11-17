@@ -119,7 +119,7 @@ let current = null;
 function cue(v, play = false) {
   current = v;
   screen.replaceChildren();
-  const label = v.from === 'rockstar' ? 'Rockstar Games' : (FEED.channel?.name || 'Scoota');
+  const label = v.from === 'rockstar' ? 'Rockstar Games' : (FEED.channel?.name || 'SX Exclusive');
   el('now-title').textContent = v.title || 'Untitled clip';
   el('now-meta').textContent = label + (v.date ? ' · ' + dateFmt.format(new Date(v.date)) : '');
   $$('.list button').forEach((b) => b.setAttribute('aria-current', String(b.dataset.id === v.id)));
@@ -128,7 +128,7 @@ function cue(v, play = false) {
   img.addEventListener('load', () => { if (img.naturalWidth < 200) img.src = thumb(v.id); }, { once: true });
   img.addEventListener('error', () => { img.src = thumb(v.id); }, { once: true });
   const b = h('button', { class: 'poster-btn', type: 'button', 'aria-label': 'Play ' + (v.title || 'video') }, img,
-    h('span', { class: 'play', 'aria-hidden': 'true' }), h('span', { class: 'bug', 'aria-hidden': 'true' }, h('span', { class: 'live', text: v.from === 'rockstar' ? 'Official' : 'Scoota' }), h('span', { text: 'CH 06' })));
+    h('span', { class: 'play', 'aria-hidden': 'true' }), h('span', { class: 'bug', 'aria-hidden': 'true' }, h('span', { class: 'live', text: v.from === 'rockstar' ? 'Official' : 'SX Exclusive' }), h('span', { text: 'CH 06' })));
   b.querySelector('.play').innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>';
   b.addEventListener('click', () => cue(v, true));
   screen.append(b);
@@ -139,7 +139,7 @@ function listOf(items, empty) {
   for (const v of items.slice(0, 5)) {
     const b = h('button', { type: 'button', 'data-id': v.id },
       h('span', { class: 'th' }, h('img', { src: thumb(v.id, 'mqdefault'), alt: '', loading: 'lazy', width: '320', height: '180' }), v.short ? h('span', { class: 's', text: 'SHORT' }) : null),
-      h('span', {}, h('b', { text: v.title || 'Clip' }), h('small', { text: (v.from === 'rockstar' ? 'Rockstar Games' : (FEED.channel?.name || 'Scoota')) + (v.date ? ' · ' + dateFmt.format(new Date(v.date)) : '') })));
+      h('span', {}, h('b', { text: v.title || 'Clip' }), h('small', { text: (v.from === 'rockstar' ? 'Rockstar Games' : (FEED.channel?.name || 'SX Exclusive')) + (v.date ? ' · ' + dateFmt.format(new Date(v.date)) : '') })));
     b.addEventListener('click', () => { cue(v); screen.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' }); });
     ul.append(h('li', {}, b));
   }
@@ -147,14 +147,14 @@ function listOf(items, empty) {
 }
 const emptyMine = h('div', { class: 'empty' },
   h('b', { class: 'poster', style: 'display:block;font-size:2.2rem;margin-bottom:8px', text: 'Launch night, filmed live' }),
-  h('p', { text: 'Scoota goes on air in Leonida the minute it opens. Every clip posted to the channel lands on this screen within 30 minutes. Until then, the official drops are one tab over.' }),
-  h('a', { class: 'link', href: FEED.channel?.url || 'https://www.youtube.com/@ShotByScoota', target: '_blank', rel: 'noopener', text: 'Go to the channel →' }));
+  h('p', { text: 'SX Exclusive goes on air in Leonida the minute it opens. Every clip posted to the channel lands on this screen within 30 minutes. Until then, the official drops are one tab over.' }),
+  h('a', { class: 'link', href: FEED.channel?.url || 'https://www.youtube.com/@SXExclusive', target: '_blank', rel: 'noopener', text: 'Go to the channel →' }));
 el('panel-mine').append(listOf(mine, emptyMine));
 el('panel-off').append(listOf(official, h('p', { class: 'empty', text: 'Official videos load here.' })));
 const tabs = [el('tab-mine'), el('tab-off')];
 function selectTab(t, focus) { tabs.forEach((x) => { const on = x === t; x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; el(x.getAttribute('aria-controls')).hidden = !on; }); if (focus) t.focus(); }
 tabs.forEach((t, i) => { t.addEventListener('click', () => selectTab(t)); t.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); selectTab(tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length], true); } }); });
-cue(mine.find((c) => c.pin) || mine[0] || launchVid);
+cue(mine.find((c) => c.pin) || launchVid);
 
 /* lightbox for the hero and close buttons */
 const dlg = el('vid');

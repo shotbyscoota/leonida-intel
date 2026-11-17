@@ -2,7 +2,7 @@
 
 ## On its own (no one at the keyboard)
 Every 30 minutes `tools/update-feed.mjs` pulls:
-- **Your YouTube channel** (Scoota Shoota, @ShotByScoota). Anything you upload shows up in Scoota TV.
+- **Your YouTube channel** (SX Exclusive, @SXExclusive). Anything you upload shows up in SX TV.
 - **Rockstar's YouTube channel**, GTA VI videos only. They show up under "Official drops" and the hero's trailer button.
 - **GTA 6 headlines** from Google News. They feed the yellow tape in the hero and The Wire.
 
