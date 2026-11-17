@@ -96,7 +96,6 @@ function orderTick(now) {
 /* ---------- caution-tape headlines ---------- */
 const tapeRun = el('tape-run');
 const tapeItems = [
-  ...(FEED.drops || []).slice(0, 3).map((d) => ({ t: d.title, s: 'Leonida Intel', l: d.link || '#wire' })),
   ...(FEED.news || []).slice(0, 10).map((n) => ({ t: n.title, s: n.source, l: n.link })),
 ];
 if (!tapeItems.length) tapeItems.push({ t: 'GTA VI unlocks at midnight local time on Thursday 19 November', s: 'Leonida Intel', l: '#facts' });
@@ -187,7 +186,7 @@ for (const d of (FEED.drops || []).slice(0, 3)) {
   if (d.link) kids.push(h('a', { class: 'link', href: d.link, target: '_blank', rel: 'noopener', text: 'Source →' }));
   drops.append(h('article', { class: 'drop' }, ...kids));
 }
-if (FEED.updated) el('fresh').textContent = 'Updated ' + ago(FEED.updated) + ' · refreshes every 30 min';
+if (FEED.updated) { const t = new Date(FEED.updated), old = Date.now() - t > 45 * 6e4; el('fresh').textContent = 'Last pull ' + new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(t) + ' · ' + ago(FEED.updated); el('fresh').parentElement.classList.toggle('stale', old); }
 
 /* ---------- the job ---------- */
 let saved = {}; try { saved = JSON.parse(localStorage.getItem('li-kit') || '{}'); } catch (e) {}
