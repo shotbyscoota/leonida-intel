@@ -1,0 +1,49 @@
+# Keeps Leonida Intel fresh with no one at the keyboard.
+# Every 30 minutes: pull the YouTube channels and GTA 6 headlines, commit the new feed if it changed,
+# and publish dist/ to GitHub Pages. Also runs when you push (say, after add-clip) or press "Run workflow".
+name: update-and-publish
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Pull channels and headlines
+        run: node tools/update-feed.mjs
+      - name: Commit the feed if it changed
+        run: |
+          if [ -n "$(git status --porcelain dist/data/feed.js)" ]; then
+            git config user.name "leonida-feed-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add dist/data/feed.js
+            git commit -m "feed: auto update $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

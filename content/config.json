@@ -1,0 +1,8 @@
+{
+  "_help": "Edit this file to change what the site pulls in automatically. The updater (tools/update-feed.mjs) runs every 30 minutes on GitHub, or by hand with: node tools/update-feed.mjs",
+  "yourChannel": { "name": "Scoota Shoota", "handle": "@ShotByScoota", "channelId": "UCBTxWQV3ee-CPDbQwifxBow", "onlyIfTitleHas": [] },
+  "officialChannel": { "name": "Rockstar Games", "channelId": "UC6VcWc1rAoWdBCM0JxrRQ3A", "onlyIfTitleHas": ["GTA VI", "Grand Theft Auto VI", "GTA 6", "Vice City", "Leonida"] },
+  "news": { "query": "\"GTA 6\" OR \"GTA VI\" OR \"Grand Theft Auto VI\"", "max": 12, "skipSources": [] },
+  "maxClips": 24,
+  "maxOfficial": 10
+}

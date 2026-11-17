@@ -1,0 +1,4 @@
+.taste-skill/
+dist/app.js
+dist/data/world.js
+node_modules/

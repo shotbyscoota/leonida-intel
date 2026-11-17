@@ -1,0 +1,7 @@
+{
+  "_help": "Short posts you write yourself. Newest first. label: Official (Rockstar or a console maker said it), Reported (a named outlet), Expected (not confirmed), Crew (your own take). Add one with: node tools/add-drop.mjs \"Headline\" \"One or two lines\" Reported https://source.link",
+  "drops": [
+    { "date": "2026-11-17", "title": "Preload is live on both consoles", "body": "Open since 10 November. Make room for up to 212 GB before Wednesday night.", "label": "Reported", "link": "https://gameluster.com/gta-6-212gb-download-size-preload/" },
+    { "date": "2026-11-16", "title": "Second pre-launch update landed", "body": "About 602.5 MB on PS5 and about 1.6 GB on Xbox. Let it finish before midnight.", "label": "Reported", "link": "https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/" }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "_help": "Your own clips. Add one with: node tools/add-clip.mjs https://youtu.be/VIDEO_ID \"Your title\"  (or paste a line below by hand). Clips from your channel arrive on their own; use this file for clips on other channels, Shorts you want pinned, or to pin one to the top with \"pin\": true.",
+  "clips": []
+}
