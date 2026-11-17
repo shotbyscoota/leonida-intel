@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#081018">
+  <meta name="description" content="Leonida Intel is an unofficial GTA VI fan hub for verified updates, guides, secrets, and community intel.">
+  <title>Leonida Intel — GTA VI, without the noise</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f7f9f6;
+      --muted: #a8b7b4;
+      --line: rgba(221, 241, 229, .14);
+      --panel: rgba(16, 30, 34, .72);
+      --panel-strong: rgba(18, 35, 40, .92);
+      --aqua: #65e3d0;
+      --coral: #ff796d;
+      --sun: #ffc56b;
+      --night: #071017;
+      --night-2: #0b1b20;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .32);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --max: 1180px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 82% 10%, rgba(255, 121, 109, .17), transparent 27rem),
+        radial-gradient(circle at 12% 34%, rgba(101, 227, 208, .08), transparent 23rem),
+        linear-gradient(180deg, var(--night) 0%, #08151a 45%, #071017 100%);
+      min-width: 320px;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
+    .skip-link { position: absolute; left: 12px; top: -80px; z-index: 20; padding: 12px 16px; background: var(--sun); color: #101314; border-radius: 10px; font-weight: 800; }
+    .skip-link:focus { top: 12px; }
+    .wrap { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .eyebrow { display: flex; align-items: center; gap: 9px; text-transform: uppercase; letter-spacing: .15em; font-size: 11px; font-weight: 800; color: var(--aqua); }
+    .eyebrow::before { content: ""; width: 26px; height: 1px; background: currentColor; }
+    .muted { color: var(--muted); }
+
+    .notice { position: relative; z-index: 3; border-bottom: 1px solid var(--line); background: rgba(5, 15, 18, .72); }
+    .notice .wrap { min-height: 34px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 12px; color: #d9e2dc; }
+    .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); box-shadow: 0 0 0 5px rgba(255, 121, 109, .13); }
+    .nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(17px); background: rgba(7, 16, 23, .75); border-bottom: 1px solid rgba(221, 241, 229, .08); }
+    .nav-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 900; letter-spacing: -.03em; }
+    .brand-mark { width: 34px; height: 34px; border: 1px solid rgba(101, 227, 208, .75); border-radius: 12px 12px 12px 3px; display: grid; place-items: center; transform: rotate(-8deg); background: linear-gradient(145deg, rgba(101, 227, 208, .24), rgba(255, 121, 109, .17)); box-shadow: 0 0 26px rgba(101, 227, 208, .15); }
+    .brand-mark span { transform: rotate(8deg); color: var(--aqua); font-size: 16px; }
+    .nav-links { display: flex; gap: 24px; align-items: center; color: #c1cfcc; font-size: 13px; font-weight: 700; }
+    .nav-links a { transition: color .2s ease; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 0 17px; border: 1px solid transparent; border-radius: 13px; font-weight: 850; font-size: 13px; cursor: pointer; transition: transform .2s ease, background .2s ease, border-color .2s ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #091314; background: var(--aqua); box-shadow: 0 10px 30px rgba(101, 227, 208, .16); }
+    .button-primary:hover { background: #8bf1e1; }
+    .button-ghost { color: var(--ink); border-color: var(--line); background: rgba(255,255,255,.035); }
+    .button-ghost:hover { border-color: rgba(101, 227, 208, .48); background: rgba(101, 227, 208, .08); }
+    .menu-button { display: none; width: 42px; height: 42px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 12px; cursor: pointer; }
+
+    .hero { position: relative; padding: 92px 0 78px; min-height: 650px; display: grid; align-items: center; }
+    .hero::after { content: ""; position: absolute; right: -22vw; top: 8%; width: 58vw; height: 58vw; max-width: 720px; max-height: 720px; border-radius: 50%; border: 1px solid rgba(101,227,208,.18); box-shadow: 0 0 0 34px rgba(101,227,208,.035), 0 0 0 70px rgba(255,121,109,.025); transform: rotate(-18deg) skewY(-10deg); pointer-events: none; }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr); gap: 52px; align-items: center; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 720px; margin-bottom: 22px; font-size: clamp(48px, 7vw, 88px); line-height: .94; letter-spacing: -.075em; font-weight: 950; }
+    h1 em { font-style: normal; color: var(--coral); }
+    .hero-copy { max-width: 620px; color: var(--muted); font-size: clamp(17px, 2vw, 20px); line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 34px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 17px; color: #d7e0db; font-size: 12px; font-weight: 700; }
+    .hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sun); }
+    .signal-card { position: relative; isolation: isolate; overflow: hidden; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(150deg, rgba(21, 43, 47, .88), rgba(9, 20, 26, .8)); box-shadow: var(--shadow); }
+    .signal-card::before { content: ""; position: absolute; inset: -90px -40px auto auto; width: 250px; height: 250px; border-radius: 50%; background: radial-gradient(circle, rgba(255,121,109,.29), transparent 67%); z-index: -1; }
+    .signal-top { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; margin-bottom: 30px; }
+    .signal-label { text-transform: uppercase; letter-spacing: .14em; font-size: 10px; color: var(--aqua); font-weight: 900; }
+    .live-pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; color: #c9f8ee; border: 1px solid rgba(101,227,208,.25); background: rgba(101,227,208,.08); border-radius: 999px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; }
+    .live-pill i { display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--aqua); }
+    .countdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 22px; }
+    .time-box { padding: 14px 8px; text-align: center; border-radius: 15px; background: rgba(4, 12, 17, .48); border: 1px solid rgba(255,255,255,.07); }
+    .time-box strong { display: block; font-size: clamp(27px, 4vw, 42px); line-height: 1; letter-spacing: -.07em; }
+    .time-box span { display: block; margin-top: 7px; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .13em; }
+    .signal-foot { display: flex; justify-content: space-between; gap: 18px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .signal-foot strong { color: var(--ink); }
+    .section { padding: 88px 0; }
+    .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 28px; }
+    h2 { max-width: 610px; margin-bottom: 0; font-size: clamp(32px, 4vw, 53px); line-height: .98; letter-spacing: -.06em; }
+    .section-head p { max-width: 365px; margin-bottom: 4px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .content-card { position: relative; min-height: 245px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--line); border-radius: var(--radius-md); background: linear-gradient(150deg, rgba(22,39,43,.8), rgba(10,22,28,.76)); overflow: hidden; }
+    .content-card::after { content: ""; position: absolute; width: 120px; height: 120px; right: -35px; bottom: -45px; border-radius: 50%; background: rgba(101,227,208,.08); }
+    .content-card.coral::after { background: rgba(255,121,109,.1); }
+    .card-kicker { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .card-kicker b { color: var(--aqua); font-size: 10px; text-transform: uppercase; letter-spacing: .13em; }
+    .card-kicker .coral-text { color: var(--coral); }
+    .content-card h3 { max-width: 280px; margin: 26px 0 10px; font-size: 24px; line-height: 1.05; letter-spacing: -.04em; }
+    .content-card p { max-width: 290px; margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .card-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; color: #e7f3ee; font-size: 12px; font-weight: 850; }
+    .card-link span { color: var(--aqua); transition: transform .2s ease; }
+    .content-card:hover .card-link span { transform: translateX(4px); }
+    .standard { display: grid; grid-template-columns: .86fr 1.14fr; gap: 45px; align-items: start; }
+    .standard-copy p { max-width: 480px; color: var(--muted); font-size: 16px; line-height: 1.7; }
+    .principles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .principle { padding: 20px; border: 1px solid var(--line); border-radius: 17px; background: rgba(255,255,255,.025); }
+    .principle-number { color: var(--coral); font-size: 11px; font-weight: 900; letter-spacing: .13em; }
+    .principle h3 { margin: 13px 0 8px; font-size: 17px; letter-spacing: -.025em; }
+    .principle p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .community { position: relative; overflow: hidden; padding: 30px; border: 1px solid rgba(101,227,208,.24); border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(20,56,56,.65), rgba(28,31,43,.67)); }
+    .community::before { content: ""; position: absolute; right: -70px; bottom: -150px; width: 430px; height: 430px; border-radius: 50%; border: 1px solid rgba(255,197,107,.2); box-shadow: 0 0 0 25px rgba(255,197,107,.03), 0 0 0 65px rgba(255,197,107,.02); }
+    .community-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 35px; align-items: center; }
+    .community h2 { max-width: 510px; margin: 14px 0; }
+    .community p { max-width: 520px; margin-bottom: 0; color: #bbd2cd; line-height: 1.65; font-size: 14px; }
+    .community-list { display: grid; gap: 12px; }
+    .community-item { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: rgba(3,12,17,.3); }
+    .check { flex: 0 0 21px; width: 21px; height: 21px; display: grid; place-items: center; border-radius: 50%; color: #09201d; background: var(--aqua); font-size: 12px; font-weight: 900; }
+    .community-item strong { display: block; margin-bottom: 3px; font-size: 13px; }
+    .community-item span { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .subscribe { display: grid; grid-template-columns: .85fr 1.15fr; gap: 34px; align-items: center; padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: rgba(255,255,255,.035); }
+    .subscribe h2 { font-size: clamp(29px, 4vw, 44px); }
+    .subscribe p { max-width: 430px; margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .subscribe-form { display: flex; gap: 10px; }
+    .subscribe-form input { min-width: 0; width: 100%; min-height: 48px; padding: 0 15px; color: var(--ink); border: 1px solid var(--line); border-radius: 13px; background: rgba(5,14,18,.74); }
+    .subscribe-form input::placeholder { color: #79908c; }
+    .form-status { min-height: 18px; margin: 11px 0 0; color: var(--aqua); font-size: 12px; }
+    footer { padding: 35px 0 50px; border-top: 1px solid rgba(221,241,229,.1); }
+    .footer-top { display: flex; justify-content: space-between; gap: 24px; align-items: center; }
+    .footer-note { max-width: 600px; color: #738784; font-size: 11px; line-height: 1.6; }
+    .footer-links { display: flex; gap: 16px; color: #a8b7b4; font-size: 12px; font-weight: 750; }
+    .footer-links a:hover { color: var(--ink); }
+    .reveal { animation: rise .7s both; }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .2s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 860px) {
+      .nav-links { display: none; position: absolute; left: 20px; right: 20px; top: 70px; padding: 14px; flex-direction: column; align-items: stretch; gap: 3px; border: 1px solid var(--line); border-radius: 16px; background: rgba(7,16,23,.98); box-shadow: var(--shadow); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 13px 12px; border-radius: 10px; }
+      .nav-links a:hover { background: rgba(255,255,255,.05); }
+      .menu-button { display: block; }
+      .nav-actions .button-ghost { display: none; }
+      .hero-grid, .standard, .community-grid, .subscribe { grid-template-columns: 1fr; }
+      .hero { padding-top: 70px; }
+      .hero::after { right: -35vw; top: 48%; width: 85vw; height: 85vw; }
+      .signal-card { max-width: 600px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .content-card { min-height: 205px; }
+      .subscribe-form { max-width: 600px; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width: min(calc(100% - 28px), var(--max)); }
+      .notice .wrap { padding: 8px 0; text-align: center; line-height: 1.35; }
+      .nav-inner { min-height: 68px; }
+      .brand { font-size: 14px; }
+      .hero { padding: 60px 0 50px; min-height: auto; }
+      h1 { font-size: clamp(47px, 15vw, 72px); }
+      .hero-copy { font-size: 16px; }
+      .hero-actions { display: grid; grid-template-columns: 1fr; }
+      .button { width: 100%; }
+      .section { padding: 62px 0; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 16px; }
+      .principles { grid-template-columns: 1fr; }
+      .community, .subscribe { padding: 22px; }
+      .subscribe-form { display: grid; grid-template-columns: 1fr; }
+      .footer-top { align-items: flex-start; flex-direction: column; }
+      .footer-links { flex-wrap: wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="notice" role="status">
+    <div class="wrap"><span class="pulse" aria-hidden="true"></span><strong>Pre-launch signal:</strong> GTA VI launches November 19, 2026. Get the first clean drop.</div>
+  </div>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Leonida Intel home"><span class="brand-mark" aria-hidden="true"><span>LI</span></span><span>Leonida Intel</span></a>
+      <nav class="nav-links" id="site-nav" aria-label="Primary navigation">
+        <a href="#intel">Latest intel</a>
+        <a href="#guides">Guides</a>
+        <a href="#standard">Our standard</a>
+        <a href="#community">Community</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="button button-ghost" href="#subscribe">Subscribe</a>
+        <a class="button button-primary" href="#community">Join Discord <span aria-hidden="true">↗</span></a>
+        <button class="menu-button" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">Vice City signal desk</div>
+          <h1>GTA VI, <em>without</em> the noise.</h1>
+          <p class="hero-copy">A clean, source-first home for every important update, useful guide, secret, and community discovery across Leonida.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#subscribe">Get launch drops <span aria-hidden="true">→</span></a>
+            <a class="button button-ghost" href="#intel">Explore the briefing <span aria-hidden="true">↘</span></a>
+          </div>
+          <div class="hero-meta" aria-label="Site principles">
+            <span><i class="meta-dot" aria-hidden="true"></i> Source-first</span>
+            <span><i class="meta-dot" aria-hidden="true"></i> Spoiler-aware</span>
+            <span><i class="meta-dot" aria-hidden="true"></i> Community-built</span>
+          </div>
+        </div>
+        <aside class="signal-card reveal delay-1" aria-label="Launch countdown">
+          <div class="signal-top">
+            <div><div class="signal-label">The launch board</div><h2 style="font-size:27px; margin-top:12px;">The city is almost live.</h2></div>
+            <span class="live-pill"><i aria-hidden="true"></i> Tracking</span>
+          </div>
+          <div class="countdown" aria-live="polite">
+            <div class="time-box"><strong id="days">--</strong><span>Days</span></div>
+            <div class="time-box"><strong id="hours">--</strong><span>Hours</span></div>
+            <div class="time-box"><strong id="minutes">--</strong><span>Minutes</span></div>
+          </div>
+          <div class="signal-foot"><span><strong>Next:</strong> launch-day guides, secrets, and live community intel.</span><span aria-hidden="true">✦</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="intel">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="eyebrow">Signal board</div><h2>Know what matters before you load in.</h2></div>
+          <p>Every story will be separated by what is confirmed, what is tested, and what still needs a closer look.</p>
+        </div>
+        <div class="card-grid">
+          <article class="content-card">
+            <div class="card-kicker"><b>Briefing</b><span>Official first</span></div>
+            <div><h3>Verified updates, in plain English.</h3><p>No endless scrolling. Just the important change, why it matters, and what players should do next.</p></div>
+            <a class="card-link" href="#subscribe">Follow the signal <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="content-card coral">
+            <div class="card-kicker"><b class="coral-text">Launch guides</b><span>Built to use</span></div>
+            <div><h3>From “what is this?” to “I got it.”</h3><p>Short steps, clear screenshots, spoiler controls, and guides that respect your time.</p></div>
+            <a class="card-link" href="#guides">See the system <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="content-card">
+            <div class="card-kicker"><b>Community intel</b><span>Find your crew</span></div>
+            <div><h3>The best discoveries move fast.</h3><p>Share finds, compare methods, and get launch-day updates where the conversation is already happening.</p></div>
+            <a class="card-link" href="#community">Join the loop <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guides">
+      <div class="wrap standard" id="standard">
+        <div class="standard-copy">
+          <div class="eyebrow">The Leonida standard</div>
+          <h2>Useful beats loud.</h2>
+          <p>We are building a guide hub that is easy to scan on a phone, honest about uncertainty, and fast enough to use with the game open beside it.</p>
+          <a class="button button-ghost" href="#subscribe">Get the first guide drop <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="principles" aria-label="Our content standards">
+          <article class="principle"><div class="principle-number">01 / CLARITY</div><h3>Simple language</h3><p>Every page starts with the answer, then gives the detail for players who want it.</p></article>
+          <article class="principle"><div class="principle-number">02 / TRUST</div><h3>Evidence labels</h3><p>Official, confirmed, tested, reported, and rumor will never be treated as the same thing.</p></article>
+          <article class="principle"><div class="principle-number">03 / ACCESS</div><h3>Built for every screen</h3><p>Readable type, visible focus states, touch-friendly controls, and reduced-motion support.</p></article>
+          <article class="principle"><div class="principle-number">04 / SPEED</div><h3>No heavy clutter</h3><p>Original CSS visuals and optimized structure keep the experience quick even on a phone.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="community">
+      <div class="wrap community">
+        <div class="community-grid">
+          <div><div class="eyebrow">Community channel</div><h2>Bring your crew into the city.</h2><p>Discord will be the live room for launch alerts, shared discoveries, squad finding, and community challenges. The site stays the clean reference point.</p><div class="hero-actions" style="margin-bottom:0;"><a class="button button-primary" href="#subscribe">Reserve your spot <span aria-hidden="true">↗</span></a></div></div>
+          <div class="community-list">
+            <div class="community-item"><span class="check" aria-hidden="true">✓</span><div><strong>Launch alerts</strong><span>New official updates and major discoveries in one channel.</span></div></div>
+            <div class="community-item"><span class="check" aria-hidden="true">✓</span><div><strong>Guide requests</strong><span>Tell us what you need explained next.</span></div></div>
+            <div class="community-item"><span class="check" aria-hidden="true">✓</span><div><strong>Find your people</strong><span>Squads, sessions, clips, and friendly competition.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="subscribe">
+      <div class="wrap subscribe">
+        <div><div class="eyebrow">First access</div><h2>Catch the drop before the feed gets noisy.</h2><p>Join the preview list for launch updates, the first guide releases, and the Discord invite.</p></div>
+        <div><form class="subscribe-form" id="subscribe-form"><label class="sr-only" for="email">Email address</label><input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required><button class="button button-primary" type="submit">Subscribe <span aria-hidden="true">→</span></button></form><p class="form-status" id="form-status" aria-live="polite"></p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-top"><div><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><span>LI</span></span><span>Leonida Intel</span></a><p class="footer-note">An unofficial fan project. Grand Theft Auto, GTA VI, Rockstar Games, and related marks belong to their respective owners. This site is not affiliated with or endorsed by Rockstar Games or Take-Two Interactive.</p></div><div class="footer-links"><a href="#intel">Intel</a><a href="#guides">Guides</a><a href="#subscribe">Subscribe</a></div></div>
+  </footer>
+
+  <script>
+    const launch = new Date('2026-11-19T00:00:00-08:00').getTime();
+    const parts = { days: document.getElementById('days'), hours: document.getElementById('hours'), minutes: document.getElementById('minutes') };
+    function updateCountdown() {
+      const distance = Math.max(0, launch - Date.now());
+      if (!distance) { parts.days.textContent = 'LIVE'; parts.hours.textContent = 'NOW'; parts.minutes.textContent = '✦'; return; }
+      parts.days.textContent = Math.floor(distance / 86400000);
+      parts.hours.textContent = String(Math.floor((distance / 3600000) % 24)).padStart(2, '0');
+      parts.minutes.textContent = String(Math.floor((distance / 60000) % 60)).padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 30000);
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const siteNav = document.getElementById('site-nav');
+    menuToggle.addEventListener('click', () => {
+      const open = siteNav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    });
+    siteNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      siteNav.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Open navigation');
+    }));
+
+    document.getElementById('subscribe-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const status = document.getElementById('form-status');
+      const email = document.getElementById('email').value.trim();
+      if (email) { status.textContent = 'You’re on the preview list. Email delivery will be connected next.'; event.target.reset(); }
+    });
+  </script>
+</body>
+</html>
