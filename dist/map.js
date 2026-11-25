@@ -39,11 +39,39 @@ for (const r of land) for (const [x, y] of r) { bx0 = Math.min(bx0, x); bx1 = Ma
 const places = MAP.places.map((p) => ({ ...p, w: p.pos ? W(p.pos) : null }));
 const placed = places.filter((p) => p.w);
 
+/* ---------- city layer: real streets, coast and buildings (OpenStreetMap, ODbL), loaded after first paint ---------- */
+// data/city.js is about 2 MB, so the map draws first and the city fades in when it arrives.
+let CITY = null;
+const METRO = (() => { const a = W([-80.55, 25.40]), b = W([-80.03, 26.35]); return { x0: a[0], y0: a[1], x1: b[0], y1: b[1] }; })();
+function decodeLine(a) {
+  const n = a.length >> 1, o = new Float32Array(n * 2); let X = 0, Y = 0;
+  for (let i = 0; i < n; i++) { X += a[2 * i]; Y += a[2 * i + 1]; const [x, y] = W([X / 1e5, Y / 1e5]); o[2 * i] = x; o[2 * i + 1] = y; }
+  return o;
+}
+function decodeCity(c) {
+  const L = (k) => (c[k] || []).map(decodeLine);
+  const bld = (c.bld || []).map(([hm, a]) => {
+    let pts = decodeLine(a); const n = pts.length >> 1;
+    let ar = 0, cx = 0, cy = 0;
+    for (let i = 0; i < n; i++) { const j = (i + 1) % n; ar += pts[2 * i] * pts[2 * j + 1] - pts[2 * j] * pts[2 * i + 1]; cx += pts[2 * i]; cy += pts[2 * i + 1]; }
+    if (ar < 0) { const r = new Float32Array(pts.length); for (let i = 0; i < n; i++) { r[2 * i] = pts[2 * (n - 1 - i)]; r[2 * i + 1] = pts[2 * (n - 1 - i) + 1]; } pts = r; }
+    return { h: hm / 1000, pts, n, cx: cx / n, cy: cy / n, tall: hm };
+  });
+  return { hw: L('hw'), pri: L('pri'), art: L('art'), st: L('st'), coast: L('coast'), air: L('air'),
+    park: (c.park || []).map(([t, a]) => ({ t, pts: decodeLine(a) })), bld, source: c.source };
+}
+function loadCity() {
+  const s = document.createElement('script');
+  s.src = 'data/city.js'; s.async = true;
+  s.onload = () => { if (window.LEONIDA_CITY) { CITY = decodeCity(window.LEONIDA_CITY); window.LEONIDA_CITY = null; draw(); } };
+  document.body.append(s);
+}
+
 /* ---------- camera ---------- */
 const canvas = el('map'), ctx = canvas.getContext('2d');
 let cw = 0, ch = 0, dpr = 1;
 const cam = { x: (bx0 + bx1) / 2, y: (by0 + by1) / 2 - 20, dist: 900, yaw: -0.18, pitch: 0.92 };
-const PITCH3D = 0.92, MIN_D = 18, MAX_D = 1600;
+const PITCH3D = 0.92, MIN_D = 1.2, MAX_D = 1600;
 // The free part of the canvas: not covered by the filter panel or the open card. The camera
 // centres and fits inside it, so a selected pin is never hidden behind a panel.
 let free = { l: 0, r: 0, t: 0, b: 0 };
@@ -159,6 +187,90 @@ function glow(color, widths) {
   for (const [w, a] of widths) { ctx.globalAlpha = a; ctx.lineWidth = w; ctx.strokeStyle = color; ctx.stroke(); }
   ctx.globalAlpha = 1;
 }
+function line(pts, z = 0, close = false) {
+  const n = pts.length >> 1; let pen = false, any = false;
+  for (let i = 0; i < n + (close ? 1 : 0); i++) {
+    const k = i % n, q = proj(pts[2 * k], pts[2 * k + 1], z);
+    if (!q) { pen = false; continue; }
+    if (pen) ctx.lineTo(q[0], q[1]); else { ctx.moveTo(q[0], q[1]); pen = true; }
+    any = true;
+  }
+  return any;
+}
+const clamp01 = (v) => Math.max(0, Math.min(1, v));
+// Rough on-screen test for a line, from its ends and middle; keeps far-off roads out of the work.
+function nearView(pts) {
+  const n = pts.length >> 1;
+  for (const k of [0, n >> 1, n - 1]) { const q = proj(pts[2 * k], pts[2 * k + 1]); if (q && q[0] > -cw && q[0] < 2 * cw && q[1] > -ch && q[1] < 2 * ch) return true; }
+  return false;
+}
+const metroNear = () => !!CITY && cam.x > METRO.x0 - 60 && cam.x < METRO.x1 + 60 && cam.y > METRO.y0 - 60 && cam.y < METRO.y1 + 60;
+function drawCity() {
+  if (!CITY) return;
+  const d = cam.dist, near = metroNear(), detail = near ? clamp01((260 - d) / 120) : 0;
+  ctx.globalCompositeOperation = 'source-over';
+  if (detail > 0 && d < 140) {
+    for (const p of CITY.park) {
+      if (!nearView(p.pts)) continue;
+      ctx.beginPath(); if (!line(p.pts, 0, true)) continue;
+      ctx.fillStyle = p.t === 'w' ? `rgba(30,110,220,${0.22 * detail})` : `rgba(77,255,136,${0.07 * detail})`; ctx.fill();
+    }
+  }
+  ctx.globalCompositeOperation = 'lighter';
+  const stroke = (list, color, w, a, test = true) => {
+    if (a <= 0.01) return; ctx.beginPath(); let any = false;
+    for (const pts of list) { if (test && !nearView(pts)) continue; if (line(pts)) any = true; }
+    if (any) { ctx.globalAlpha = a; ctx.lineWidth = w; ctx.strokeStyle = color; ctx.stroke(); ctx.globalAlpha = 1; }
+  };
+  const zk = Math.min(3, Math.max(0.6, 60 / d));
+  if (detail > 0) {
+    ctx.beginPath(); let any = false; for (const pts of CITY.coast) if (line(pts)) any = true;
+    if (any) glow('#ff2e7e', [[8, 0.06 * detail], [3.5, 0.16 * detail], [1.4, 0.9 * detail]]);
+  }
+  stroke(CITY.pri, '#fff3e4', 1, 0.16 * clamp01((900 - d) / 500), d < 500);
+  if (near) stroke(CITY.art, '#fff3e4', Math.max(0.8, zk * 0.7), 0.22 * clamp01((150 - d) / 90));
+  if (near) stroke(CITY.st, '#fff3e4', Math.max(0.6, zk * 0.45), 0.16 * clamp01((40 - d) / 25));
+  stroke(CITY.air, '#fff3e4', Math.max(1.5, zk * 2.2), 0.4 * clamp01((400 - d) / 250), d < 400);
+  ctx.beginPath(); let anyH = false; for (const pts of CITY.hw) { if (d < 400 && !nearView(pts)) continue; if (line(pts)) anyH = true; }
+  if (anyH) glow('#ffb547', [[Math.max(4, zk * 5), 0.08], [Math.max(1.2, zk * 1.6), 0.75]]);
+  ctx.globalAlpha = 1;
+}
+// Buildings: extruded blocks, far to near, lit from one side; towers glow at the roof line.
+const LIGHT = [Math.cos(0.9), Math.sin(0.9)];
+function drawBuildings() {
+  if (!CITY || cam.dist > 60) return;
+  const fade = clamp01((60 - cam.dist) / 25), ex = 2.4, minH = cam.dist > 30 ? 0.03 : 0;
+  const vis = [];
+  for (const b of CITY.bld) {
+    if (b.h < minH) continue;
+    const q = proj(b.cx, b.cy, 0);
+    if (!q || q[0] < -80 || q[0] > cw + 80 || q[1] < -200 || q[1] > ch + 80) continue;
+    vis.push([q[2], b]);
+  }
+  vis.sort((a, b) => b[0] - a[0]);
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.lineJoin = 'miter';
+  for (const [, b] of vis) {
+    const n = b.n, P = b.pts, H = b.h * ex, base = [], roof = [];
+    let ok = true;
+    for (let i = 0; i < n; i++) { const a = proj(P[2 * i], P[2 * i + 1], 0), r = proj(P[2 * i], P[2 * i + 1], H); if (!a || !r) { ok = false; break; } base.push(a); roof.push(r); }
+    if (!ok) continue;
+    const edge = b.tall >= 100 ? '#ffb547' : b.tall >= 40 ? '#ff2e7e' : '#19e3d0';
+    for (let i = 0; i < n; i++) {
+      const j = (i + 1) % n, a = base[i], c = base[j], rc = roof[j], ra = roof[i];
+      const sa = (c[0] - a[0]) * (ra[1] - a[1]) - (c[1] - a[1]) * (ra[0] - a[0]);
+      if (sa <= 0) continue;
+      const ex2 = P[2 * j] - P[2 * i], ey2 = P[2 * j + 1] - P[2 * i + 1], L = Math.hypot(ex2, ey2) || 1;
+      const lit = 0.55 + 0.45 * ((ey2 / L) * LIGHT[0] - (ex2 / L) * LIGHT[1]);
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(c[0], c[1]); ctx.lineTo(rc[0], rc[1]); ctx.lineTo(ra[0], ra[1]); ctx.closePath();
+      ctx.fillStyle = `rgba(${Math.round(30 + 34 * lit)},${Math.round(22 + 20 * lit)},${Math.round(44 + 40 * lit)},${0.96 * fade})`; ctx.fill();
+    }
+    ctx.beginPath(); roof.forEach((r, i) => i ? ctx.lineTo(r[0], r[1]) : ctx.moveTo(r[0], r[1])); ctx.closePath();
+    ctx.fillStyle = `rgba(38,28,52,${fade})`; ctx.fill();
+    ctx.globalAlpha = fade * (b.tall >= 40 ? 0.95 : 0.45); ctx.lineWidth = b.tall >= 40 ? 1.3 : 0.8; ctx.strokeStyle = edge; ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  ctx.lineJoin = 'round';
+}
 function render(t) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, cw, ch);
@@ -185,17 +297,21 @@ function render(t) {
     for (const r of land) for (let i = 0; i < r.length; i += r.length > 100 ? 6 : 3) { const a = proj(r[i][0], r[i][1], 0), b = proj(r[i][0], r[i][1], -wall); if (a && b) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } }
     ctx.strokeStyle = 'rgba(25,227,208,0.18)'; ctx.lineWidth = 1; ctx.stroke();
   }
-  land.forEach((r, i) => { if (path(r, 0, 'coast', borders[i])) glow('#ff2e7e', [[9, 0.07], [4.5, 0.18], [1.6, 0.95]]); });
+  // Near Vice City the detailed shore takes over, so the coarse state outline steps back.
+  const coastA = 1 - 0.85 * (metroNear() ? clamp01((260 - cam.dist) / 120) : 0);
+  land.forEach((r, i) => { if (path(r, 0, 'coast', borders[i])) glow('#ff2e7e', [[9, 0.07 * coastA], [4.5, 0.18 * coastA], [1.6, 0.95 * coastA]]); });
   ctx.setLineDash([6, 6]);
   land.forEach((r, i) => { if (borders[i].size && path(r, 0, 'border', borders[i])) glow('#b7aeb9', [[1.2, 0.45]]); });
   ctx.setLineDash([]);
   for (const l of lakes) { if (path(l.ring)) { glow('#19e3d0', [[6, 0.1], [1.4, 0.85]]); } }
+  drawCity();
+  drawBuildings();
 
   // region labels
   ctx.globalCompositeOperation = 'source-over';
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   for (const r of MAP.regions) {
-    const p = proj(...W(r.anchor), 2); if (!p) continue;
+    const p = proj(...W(r.anchor), 2); if (!p || p[2] > cam.dist * 2.4) continue;
     const size = Math.max(11, Math.min(34, 22 * focal() / p[2]));
     const dim = state.region && state.region !== r.id;
     ctx.font = `400 ${size}px Anton, Impact, sans-serif`;
@@ -207,15 +323,18 @@ function render(t) {
     ctx.shadowBlur = 0; ctx.globalAlpha = 1;
   }
   // area labels when zoomed in
-  if (cam.dist < 380) {
-    ctx.font = '700 11px "DM Sans", system-ui, sans-serif';
-    for (const a of MAP.areas) {
-      const p = proj(...W(a.pos)); if (!p) continue;
-      ctx.globalAlpha = Math.min(0.75, (380 - cam.dist) / 160);
-      ctx.fillStyle = '#fff3e4'; ctx.fillText(a.name.toUpperCase(), p[0], p[1] + 16);
-    }
-    ctx.globalAlpha = 1;
+  // place names fade in by size: towns first, then keys, parks and water, then districts and islands
+  const SHOW = { county: 520, town: 380, key: 140, park: 160, lake: 200, island: 60, district: 45 };
+  ctx.font = '700 11px "DM Sans", system-ui, sans-serif';
+  for (const a of MAP.areas) {
+    const lim = SHOW[a.kind] || 380; if (cam.dist > lim) continue;
+    const p = proj(...W(a.pos), 0.05); if (!p || p[2] > cam.dist * 2.2 || p[0] < 0 || p[0] > cw || p[1] < 0 || p[1] > ch) continue;
+    ctx.globalAlpha = Math.min(0.85, (lim - cam.dist) / (lim * 0.4));
+    ctx.fillStyle = a.kind === 'lake' ? '#7ab8ff' : a.kind === 'park' ? '#4dff88' : '#fff3e4';
+    ctx.strokeStyle = 'rgba(11,10,12,0.85)'; ctx.lineWidth = 3;
+    ctx.strokeText(a.name.toUpperCase(), p[0], p[1]); ctx.fillText(a.name.toUpperCase(), p[0], p[1]);
   }
+  ctx.globalAlpha = 1;
 
   // pins, far to near
   hitList = [];
@@ -233,8 +352,8 @@ function render(t) {
   for (const { p, base, top } of items) {
     const col = CATS[p.cat].color, isSel = selected === p, isHov = hover === p;
     // certainty ring on the ground: wide when only the region is known
-    const rad = p.precision === 'region' ? 22 : p.precision === 'area' ? 5 : 1.5;
-    if (rad > 2 && (isSel || isHov || cam.dist < 500)) {
+    const rad = p.precision === 'region' ? 22 : p.precision === 'area' ? (p.region === 'vice-city' ? 1.2 : 3) : 0.15;
+    if (isSel || isHov || cam.dist < 500) {
       ctx.beginPath();
       for (let i = 0; i <= 28; i++) { const a = i / 28 * Math.PI * 2, q = proj(p.w[0] + Math.cos(a) * rad, p.w[1] + Math.sin(a) * rad); if (q) i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]); }
       ctx.setLineDash(p.precision === 'region' ? [4, 5] : []);
@@ -254,10 +373,13 @@ function render(t) {
   ctx.globalCompositeOperation = 'source-over';
   // name tags for the selected pin and, when close, for every pin
   ctx.font = '700 12px "DM Sans", system-ui, sans-serif'; ctx.textAlign = 'left';
-  const near = cam.dist < 130 ? [...hitList].sort((a, b) => (a.x - CX()) ** 2 + (a.y - CY()) ** 2 - (b.x - CX()) ** 2 - (b.y - CY()) ** 2).slice(0, 10) : [];
-  for (const it of hitList) {
-    if (!(it.p === selected || near.includes(it))) continue;
-    const label = it.p.name, w = ctx.measureText(label).width + 12;
+  const near = cam.dist < 130 ? [...hitList].filter((it) => { const q = proj(it.p.w[0], it.p.w[1]); return q && q[2] < cam.dist * 2.2; }).sort((a, b) => (a.x - CX()) ** 2 + (a.y - CY()) ** 2 - (b.x - CX()) ** 2 - (b.y - CY()) ** 2).slice(0, 10) : [];
+  const taken = [], free4 = (x, y, w, hh) => !taken.some((r) => x < r[0] + r[2] && x + w > r[0] && y < r[1] + r[3] && y + hh > r[1]);
+  const tags = [...hitList.filter((it) => it.p === selected), ...near.filter((it) => it.p !== selected)].slice(0, cw < 600 ? 6 : 10);
+  for (const it of tags) {
+    const label = it.p.name.length > 34 ? it.p.name.slice(0, 32) + '…' : it.p.name, w = ctx.measureText(label).width + 12;
+    if (it.p !== selected && !free4(it.x + 12, it.y - 10, w, 20)) continue;
+    taken.push([it.x + 12, it.y - 10, w, 20]);
     ctx.fillStyle = 'rgba(11,10,12,0.85)'; ctx.fillRect(it.x + 12, it.y - 10, w, 20);
     ctx.fillStyle = it.p === selected ? '#ffd23f' : '#fff3e4'; ctx.fillText(label, it.x + 18, it.y + 1);
   }
@@ -412,15 +534,28 @@ function select(p, fromMap = false, focus = false) {
   if (latest && lastRead && D(latest.date) > D(lastRead) && !(p.checked && p.checked.version === latest.version)) warn = `Read before update ${latest.version} (${dateFmt.format(D(latest.date))}). It may have changed; check in game.`;
   el('card-warn').textContent = warn;
   el('card-out').textContent = '';
+  el('card-street').hidden = !p.w;
   card.hidden = false;
   history.replaceState(null, '', '#p=' + p.id);
   if (p.w && !fromMap) {
     measureFree();
-    fly({ x: p.w[0], y: p.w[1], dist: Math.min(cam.dist, p.precision === 'region' ? 220 : 110) });
+    fly({ x: p.w[0], y: p.w[1], dist: p.precision === 'region' ? 160 : p.region === 'vice-city' ? 3.2 : 24, pitch: cam.pitch < 0.3 ? cam.pitch : PITCH3D });
   } else draw();
   if (focus) card.focus();
 }
 el('card-x').addEventListener('click', () => { select(null); canvas.focus(); });
+// Street level: fly right down onto the pin, tilted, so the blocks around it stand up.
+el('card-street').addEventListener('click', () => {
+  if (!selected || !selected.w) return;
+  el('tilt').setAttribute('aria-pressed', 'true');
+  fly({ x: selected.w[0], y: selected.w[1], dist: selected.region === 'vice-city' ? 1.6 : 6, pitch: 1.02 });
+});
+el('card-big').addEventListener('click', () => {
+  const on = !card.classList.contains('big');
+  card.classList.toggle('big', on); el('card-big').setAttribute('aria-pressed', String(on));
+  el('card-big').textContent = on ? 'Smaller card' : 'Enlarge card';
+  measureFree(); draw();
+});
 el('card-share').addEventListener('click', async () => {
   const url = location.href;
   try { await navigator.clipboard.writeText(url); el('card-out').textContent = 'Link copied.'; } catch (e) { el('card-out').textContent = url; }
@@ -476,4 +611,5 @@ fitAll(placed, false);
 if (start) select(start);
 addEventListener('hashchange', () => { const id = (location.hash.match(/^#p=([a-z0-9-]+)$/) || [])[1]; const p = id && places.find((x) => x.id === id); if (p && p !== selected) select(p); });
 if (document.fonts?.ready) document.fonts.ready.then(draw);
+setTimeout(loadCity, 60);
 })();

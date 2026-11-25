@@ -41,6 +41,9 @@ Built for years of small edits, with no libraries and no build step for the page
 - **Changing the shape** (rare): `node tools/map/make-outline.mjs <Natural Earth states.geojson> <lakes.geojson>` regenerates `content/map/outline.json`.
 - **Tests:** `node --test tools/test-map.mjs`.
 
+- **City detail (streets, freeways, 3D buildings):** real Miami from OpenStreetMap (ODbL), stored in `content/map/city.json` and copied to `dist/data/city.js` by `node tools/build-map.mjs`. It loads after the map draws. To refresh it (rarely, maybe once a year): `node tools/map/make-city.mjs <some-temp-folder>`, then `node tools/build-map.mjs`. Keep the OpenStreetMap credit on the page.
+- **Research batches:** new spots go in `content/map/places.json` with a source each. Pins sit in the district a guide names (`precision: "area"`); never `spot` unless we stood there in game.
+
 ## Daily Shorts
 See `creator/README.md` (the weekly batch loop) and `creator/queue-*.md` (this week's 7 clips).
 

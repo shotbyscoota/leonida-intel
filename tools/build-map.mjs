@@ -14,6 +14,7 @@ import { clean, safeUrl, STATUSES } from './lib/intel.mjs';
 export const SCHEMA = 1;
 export const CATS = ['weapon', 'vehicle', 'secret', 'money', 'mission', 'landmark', 'service'];
 export const PRECISION = ['spot', 'area', 'region'];
+export const AREA_KINDS = ['county', 'town', 'district', 'island', 'key', 'park', 'lake'];
 // Generous box around the stand-in outline (lon/lat). A pin outside it is a typo.
 const BOX = { w: -87.7, e: -79.8, s: 24.3, n: 31.1 };
 const ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -52,6 +53,11 @@ export function validate(data, outline) {
     if (p.status === 'Official' && !(p.sources || []).some((s) => /(^|\.)rockstargames\.com$/.test(host(s.url)))) e(w, 'Official needs a rockstargames.com source');
     if (p.status === 'Tested' && !(p.checked?.on && p.checked?.version && p.checked?.platform)) e(w, 'Tested needs checked.on, checked.version and checked.platform');
   }
+  for (const a of data.areas || []) {
+    if (!a.name) e('area', 'name missing');
+    if (!inBox(a.pos)) e(`area ${a.name}`, 'pos must be [lon, lat] inside the map');
+    if (a.kind && !AREA_KINDS.includes(a.kind)) e(`area ${a.name}`, `kind must be one of ${AREA_KINDS.join(', ')}`);
+  }
   if (!outline?.land?.length) e('outline.json', 'land rings missing; run tools/map/make-outline.mjs');
   return errs;
 }
@@ -87,7 +93,7 @@ export function build(data, outline) {
     updated: data.updated || '',
     outline: { source: outline.source, land: outline.land, lakes: outline.lakes || [], border: borderSegments(outline) },
     regions: data.regions.map((r) => ({ id: r.id, name: t(r.name, 40), anchor: r.anchor, blurb: t(r.blurb, 200) })),
-    areas: (data.areas || []).map((a) => ({ name: t(a.name, 40), pos: a.pos })),
+    areas: (data.areas || []).map((a) => ({ name: t(a.name, 40), pos: a.pos, kind: AREA_KINDS.includes(a.kind) ? a.kind : 'town' })),
     places: data.places.map((p) => {
       const o = {
         id: p.id, name: t(p.name, 80), region: p.region, area: t(p.area, 80), cat: p.cat, pos: p.pos, precision: p.precision, status: p.status,
@@ -111,13 +117,18 @@ if (/build-map\.mjs$/.test(process.argv[1] || '')) {
   const out = join(root, 'dist/data/map.js');
   const text = `/* written by tools/build-map.mjs from content/map/; do not edit by hand */\nwindow.LEONIDA_MAP = ${JSON.stringify(build(data, outline))};\n`;
   const placed = data.places.filter((p) => p.pos).length;
+  // The city layer (streets and buildings, OpenStreetMap) is copied as is; it is only numbers.
+  const cityIn = join(root, 'content/map/city.json'), cityOut = join(root, 'dist/data/city.js');
+  const cityText = existsSync(cityIn) ? `/* written by tools/build-map.mjs from content/map/city.json: ${JSON.parse(readFileSync(cityIn, 'utf8')).source} */\nwindow.LEONIDA_CITY = ${readFileSync(cityIn, 'utf8').trim()};\n` : null;
   if (process.argv.includes('--check')) {
     const cur = existsSync(out) ? readFileSync(out, 'utf8').replace(/\r\n/g, '\n') : '';
     if (cur !== text) { console.log('ERROR dist/data/map.js is out of date: run node tools/build-map.mjs and commit it'); process.exit(1); }
+    if (cityText && (!existsSync(cityOut) || readFileSync(cityOut, 'utf8').replace(/\r\n/g, '\n') !== cityText)) { console.log('ERROR dist/data/city.js is out of date: run node tools/build-map.mjs and commit it'); process.exit(1); }
     console.log(`map OK: ${data.places.length} places (${placed} placed)`);
   } else {
     mkdirSync(dirname(out), { recursive: true });
     writeFileSync(out, text);
+    if (cityText) writeFileSync(cityOut, cityText);
     console.log(`wrote dist/data/map.js: ${data.places.length} places (${placed} placed), ${outline.land.length} land rings`);
   }
 }

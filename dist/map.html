@@ -121,6 +121,12 @@ canvas#map.over{cursor:pointer}
 .card .src small{color:var(--mute)}
 .card .warn{font-size:13px;color:var(--yellow);margin:12px 0 0}
 .card .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.card .acts .btn.alt{background:none;color:var(--bone);border:2px solid var(--line);box-shadow:none}
+.card .acts .btn.alt:hover{border-color:var(--teal);color:var(--teal)}
+.card.big{width:min(720px,calc(100% - 2 * var(--side) - 58px));font-size:17px}
+.card.big h2{font-size:54px}
+.card.big .how-wrap{columns:2;column-gap:28px}
+@media (max-width:860px){.card.big{max-height:92%;width:100%}.card.big h2{font-size:40px}.card.big .how-wrap{columns:1}}
 .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;background:var(--bone);color:var(--ink);border:0;font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;box-shadow:4px 4px 0 var(--pink);transition:transform .15s,box-shadow .15s}
 .btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--pink)}
 .btn.ghost{background:none;color:var(--bone);border:2px solid var(--bone);box-shadow:none}
@@ -225,7 +231,7 @@ footer a:hover{color:var(--bone)}
     <h3>Sources</h3>
     <ul class="src" id="card-src"></ul>
     <p class="warn" id="card-warn"></p>
-    <div class="acts"><button class="btn" type="button" id="card-share">Copy link to this spot</button><output id="card-out" role="status"></output></div>
+    <div class="acts"><button class="btn" type="button" id="card-street">Zoom to street level</button><button class="btn alt" type="button" id="card-big" aria-pressed="false">Enlarge card</button><button class="btn alt" type="button" id="card-share">Copy link</button><output id="card-out" role="status"></output></div>
   </aside>
 </section>
 
@@ -257,6 +263,7 @@ footer a:hover{color:var(--bone)}
   <div class="wrap method">
     <div>
       <h2 class="poster" id="how-h">How the map is made</h2>
+      <p><b>The city detail is real Miami.</b> Vice City is Rockstar's take on Miami, so the streets, freeways and buildings you see when you zoom in are real-world data from OpenStreetMap (© OpenStreetMap contributors, ODbL). Rockstar's streets differ; pins sit in the district a guide names, not on an exact in-game doorstep.</p>
       <p><b>The shape is a stand-in.</b> Leonida is Rockstar's version of Florida, so the outline is the real Florida coastline (Natural Earth, public domain) drawn in neon, with the far panhandle trimmed and Lake Okeechobee standing in for Lake Leonida. It is not Rockstar's map art and it is not to scale with the game.</p>
       <p><b>The pins are from written guides.</b> Each spot comes from a named outlet guide, linked on its card, with the date we read it. The ring around a pin shows how sure the position is: small for a named town or district, wide when only the region is known.</p>
     </div>
@@ -271,7 +278,7 @@ footer a:hover{color:var(--bone)}
 
 <footer>
   <div class="wrap">
-    <p>Leonida Intel is an unofficial fan desk from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks. Coastline: Natural Earth (public domain). Place facts: the outlets linked on each card.</p>
+    <p>Leonida Intel is an unofficial fan desk from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks. Coastline: Natural Earth (public domain). Streets and buildings: © OpenStreetMap contributors, ODbL. Place facts: the outlets linked on each card.</p>
   </div>
 </footer>
 
