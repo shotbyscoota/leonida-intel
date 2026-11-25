@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Leonida Intel · GTA VI drops at your midnight</title>
-<meta name="description" content="Unofficial GTA VI launch desk: a countdown to your own midnight on 19 Nov 2026, every new trailer and clip, live headlines, and a launch-night prep list for PS5 and Xbox.">
+<title>Leonida Intel · GTA VI patches, cheats, glitches and secrets</title>
+<meta name="description" content="Unofficial GTA VI desk: Rockstar updates, patch notes, cheats, glitches and secrets, each labelled with its source. Rescanned every 30 minutes.">
 <meta name="page-type" content="software">
 <meta name="site-kind" content="gaming">
 <meta name="theme-color" content="#0b0a0c">
 <meta property="og:type" content="website">
-<meta property="og:title" content="GTA VI drops at midnight. Yours.">
-<meta property="og:description" content="Countdown to your own midnight, every trailer and clip, live headlines and a prep list. Unofficial fan desk.">
+<meta property="og:title" content="GTA VI intel, labelled and sourced">
+<meta property="og:description" content="Patches, cheats, glitches and secrets for GTA VI, each with its source and a clear label. Unofficial fan desk.">
 <meta property="og:image" content="og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -116,7 +116,7 @@ h2.poster{font-size:clamp(3.2rem,8.4vw,9rem)}
 .hero .acts{display:flex;flex-wrap:wrap;gap:16px 22px}
 
 .clock{justify-self:end;width:min(100%,460px);background:rgba(11,10,12,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:2px solid var(--bone);padding:22px 24px 20px;position:relative}
-.clock::before{content:"YOUR MIDNIGHT";position:absolute;top:-13px;left:18px;background:var(--yellow);color:var(--ink);font:700 12px/1 var(--body);letter-spacing:.18em;padding:6px 10px}
+.clock::before{content:"LIVE DESK";position:absolute;top:-13px;left:18px;background:var(--yellow);color:var(--ink);font:700 12px/1 var(--body);letter-spacing:.18em;padding:6px 10px}
 .clock .where{font:500 14px/1.4 var(--body);color:var(--mute);margin:4px 0 14px}
 .clock .where b{color:var(--bone)}
 .cd{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
@@ -427,6 +427,54 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
 }
 @media (prefers-reduced-motion:reduce){.scanner .wave span{height:60%}}
 
+
+/* ---------- post-launch (v5): intel board, patch log, labels ---------- */
+.lab.Tested{background:#4dff88;border-color:#4dff88;color:var(--ink)}
+.lab.Patched{background:none;border-color:var(--mute);color:var(--mute);text-decoration:line-through}
+.lab.Unverified{background:none;border:2px dashed var(--yellow);color:var(--yellow)}
+#wire .lab.Unverified,#facts .lab.Unverified{color:var(--ink);border-color:var(--ink)}
+#intel{background:var(--ink-2)}
+.legend.big{display:flex;flex-wrap:wrap;gap:10px 22px;margin:0 0 26px;font-size:14px;color:var(--mute)}
+.legend.big>span{display:inline-flex;align-items:center;gap:8px}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:18px}
+.card{border:2px solid var(--line);background:var(--ink);padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .2s var(--ease)}
+.card:hover{border-color:var(--bone);transform:translateY(-2px)}
+.card.lead-u{border-style:dashed;background:none}
+.card .ctop{display:flex;justify-content:space-between;align-items:center;gap:10px;font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.card h3{margin:0;font:700 19px/1.25 var(--body)}
+.card h3 a{text-decoration:none}
+.card h3 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--pink)}
+.card .meta{margin:0;font-size:13px;color:var(--mute)}
+.card .meta b{color:var(--bone);font-weight:700}
+.card .ev{margin:0;font-size:14px;color:var(--bone);opacity:.85}
+.card .warn{margin:0;font-size:13px;color:var(--yellow)}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:13px}
+.card dt{color:var(--mute);text-transform:uppercase;letter-spacing:.1em;font-size:11px;padding-top:2px}
+.card dd{margin:0}
+.board .sub{grid-column:1/-1;margin:14px 0 -4px;font:700 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--yellow)}
+.board .none{grid-column:1/-1;color:var(--mute);margin:0}
+.board[hidden],.more-row[hidden]{display:none}
+.board .x{display:none}.board.all .x{display:flex}
+.more-intel{margin-top:22px;min-height:48px;padding:0 20px;border:3px solid var(--bone);background:none;color:var(--bone);font:700 14px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.more-intel:hover{background:var(--bone);color:var(--ink)}
+#patches{background:var(--sunset);color:var(--ink)}
+#patches .lede{color:rgba(11,10,12,.8)}
+.plog{list-style:none;margin:10px 0 0;padding:0;border-top:3px solid var(--ink)}
+.plog li{display:grid;grid-template-columns:minmax(130px,190px) minmax(0,1fr) auto;gap:8px 24px;align-items:baseline;padding:18px 4px;border-bottom:1px solid rgba(11,10,12,.35)}
+.plog .v{font:400 32px/1 var(--poster);text-transform:uppercase}
+.plog .v small{display:block;font:700 13px/1.4 var(--body);letter-spacing:.08em;margin-top:6px}
+.plog p{margin:0;font-size:16px}
+.plog p small{display:block;margin-top:4px;opacity:.75;font-size:13px}
+.plog .lab{justify-self:end}
+#patches .lab.Reported{background:var(--ink);border-color:var(--ink);color:var(--orange)}
+#patches .lab.Official{background:var(--ink);border-color:var(--ink);color:var(--pink)}
+.space output.new{color:var(--yellow)}
+@media (max-width:640px){
+  .plog li{grid-template-columns:1fr}
+  .plog .lab{justify-self:start}
+  .legend.big{gap:8px 14px;font-size:13px}
+}
+
 @media (max-width:1180px){
   .top nav{display:none}
   .menu-btn{display:inline-flex;min-height:44px;align-items:center;padding:0 16px;border:2px solid var(--bone);background:none;font:700 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
@@ -486,9 +534,9 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   <div class="wrap">
     <a class="brand" href="#hero" aria-label="Leonida Intel, back to top"><b>Leonida</b><i>Intel</i></a>
     <nav id="nav" aria-label="Sections">
-      <a href="#tv">SX TV</a><a href="#wire">The Wire</a><a href="#leonida">Leonida</a><a href="#facts">Rap sheet</a><a href="#prep">The job</a><a href="#first">Who's first</a>
+      <a href="#intel">Intel</a><a href="#patches">Patches</a><a href="#tv">SX TV</a><a href="#wire">The Wire</a><a href="#facts">Rap sheet</a><a href="#prep">Kit</a>
     </nav>
-    <div class="heat" title="Heat rises as your midnight gets closer">
+    <div class="heat" title="Heat = new checked intel in the last 24 hours">
       <small>Heat</small>
       <div class="stars" id="stars" role="img" aria-label="Heat level"></div>
       <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
@@ -504,26 +552,25 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
     <div>
       <span class="script neon flicker" aria-hidden="true">Welcome to Leonida</span>
       <h1 class="poster" id="h1">
-        <span class="row in" style="--d:.15s">GTA VI drops</span>
-        <span class="row in fill-sunset" style="--d:.3s">at midnight.</span>
+        <span class="row in" style="--d:.15s">GTA VI is out.</span>
+        <span class="row in fill-sunset" style="--d:.3s">Here's the intel.</span>
       </h1>
-      <p class="facts in" style="--d:.6s"><span>Thu 19 Nov 2026</span><span>PS5 + Xbox Series X|S</span><span>Up to 212 GB</span></p>
+      <p class="facts in" style="--d:.6s"><span>Out since Thu 19 Nov 2026</span><span>PS5 + Xbox Series X|S</span><span>Latest update <b id="hero-patch">1.002.002</b></span></p>
       <div class="acts in" style="--d:.75s">
         <button class="btn hot" type="button" data-play="launch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z" fill="currentColor"/></svg>Watch the launch trailer</button>
-        <a class="btn" href="#prep">Run the prep list</a>
+        <a class="btn" href="#intel">Read the intel board</a>
       </div>
     </div>
-    <div class="clock in" id="clock" style="--d:.9s" aria-live="off">
-      <p class="where">Unlocks <b id="when">Thursday 12:00 AM</b> in <b id="zone">your time zone</b></p>
-      <div class="cd" role="timer" aria-label="Time until GTA VI unlocks for you">
-        <div><b id="cd-d">00</b><small>Days</small></div>
-        <div><b id="cd-h">00</b><small>Hours</small></div>
-        <div><b id="cd-m">00</b><small>Mins</small></div>
-        <div><b id="cd-s">00</b><small>Secs</small></div>
+    <div class="clock in" id="clock" style="--d:.9s">
+      <p class="where">The desk · <b id="desk-scan">rescans every 30 minutes</b></p>
+      <div class="cd" aria-label="Findings on the intel board by label">
+        <div><b id="n-official">00</b><small>Official</small></div>
+        <div><b id="n-tested">00</b><small>Tested</small></div>
+        <div><b id="n-reported">00</b><small>Reported</small></div>
+        <div><b id="n-leads">00</b><small>Leads</small></div>
       </div>
-      <p class="open">Leonida is open. Go.</p>
       <div class="bar" aria-hidden="true"><i id="bar"></i></div>
-      <p class="note" id="first-note">New Zealand gets in first. Hawaii goes last.</p>
+      <p class="note" id="desk-note">Every finding carries its source and a label. Leads are not confirmed.</p>
     </div>
   </div>
   <div class="tape" id="tape">
@@ -533,6 +580,53 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   </div>
 </section>
 
+<section id="intel" aria-labelledby="intel-h">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="tear teal">Scanner · every 30 min</span>
+        <h2 class="poster" id="intel-h">The intel <span class="neon">board</span></h2>
+      </div>
+      <p class="lede">Rockstar's own word first, then what named outlets report, then street leads nobody has checked. Every card says who said it, when we first saw it and when we last checked.</p>
+    </div>
+    <div class="legend big" aria-label="What the labels mean">
+      <span><span class="lab Official">Official</span> Rockstar's own page</span>
+      <span><span class="lab Tested">Tested</span> we reproduced it</span>
+      <span><span class="lab Reported">Reported</span> a named outlet said it</span>
+      <span><span class="lab Patched">Patched</span> fixed or outdated</span>
+      <span><span class="lab Unverified">Unverified</span> a lead, treat as rumour</span>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Intel categories" id="intel-tabs">
+      <button role="tab" id="t-official" aria-selected="true" aria-controls="p-official" data-cat="official">Rockstar</button>
+      <button role="tab" id="t-patch" aria-selected="false" aria-controls="p-patch" tabindex="-1" data-cat="patch">Patches &amp; fixes</button>
+      <button role="tab" id="t-cheat" aria-selected="false" aria-controls="p-cheat" tabindex="-1" data-cat="cheat">Cheats &amp; unlocks</button>
+      <button role="tab" id="t-glitch" aria-selected="false" aria-controls="p-glitch" tabindex="-1" data-cat="glitch">Glitches</button>
+      <button role="tab" id="t-secret" aria-selected="false" aria-controls="p-secret" tabindex="-1" data-cat="secret">Secrets &amp; tips</button>
+    </div>
+    <div role="tabpanel" id="p-official" aria-labelledby="t-official" class="board"></div>
+    <div role="tabpanel" id="p-patch" aria-labelledby="t-patch" class="board" hidden></div>
+    <div role="tabpanel" id="p-cheat" aria-labelledby="t-cheat" class="board" hidden></div>
+    <div role="tabpanel" id="p-glitch" aria-labelledby="t-glitch" class="board" hidden></div>
+    <div role="tabpanel" id="p-secret" aria-labelledby="t-secret" class="board" hidden></div>
+    <p class="fine" id="intel-fine">Headlines are the outlet's own words and link to the original. A cheat or glitch is only Tested when the desk recorded the input, the game version and the platform. Glitches found before the latest update are marked until someone re-tests them.</p>
+  </div>
+</section>
+
+<section id="patches" aria-labelledby="patches-h">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="tear pink">Title updates</span><h2 class="poster" id="patches-h">Patch log</h2></div>
+      <p class="lede">Every GTA VI update we can source, newest first. Check your own version in the kit below.</p>
+    </div>
+    <ol class="plog" id="plog"></ol>
+    <div class="share">
+      <button class="btn" type="button" id="share">Send this to the crew</button>
+      <output id="share-out" role="status"></output>
+    </div>
+  </div>
+</section>
+
+
 <section id="tv" aria-labelledby="tv-h">
   <div class="wrap">
     <div class="head">
@@ -540,7 +634,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
         <span class="tear teal">Channel 06 · on air</span>
         <h2 class="poster" id="tv-h">SX <span class="neon">TV</span></h2>
       </div>
-      <p class="lede">The SX Exclusive reel next to every official GTA VI drop from Rockstar, the minute it posts. New SX uploads land here on their own.</p>
+      <p class="lede">SX Exclusive's GTA VI Shorts next to every official drop from Rockstar. Only GTA VI uploads show here, picked up by the 30-minute scan.</p>
     </div>
     <div class="tv-grid">
       <div>
@@ -581,13 +675,13 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   <div class="wrap">
     <div class="mast">
       <h2 class="poster" id="wire-h">The Wire<span class="script">daily</span></h2>
-      <div class="meta"><div>Leonida Intel · launch week edition</div><div class="fresh"><i aria-hidden="true"></i><span id="fresh">Updates itself every 30 minutes</span></div></div>
+      <div class="meta"><div>Leonida Intel · post-launch edition</div><div class="fresh"><i aria-hidden="true"></i><span id="fresh">Updates itself every 30 minutes</span></div></div>
     </div>
     <div class="paper">
       <article class="lead" id="lead">
         <span class="stamp">Front page</span>
-        <h3><a id="lead-link" href="https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/" target="_blank" rel="noopener">GTA VI unlocks at midnight, local time, on Thursday</a></h3>
-        <p id="lead-body">A rolling release: every region starts at its own midnight, so the first players are in New Zealand and the last in Hawaii.</p>
+        <h3><a id="lead-link" href="https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/" target="_blank" rel="noopener">GTA VI is out on PS5 and Xbox Series X|S</a></h3>
+        <p id="lead-body">The top story loads here from Google News.</p>
         <div class="pic"><img src="img/bridge.webp" alt="A city skyline and a lit bridge reflected in the bay at night" loading="lazy" width="1400" height="933" data-source="stand-in"></div>
       </article>
       <div class="cols" id="stories" aria-label="Latest headlines"></div>
@@ -601,7 +695,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   <div class="wrap">
     <div class="head">
       <h2 class="poster" id="leo-h"><span class="script">Greetings from</span>Six regions. One state.</h2>
-      <p class="lede">Rockstar named six regions of Leonida. Next to each one: the real place fans think it is based on. Guides for each region land here after launch.</p>
+      <p class="lede">Rockstar named six regions of Leonida. Next to each one: the real place fans think it is based on. Secrets and tips found in each region show up on the intel board.</p>
     </div>
     <div class="regions">
       <a class="region r1" href="#wire"><img src="img/strip.webp" alt="" loading="lazy" width="1400" height="933"><span class="no">01</span><span class="fan">Fan reading: Miami</span><span class="txt"><h3><span class="script">The city of</span>Vice City</h3><p>Neon, nightlife and money. The heart of the map.</p></span></a>
@@ -619,22 +713,22 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
     <div class="mug">
       <span class="tear">Case file GTA-VI</span>
       <h2 class="poster" id="facts-h" style="font-size:clamp(3rem,6vw,6.4rem);margin-top:16px">The rap sheet</h2>
-      <p class="lede">Launch week fills every feed with screenshots of screenshots. Each fact here carries a label and the source that said it.</p>
+      <p class="lede">Post-launch, every feed fills with screenshots of screenshots. Each fact here carries a label and the source that said it.</p>
       <div class="legend"><span class="lab Official">Official</span><span class="lab Reported">Reported</span><span class="lab Expected">Expected</span></div>
       <div class="wanted" style="margin-top:34px">
         <p class="w">Wanted</p>
         <div class="sub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></div>
         <div class="ph"><img src="img/street.webp" alt="" loading="lazy" width="1400" height="933"></div>
-        <dl><dt>Known as</dt><dd>GTA VI</dd><dt>Last seen</dt><dd>Vice City, Leonida</dd><dt>Strikes</dt><dd>Midnight, Thu 19 Nov 2026</dd></dl>
+        <dl><dt>Known as</dt><dd>GTA VI</dd><dt>Last seen</dt><dd>Vice City, Leonida</dd><dt>Out since</dt><dd>Thu 19 Nov 2026</dd></dl>
         <p class="reward">Seven facts. All sourced.</p>
       </div>
     </div>
     <ol class="charges">
-      <li><span class="n">01</span><div><span class="what">Release</span><b>Thursday 19 November 2026</b><span>Moved here in November 2025, from 26 May 2026.</span></div><a class="lab Official" href="https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026" target="_blank" rel="noopener">Official</a></li>
-      <li><span class="n">02</span><div><span class="what">Unlock time</span><b>Midnight, local time</b><span>A rolling release: each region starts at its own midnight.</span></div><a class="lab Reported" href="https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/" target="_blank" rel="noopener">Reported</a></li>
+      <li><span class="n">01</span><div><span class="what">Release</span><b>Out since 19 November 2026</b><span>Unlocked at midnight local time, region by region.</span></div><a class="lab Official" href="https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026" target="_blank" rel="noopener">Official</a></li>
+      <li><span class="n">02</span><div><span class="what">Latest update</span><b>1.002.002 · 23 November</b><span>Seven fixes, from crashes and autosave to story phone calls. About 1.6 GB on Xbox.</span></div><a class="lab Reported" href="https://www.purexbox.com/news/2026/11/gta-6-update-now-live-on-xbox-series-xs-includes-seven-official-fixes" target="_blank" rel="noopener">Reported</a></li>
       <li><span class="n">03</span><div><span class="what">Platforms</span><b>PS5 and Xbox Series X|S</b><span>No PC version at launch, and no PC date announced.</span></div><a class="lab Official" href="https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026" target="_blank" rel="noopener">Official</a></li>
-      <li><span class="n">04</span><div><span class="what">Space</span><b>Up to 212 GB free</b><span>PS5 preload shows about 209.75 GB. Xbox reports range from about 210 GB to 225 GB.</span></div><a class="lab Reported" href="https://gameluster.com/gta-6-212gb-download-size-preload/" target="_blank" rel="noopener">Reported</a></li>
-      <li><span class="n">05</span><div><span class="what">Preload</span><b>Open since 10 November</b><span>Pre-launch updates on 13 and 16 November. Install both before midnight.</span></div><a class="lab Reported" href="https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/" target="_blank" rel="noopener">Reported</a></li>
+      <li><span class="n">04</span><div><span class="what">Space</span><b>Up to 212 GB free</b><span>PS5 showed about 209.75 GB at preload; Xbox listings up to 225 GB. Updates add more.</span></div><a class="lab Reported" href="https://gameluster.com/gta-6-212gb-download-size-preload/" target="_blank" rel="noopener">Reported</a></li>
+      <li><span class="n">05</span><div><span class="what">Cheats</span><b>After the story</b><span>61 listed so far. Each needs a challenge to unlock, and using one is reported to switch off trophies and saving for that session.</span></div><a class="lab Reported" href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-cheats/" target="_blank" rel="noopener">Reported</a></li>
       <li><span class="n">06</span><div><span class="what">Price (US)</span><b>$79.99 / $99.99</b><span>Standard and Ultimate. Europe €89.99 and €109.99. Boxed copies hold a download code.</span></div><a class="lab Reported" href="https://www.technobezz.com/gta-6-editions" target="_blank" rel="noopener">Reported</a></li>
       <li><span class="n">07</span><div><span class="what">GTA Online for VI</span><b>No date yet</b><span>Widely expected in 2027. A guess until Rockstar names a date.</span></div><a class="lab Expected" href="https://dotesports.com/gta/news/gta-6" target="_blank" rel="noopener">Expected</a></li>
     </ol>
@@ -645,64 +739,50 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   <div class="bg"><img src="img/car-blue.webp" alt="" loading="lazy" width="1400" height="933"></div>
   <div class="wrap job">
     <div>
-      <div class="scanner" aria-hidden="true"><i></i><span>Dispatch · all units</span><span class="wave"><span></span><span></span><span></span><span></span><span></span></span><span>Six steps before midnight · 10-4</span></div>
-      <h2 class="poster" id="prep-h">Pull it off <span style="color:var(--pink)">before midnight</span></h2>
-      <p class="lede">Every step names the exact menu, so you can do it with the controller in your other hand. Your ticks stay in this browser.</p>
+      <div class="scanner" aria-hidden="true"><i></i><span>Dispatch · all units</span><span class="wave"><span></span><span></span><span></span><span></span><span></span></span><span>Stay patched · 10-4</span></div>
+      <h2 class="poster" id="prep-h">Keep it <span style="color:var(--pink)">patched</span></h2>
+      <p class="lede">Six habits that save a run: the right version, a backed-up save, and a bug report when something breaks. Your ticks stay in this browser.</p>
       <div class="seg" role="radiogroup" aria-label="Console">
         <label><input type="radio" name="plat" value="ps5" checked><span>PS5</span></label>
         <label><input type="radio" name="plat" value="xbox"><span>Xbox Series X|S</span></label>
       </div>
-      <div class="meter"><b id="prep-n">0</b><small id="prep-of">of 6 done<br>deadline <span id="deadline">Thursday 12:00 AM</span></small></div>
+      <div class="meter"><b id="prep-n">0</b><small id="prep-of">of 6 done<br>latest update <span id="kit-patch">1.002.002</span></small></div>
       <div class="space">
-        <label for="free-gb">Space check: how many GB does your console show free?</label>
-        <div class="row"><input id="free-gb" type="number" inputmode="decimal" min="0" max="8000" placeholder="0"><span>GB free</span></div>
-        <output id="gb-out" for="free-gb">You need up to 212 GB.</output>
+        <label for="my-ver">Version check: what version does your console show?</label>
+        <div class="row"><input id="my-ver" type="text" inputmode="decimal" autocomplete="off" placeholder="1.002.002" maxlength="12"><span>your version</span></div>
+        <output id="ver-out" for="my-ver">The latest update we can source is 1.002.002.</output>
       </div>
-      <div class="cal"><button class="btn hot" type="button" id="ics">Add my midnight to my calendar</button><p id="ics-msg" role="status"></p></div>
+      <div class="cal"><a class="btn hot" href="https://support.rockstargames.com/" target="_blank" rel="noopener">Report a bug to Rockstar</a><p>Rockstar Support is the official place for crashes and broken saves.</p></div>
     </div>
     <div>
       <ol class="steps" data-platform="ps5">
-        <li><label><input type="checkbox" data-k="ps5-1"><span class="box" aria-hidden="true"></span><div><b>See your free space</b><small>Settings › Storage › Console Storage. You need up to 212 GB.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="ps5-2"><span class="box" aria-hidden="true"></span><div><b>Preload the game</b><small>Game Library › Grand Theft Auto VI › Download. Bought a box? Redeem its code in the PlayStation Store first.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="ps5-3"><span class="box" aria-hidden="true"></span><div><b>Install the updates</b><small>Highlight the game, press Options, then Check for Update.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="ps5-4"><span class="box" aria-hidden="true"></span><div><b>Let rest mode work</b><small>Settings › System › Power Saving › Features Available in Rest Mode › Stay Connected to the Internet: on.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="ps5-5"><span class="box" aria-hidden="true"></span><div><b>Auto updates on</b><small>Settings › Saved Data and Game/App Settings › Automatic Updates: Auto-Download and Auto-Install in Rest Mode.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="ps5-6"><span class="box" aria-hidden="true"></span><div><b>Set the spoiler rule</b><small>Send the crew this page and agree what stays out of the group chat.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-ps5-1"><span class="box" aria-hidden="true"></span><div><b>Install the latest update</b><small>Highlight the game, press Options, then Check for Update.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-ps5-2"><span class="box" aria-hidden="true"></span><div><b>Check your version</b><small>Highlight the game, press Options, then Information. Compare it with the version check on the left.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-ps5-3"><span class="box" aria-hidden="true"></span><div><b>Auto updates on</b><small>Settings › Saved Data and Game/App Settings › Automatic Updates: Auto-Download and Auto-Install in Rest Mode.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-ps5-4"><span class="box" aria-hidden="true"></span><div><b>Back up your save</b><small>With PS Plus: Settings › Saved Data and Game/App Settings › Saved Data (PS5) › Cloud Storage.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-ps5-5"><span class="box" aria-hidden="true"></span><div><b>Save by hand before risky stuff</b><small>Before you try a glitch or a cheat, make a manual save. A softlocked save is reported; don't let it be yours.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-ps5-6"><span class="box" aria-hidden="true"></span><div><b>Report what breaks</b><small>Send crashes and broken missions to Rockstar Support, with your version and what you were doing.</small></div></label></li>
       </ol>
       <ol class="steps" data-platform="xbox" hidden>
-        <li><label><input type="checkbox" data-k="xb-1"><span class="box" aria-hidden="true"></span><div><b>See your free space</b><small>Settings › System › Storage devices. Up to 212 GB; some Xbox listings show 225 GB.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="xb-2"><span class="box" aria-hidden="true"></span><div><b>Preload the game</b><small>My games &amp; apps › Full library › Grand Theft Auto VI › Install. Bought a box? Redeem its code in the Microsoft Store first.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="xb-3"><span class="box" aria-hidden="true"></span><div><b>Install the updates</b><small>My games &amp; apps › Manage › Updates.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="xb-4"><span class="box" aria-hidden="true"></span><div><b>Sleep, not shutdown</b><small>Settings › General › Power options › Sleep, so the console downloads overnight.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="xb-5"><span class="box" aria-hidden="true"></span><div><b>Auto updates on</b><small>Settings › System › Updates › Keep my games &amp; apps up to date.</small></div></label></li>
-        <li><label><input type="checkbox" data-k="xb-6"><span class="box" aria-hidden="true"></span><div><b>Set the spoiler rule</b><small>Send the crew this page and agree what stays out of the group chat.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-xb-1"><span class="box" aria-hidden="true"></span><div><b>Install the latest update</b><small>My games &amp; apps › Manage › Updates.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-xb-2"><span class="box" aria-hidden="true"></span><div><b>Auto updates on</b><small>Settings › System › Updates › Keep my games &amp; apps up to date.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-xb-3"><span class="box" aria-hidden="true"></span><div><b>Sleep, not shutdown</b><small>Settings › General › Power options › Sleep, so updates land overnight.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-xb-4"><span class="box" aria-hidden="true"></span><div><b>Let the cloud save finish</b><small>Xbox syncs saves while you are online. Wait for the sync to finish before you switch off.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-xb-5"><span class="box" aria-hidden="true"></span><div><b>Save by hand before risky stuff</b><small>Before you try a glitch or a cheat, make a manual save. A softlocked save is reported; don't let it be yours.</small></div></label></li>
+        <li><label><input type="checkbox" data-k="p-xb-6"><span class="box" aria-hidden="true"></span><div><b>Report what breaks</b><small>Send crashes and broken missions to Rockstar Support, with your version and what you were doing.</small></div></label></li>
       </ol>
       <p class="fine">Menu names as of current PS5 and Xbox system software; they can move after an update. If a menu looks different, the console's own help wins.</p>
     </div>
   </div>
 </section>
 
-<section id="first" aria-labelledby="first-h">
-  <div class="wrap">
-    <div class="head">
-      <div><span class="tear pink">The rolling release</span><h2 class="poster" id="first-h">Who gets in first</h2></div>
-      <p class="lede">Midnight moves west across the planet. Here is the order, counting down live. Your city is the yellow row.</p>
-    </div>
-    <ol class="order" id="order"></ol>
-    <button class="more" type="button" id="more" aria-expanded="false" aria-controls="order">Show all cities</button>
-    <div class="share">
-      <button class="btn" type="button" id="share">Send this to the crew</button>
-      <output id="share-out" role="status"></output>
-    </div>
-  </div>
-</section>
 
 <section class="close" aria-labelledby="close-h">
   <img src="img/palms.webp" alt="" loading="lazy" width="1400" height="933">
   <div class="wrap">
     <span class="script neon" aria-hidden="true">see you in</span>
     <h2 class="poster fill-sunset" id="close-h">Leonida</h2>
-    <p>Keep this tab open on launch night. The countdown, the clips and the headlines keep updating on their own.</p>
+    <p>Check back after every update. The scanner reads Rockstar and the outlets every 30 minutes, and this page republishes when it finds something new.</p>
     <button class="btn hot" type="button" data-play="launch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z" fill="currentColor"/></svg>Play the launch trailer</button>
   </div>
 </section>
@@ -713,7 +793,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
     <div class="cols3">
       <div>
         <a class="brand" href="#hero"><b>Leonida</b><i>Intel</i></a>
-        <p>An unofficial fan desk for GTA VI launch week, from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks.</p>
+        <p>An unofficial fan desk for GTA VI, from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks.</p>
       </div>
       <div>
         <h3>Sources</h3>
@@ -721,6 +801,8 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
           <li><a href="https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026" target="_blank" rel="noopener">Rockstar Newswire: release date</a></li>
           <li><a href="https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/" target="_blank" rel="noopener">Forbes, 16 Nov: unlock time and updates</a></li>
           <li><a href="https://gameluster.com/gta-6-212gb-download-size-preload/" target="_blank" rel="noopener">Gameluster: download size</a></li>
+          <li><a href="https://www.purexbox.com/news/2026/11/gta-6-update-now-live-on-xbox-series-xs-includes-seven-official-fixes" target="_blank" rel="noopener">Pure Xbox, 23 Nov: update 1.002.002</a></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-cheats/" target="_blank" rel="noopener">GamesRadar+: cheats and unlocks</a></li>
           <li><a href="https://www.technobezz.com/gta-6-editions" target="_blank" rel="noopener">Technobezz: editions and prices</a></li>
           <li><a href="https://dotesports.com/gta/news/gta-6" target="_blank" rel="noopener">Dot Esports: GTA Online outlook</a></li>
         </ul>
@@ -731,11 +813,13 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
           <li><a href="https://www.youtube.com/@SXExclusive" target="_blank" rel="noopener">SX Exclusive on YouTube</a></li>
           <li><a href="#tv">SX TV</a></li>
           <li><a href="#wire">The Wire</a></li>
-          <li><a href="#prep">Launch prep list</a></li>
+          <li><a href="#intel">Intel board</a></li>
+          <li><a href="#patches">Patch log</a></li>
+          <li><a href="#prep">Stay-patched kit</a></li>
         </ul>
       </div>
     </div>
-    <p class="legal">Facts checked 17 November 2026. Photographs: Pexels. Videos play from YouTube only when you press play.</p>
+    <p class="legal">Hand-checked facts: 25 November 2026. Intel board: automatic, see each card. Photographs: Pexels. Videos play from YouTube only when you press play.</p>
   </div>
 </footer>
 

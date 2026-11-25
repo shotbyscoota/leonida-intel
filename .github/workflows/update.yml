@@ -1,49 +1,65 @@
-# Keeps Leonida Intel fresh with no one at the keyboard.
-# Every 30 minutes: pull the YouTube channels and GTA 6 headlines, commit the new feed if it changed,
-# and publish dist/ to GitHub Pages. Also runs when you push (say, after add-clip) or press "Run workflow".
-name: update-and-publish
+# Leonida Intel research scan.
+# Every 30 minutes: read Rockstar, the gaming outlets, the topic searches and the two YouTube channels,
+# update the research ledger, and commit dist/data/feed.js when a publish is due.
+# Netlify (site "gtadropz") is linked to this repo and deploys on those commits; there is no
+# GitHub Pages deploy any more, so there is exactly one public site.
+# Each run uses about 1 Actions minute (about 1,440 a month on the 30-minute schedule).
+name: scan-and-publish
 on:
   schedule:
     - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Publish now, even if the throttle says wait"
+        type: boolean
+        default: false
   push:
     branches: [main]
-  workflow_dispatch:
+    paths: ["content/**", "tools/**", ".github/workflows/update.yml"]
 permissions:
   contents: write
-  pages: write
-  id-token: write
 concurrency:
-  group: pages
+  group: scan
   cancel-in-progress: false
 jobs:
-  build:
+  scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Pull channels and headlines
-        run: node tools/update-feed.mjs
-      - name: Commit the feed if it changed
+      - name: Tests and content check
+        run: |
+          node --test tools/test-updater.mjs
+          node tools/update-feed.mjs --check
+      # The ledger (first-seen / last-checked per finding) lives in the Actions cache between runs,
+      # and is committed only together with a publish, so the history is not one commit per scan.
+      - name: Restore scan ledger
+        uses: actions/cache/restore@v4
+        with:
+          path: data/scan-state.json
+          key: scan-state-${{ github.run_id }}
+          restore-keys: scan-state-
+      - name: Scan sources
+        run: node tools/update-feed.mjs ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '--force' || '' }}
+      - name: Save scan ledger
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/scan-state.json
+          key: scan-state-${{ github.run_id }}
+      - name: Commit the feed if a publish happened
         run: |
           if [ -n "$(git status --porcelain dist/data/feed.js)" ]; then
             git config user.name "leonida-feed-bot"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add dist/data/feed.js
-            git commit -m "feed: auto update $(date -u +%Y-%m-%dT%H:%MZ)"
+            git add dist/data/feed.js data/scan-state.json
+            git commit -m "feed: publish $(date -u +%Y-%m-%dT%H:%MZ)"
+            git pull --rebase --autostash
             git push
+          else
+            echo "No publish this run (throttled or nothing new)."
           fi
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4

@@ -1,107 +1,184 @@
 #!/usr/bin/env node
-// Leonida Intel feed updater. No dependencies, Node 18+.
-// Pulls: your YouTube channel, Rockstar's YouTube channel (GTA VI videos only), GTA 6 headlines
-// from Google News, plus content/clips.json and content/drops.json. Writes dist/data/feed.js
-// (window.LEONIDA_FEED = {...}) so the page works from a server and from a double-clicked file.
-// A source that fails keeps its last good items, so one bad fetch never empties the page.
+// Leonida Intel scanner + feed writer. No dependencies, Node 18+.
+//
+//   node tools/update-feed.mjs           scan every source, publish if a change is due (see content/config.json "publish")
+//   node tools/update-feed.mjs --force   scan and publish now
+//   node tools/update-feed.mjs --check   validate content/*.json only (no network); exit 1 on problems
+//
+// Reads:  content/config.json, content/clips.json, content/drops.json, content/intel.json, content/patches.json
+// Keeps:  data/scan-state.json  (research ledger: first-seen / last-checked per finding, source health, last publish)
+// Writes: dist/data/feed.js     (window.LEONIDA_FEED = {...}; the only file the site reads)
+//
+// Rules: a source that fails never erases what it found before; the same story is never listed twice
+// (canonical URL / video id / Google News id / normalised headline); feed text is untrusted data and is
+// stored as plain capped text only. Status comes from who published it, never from what the text claims.
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+import * as I from './lib/intel.mjs';
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const root = process.env.LEONIDA_ROOT || join(dirname(fileURLToPath(import.meta.url)), '..');
+const NOW = process.env.LEONIDA_NOW || new Date().toISOString();
+const args = new Set(process.argv.slice(2));
 const read = (p, d) => { try { return JSON.parse(readFileSync(join(root, p), 'utf8')); } catch { return d; } };
 const cfg = read('content/config.json', {});
 const OUT = join(root, 'dist/data/feed.js');
-const UA = 'LeonidaIntelFeed/1.0 (+fan site updater)';
+const STATE = join(root, 'data/scan-state.json');
+const UA = 'LeonidaIntelFeed/2.0 (+unofficial GTA VI fan site updater)';
+const warnings = [];
+const warn = (m) => { warnings.push(m); console.log('WARN ' + m); };
 
-function previous() {
-  if (!existsSync(OUT)) return {};
-  const txt = readFileSync(OUT, 'utf8');
-  const i = txt.indexOf('{');
-  try { return JSON.parse(txt.slice(i, txt.lastIndexOf('}') + 1)); } catch { return {}; }
-}
-const prev = previous();
+/* ---------- --check: validate hand-edited files, no network ---------- */
+const desk = read('content/intel.json', { entries: [] });
+for (const e of desk.entries || []) { const p = I.deskProblems(e); if (p.length) warn(`content/intel.json "${e.title || e.id || '?'}": ${p.join('; ')}`); }
+for (const f of ['content/config.json', 'content/clips.json', 'content/drops.json', 'content/intel.json', 'content/patches.json'])
+  if (existsSync(join(root, f)) && read(f, null) === null) warn(`${f} is not valid JSON`);
+if (args.has('--check')) { console.log(warnings.length ? `${warnings.length} problem(s)` : 'content OK'); process.exit(warnings.length ? 1 : 0); }
 
+/* ---------- fetching (with test hooks) ---------- */
+const FIX = process.env.LEONIDA_FIXTURES, FAIL = process.env.LEONIDA_FAIL ? new RegExp(process.env.LEONIDA_FAIL) : null;
+const fixMap = FIX ? JSON.parse(readFileSync(join(FIX, 'map.json'), 'utf8')) : null;
 async function get(url) {
+  if (FAIL && FAIL.test(url)) throw new Error('simulated failure');
+  if (fixMap) { const k = Object.keys(fixMap).find((s) => url.includes(s)); if (!k) throw new Error('no fixture for ' + url); return readFileSync(join(FIX, fixMap[k]), 'utf8'); }
   const r = await fetch(url, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(20000) });
-  if (!r.ok) throw new Error(`${r.status} ${url}`);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
   return r.text();
 }
-const decode = (s = '') => s
-  .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-  .replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n))
-  .trim();
-const tag = (xml, name) => { const m = xml.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)</${name}>`)); return m ? decode(m[1]) : ''; };
-const blocks = (xml, name) => xml.match(new RegExp(`<${name}[\\s>][\\s\\S]*?</${name}>`, 'g')) || [];
-const ytId = (u = '') => (u.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([\w-]{11})/) || [])[1] || (/^[\w-]{11}$/.test(u) ? u : null);
+const gnews = (q) => `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
 
+/* ---------- state ---------- */
+function prevFeed() {
+  if (!existsSync(OUT)) return {};
+  const t = readFileSync(OUT, 'utf8');
+  try { return JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)); } catch { return {}; }
+}
+const prev = prevFeed();
+const state = (() => { try { return JSON.parse(readFileSync(STATE, 'utf8')); } catch { return {}; } })();
+state.items ||= {}; state.sources ||= {};
+// First run after the upgrade: seed the ledger from what the site already shows, so first-seen times survive.
+for (const it of prev.intel || []) if (!state.items[it.id]) state.items[it.id] = { ...it, tkey: I.titleKey(it.title) };
+
+const health = (name, ok, extra = {}) => {
+  const s = state.sources[name] ||= {};
+  s.lastRun = NOW; s.ok = ok; Object.assign(s, extra);
+  if (ok) { s.lastOk = NOW; delete s.lastError; }
+};
+async function safe(name, fn) {
+  try { const v = await fn(); health(name, true, { count: v.length }); console.log(`ok   ${name}: ${v.length}`); return { v, ok: true }; }
+  catch (e) { health(name, false, { lastError: String(e.message).slice(0, 120) }); console.log(`FAIL ${name}: ${e.message} (keeping earlier findings)`); return { v: null, ok: false }; }
+}
+
+/* ---------- YouTube channels ---------- */
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const titleFilter = (terms = []) => terms.length ? new RegExp(`(^|[^a-z0-9])(${terms.map(esc).join('|')})(?![a-z0-9])`, 'i') : null;
+function keepFor(ch) { const rx = titleFilter(ch?.onlyIfTitleHas); return (v) => !rx || rx.test(v.title || ''); }
 async function channel(ch, from) {
   if (!ch?.channelId) return [];
   const xml = await get(`https://www.youtube.com/feeds/videos.xml?channel_id=${ch.channelId}`);
-  const want = (ch.onlyIfTitleHas || []).map((w) => w.toLowerCase());
-  return blocks(xml, 'entry').map((e) => {
-    const id = tag(e, 'yt:videoId');
-    const link = (e.match(/<link[^>]*href="([^"]+)"/) || [])[1] || '';
-    return {
-      id, title: tag(e, 'title'), date: tag(e, 'published'), from,
-      short: link.includes('/shorts/'),
-      views: +((e.match(/views="(\d+)"/) || [])[1] || 0),
-    };
-  }).filter((v) => v.id && (!want.length || want.some((w) => v.title.toLowerCase().includes(w))));
+  return I.parseFeed(xml).map((e) => ({
+    id: e.vid || I.videoId(e.link), title: I.clean(e.title, 160), date: e.date, from, short: /\/shorts\//.test(e.link),
+  })).filter((v) => v.id).filter(keepFor(ch));
 }
 
+/* ---------- The Wire (general headlines) ---------- */
 async function news(n) {
   if (!n?.query) return [];
-  const url = `https://news.google.com/rss/search?q=${encodeURIComponent(n.query)}&hl=en-US&gl=US&ceid=US:en`;
-  const xml = await get(url);
   const skip = (n.skipSources || []).map((s) => s.toLowerCase());
   const seen = new Set();
-  return blocks(xml, 'item').map((it) => {
-    const source = tag(it, 'source');
-    let title = tag(it, 'title');
+  return I.parseFeed(await get(gnews(n.query))).map((it) => {
+    const source = I.clean(it.source, 60); let title = I.clean(it.title, 200);
     if (source && title.endsWith(` - ${source}`)) title = title.slice(0, -(source.length + 3));
-    return { title, link: tag(it, 'link'), source, date: new Date(tag(it, 'pubDate')).toISOString() };
+    const d = new Date(it.date);
+    return { title, link: I.safeUrl(it.link), source, date: isNaN(d) ? NOW : d.toISOString() };
   }).filter((x) => {
-    const k = x.title.toLowerCase().slice(0, 60);
-    if (seen.has(k) || skip.includes(x.source.toLowerCase())) return false;
+    const k = I.titleKey(x.title).slice(0, 60);
+    if (!x.link || seen.has(k) || skip.includes(x.source.toLowerCase())) return false;
     seen.add(k); return true;
   }).sort((a, b) => b.date.localeCompare(a.date)).slice(0, n.max || 12);
 }
 
-async function safe(name, fn, fallback) {
-  try { const v = await fn(); console.log(`ok   ${name}: ${v.length}`); return { v, ok: true }; }
-  catch (e) { console.log(`FAIL ${name}: ${e.message} (kept ${fallback?.length || 0} old items)`); return { v: fallback || [], ok: false }; }
+/* ---------- research sources ---------- */
+const ic = cfg.intel || {};
+const ON = (ic.sources || []).filter((s) => s.enabled !== false);
+async function scanSource(src) {
+  const url = src.type === 'gnews' ? gnews(src.q) : src.url;
+  const xml = await get(url);
+  if (!/<(rss|feed|rdf:RDF)[\s>]/.test(xml.slice(0, 3000))) throw new Error('response is not a feed (login wall or error page?)');
+  return I.toItems(I.parseFeed(xml), src, ic.trustedPublishers || []);
 }
 
-const [mine, official, headlines] = await Promise.all([
-  safe('your channel', () => channel(cfg.yourChannel, 'you'), prev.mine),
-  safe('Rockstar channel', () => channel(cfg.officialChannel, 'rockstar'), prev.official),
-  safe('news', () => news(cfg.news), prev.news),
+/* ---------- run ---------- */
+const [mineR, offR, newsR, ...srcR] = await Promise.all([
+  safe('YouTube: ' + (cfg.yourChannel?.name || 'your channel'), () => channel(cfg.yourChannel, 'you')),
+  safe('YouTube: Rockstar Games', () => channel(cfg.officialChannel, 'rockstar')),
+  safe('Google News: The Wire', () => news(cfg.news)),
+  ...ON.map((s) => safe(s.name, () => scanSource(s))),
 ]);
+// Last good data: a failed fetch falls back to the previous feed, re-filtered with today's rules.
+const mine = mineR.ok ? mineR.v : (prev.mine || []).filter(keepFor(cfg.yourChannel));
+const official = offR.ok ? offR.v : (prev.official || []);
+const headlines = newsR.ok ? newsR.v : (prev.news || []);
 
-// Hand-added clips win over channel copies of the same video; pinned ones go first.
+const found = srcR.filter((r) => r.ok).flatMap((r) => r.v);
+const added = I.merge(state, found, NOW);
+I.applyDesk(state, desk.entries || [], NOW, warn);
+I.prune(state, NOW, ic.forgetAfterDays || 45);
+console.log(`intel: ${found.length} seen this scan, ${added.length} new, ${Object.keys(state.items).length} in ledger`);
+
 const manual = (read('content/clips.json', {}).clips || []).map((c) => ({
-  id: ytId(c.url || c.id), title: c.title || '', date: c.date || '', from: c.from || 'you', pin: !!c.pin, short: /shorts\//.test(c.url || ''),
+  id: I.videoId(c.url || c.id) || (/^[\w-]{11}$/.test(c.id || '') ? c.id : null), title: I.clean(c.title || '', 160), date: c.date || '', from: c.from || 'you', pin: !!c.pin, short: /shorts\//.test(c.url || ''),
 })).filter((c) => c.id);
 const byId = new Map();
-for (const c of [...manual, ...mine.v]) if (!byId.has(c.id)) byId.set(c.id, c);
+for (const c of [...manual, ...mine]) if (!byId.has(c.id)) byId.set(c.id, c);
 const clips = [...byId.values()].sort((a, b) => (b.pin - a.pin) || (b.date || '').localeCompare(a.date || '')).slice(0, cfg.maxClips || 24);
-
 const drops = (read('content/drops.json', {}).drops || []).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
-const feed = {
-  updated: new Date().toISOString(),
+const patches = (read('content/patches.json', {}).patches || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+const versioned = [
+  ...patches.filter((p) => p.version).map((p) => ({ version: p.version, date: p.date, status: p.status, url: p.url, source: p.source })),
+  ...Object.values(state.items).filter((v) => v.cat === 'patch' && v.status === 'Official' && v.version).map((v) => ({ version: v.version, date: v.date || v.firstSeen, status: 'Official', url: v.url, source: 'Rockstar Games' })),
+].sort((a, b) => I.compareVersions(b.version, a.version) || (b.date || '').localeCompare(a.date || ''));
+const latestPatch = versioned[0] || null;
+
+const intel = I.annotate(I.select(state, { perCat: ic.perCategory || 8, leadsPerCat: ic.leadsPerCategory ?? 3, maxAgeDays: ic.maxAgeDays || 30, now: NOW }), latestPatch);
+const sources = [
+  ...ON.map((s) => ({ name: s.name, kind: s.kind })),
+  { name: 'YouTube: ' + (cfg.yourChannel?.name || 'your channel'), kind: 'video' }, { name: 'YouTube: Rockstar Games', kind: 'video' }, { name: 'Google News: The Wire', kind: 'search' },
+].map((s) => ({ ...s, ok: !!state.sources[s.name]?.ok, lastOk: state.sources[s.name]?.lastOk || null }));
+
+const body = {
   channel: { name: cfg.yourChannel?.name, handle: cfg.yourChannel?.handle, url: cfg.yourChannel?.handle ? `https://www.youtube.com/${cfg.yourChannel.handle}` : '' },
-  clips, mine: mine.v,
-  official: official.v.slice(0, cfg.maxOfficial || 10),
-  news: headlines.v, drops,
-  health: { mine: mine.ok, official: official.ok, news: headlines.ok },
+  clips, mine, official: official.slice(0, cfg.maxOfficial || 10), news: headlines, drops,
+  intel, patches, latestPatch, sources,
 };
 
-// Only rewrite when something other than the timestamp changed, so the scheduled job makes no empty commits.
-const strip = (f) => JSON.stringify({ ...f, updated: 0, health: 0 });
-if (prev.updated && strip(prev) === strip(feed)) { console.log('no change'); process.exit(0); }
-mkdirSync(dirname(OUT), { recursive: true });
-writeFileSync(OUT, `/* written by tools/update-feed.mjs; do not edit by hand */\nwindow.LEONIDA_FEED = ${JSON.stringify(feed, null, 1)};\n`);
-console.log(`wrote ${OUT}: ${clips.length} clips, ${feed.official.length} official, ${feed.news.length} news, ${drops.length} drops`);
+/* ---------- publish only when due (each Netlify production deploy can cost credits) ---------- */
+const volatile = (k, v) => (k === 'lastChecked' || k === 'lastOk' || k === 'ok' ? undefined : v);
+const hash = createHash('sha256').update(JSON.stringify(body, volatile)).digest('hex').slice(0, 16);
+const officialIds = intel.filter((v) => v.status === 'Official').map((v) => v.id).concat(official.map((v) => 'yt:' + v.id)).sort();
+const pub = cfg.publish || {};
+const sinceMin = state.lastPublish ? (new Date(NOW) - new Date(state.lastPublish)) / 6e4 : Infinity;
+const newOfficial = officialIds.some((id) => !(state.officialIds || []).includes(id));
+const changed = hash !== state.publishedHash;
+let why = '';
+if (args.has('--force')) why = 'forced';
+else if (!state.lastPublish || !existsSync(OUT)) why = 'first publish';
+else if (changed && pub.officialNow !== false && newOfficial) why = 'new official item';
+else if (changed && sinceMin >= (pub.everyMinutes ?? 180)) why = 'new findings';
+else if (sinceMin >= (pub.heartbeatHours ?? 12) * 60) why = 'heartbeat';
+
+if (why) {
+  const feed = { updated: NOW, checked: NOW, ...body, health: { mine: mineR.ok, official: offR.ok, news: newsR.ok } };
+  mkdirSync(dirname(OUT), { recursive: true });
+  writeFileSync(OUT, `/* written by tools/update-feed.mjs; do not edit by hand */\nwindow.LEONIDA_FEED = ${JSON.stringify(feed, null, 1)};\n`);
+  Object.assign(state, { lastPublish: NOW, publishedHash: hash, officialIds, pending: false });
+  console.log(`PUBLISHED (${why}): ${clips.length} SX clips, ${body.official.length} official videos, ${headlines.length} headlines, ${intel.length} findings, latest patch ${latestPatch?.version || 'n/a'}`);
+} else {
+  state.pending = changed;
+  console.log(changed ? `held: new findings wait for the next publish window (${Math.round(sinceMin)} of ${pub.everyMinutes ?? 180} min)` : 'no change to publish');
+}
+state.lastScan = NOW;
+mkdirSync(dirname(STATE), { recursive: true });
+writeFileSync(STATE, JSON.stringify(state, null, 1) + '\n');

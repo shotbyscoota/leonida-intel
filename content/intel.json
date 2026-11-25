@@ -1,0 +1,52 @@
+{
+  "_help": "Desk entries: things a person has checked or tested. They always show on the site and override an automatic item with the same URL or headline. status: Official (Rockstar said it, link to Rockstar), Tested (we reproduced it ourselves; needs the tested block, and for cheats the cheat block, for glitches the glitch block), Reported (a named outlet said it; link to that outlet), Patched (a glitch that no longer reproduces), Unverified (a lead, not checked). The updater refuses to show Tested without the proof fields. Run: node tools/update-feed.mjs --check to validate this file.",
+  "_example_tested_cheat": {
+    "id": "cheat-250k", "cat": "cheat", "status": "Tested", "title": "$250,000 cheat",
+    "cheat": { "input": "Phone open, hold L1+R1 / LB+RB, then Up, Right, Down, Left, Up, Left, Down, Right", "unlock": "Finish the story", "affectsSaves": true, "affectsAchievements": true },
+    "tested": { "on": "2026-11-27", "version": "1.002.002", "platform": "PS5" },
+    "evidence": "Recorded in SX clip 2026-11-27, take 3. Saving greyed out after use; trophy pop blocked until reload.",
+    "url": "https://www.youtube.com/watch?v=VIDEOID"
+  },
+  "entries": [
+    {
+      "id": "patch-1-002-002",
+      "cat": "patch",
+      "status": "Reported",
+      "title": "Update 1.002.002: seven fixes, from crashes and autosave to story phone calls",
+      "publisher": "Pure Xbox (quoting Rockstar Support)",
+      "url": "https://www.purexbox.com/news/2026/11/gta-6-update-now-live-on-xbox-series-xs-includes-seven-official-fixes",
+      "date": "2026-11-23T14:50:00Z",
+      "platform": "PS5 + Xbox Series X|S",
+      "version": "1.002.002",
+      "evidence": "Rockstar's notes as quoted: crashes; weather not changing; autosave; phone calls that progress the story or unlock missions; Wanted Level that could not be lost; gym deadlift bar; partners not handing over bags for fences. About 1.6 GB on Xbox Series X|S.",
+      "note": "The desk could not open support.rockstargames.com from the scanner (it timed out), so this is Reported until the Rockstar page itself is linked.",
+      "lastChecked": "2026-11-25T15:00:00Z"
+    },
+    {
+      "id": "cheats-unlock-rule",
+      "cat": "cheat",
+      "status": "Reported",
+      "title": "Cheats only work after you finish the story, and each one must be unlocked by a challenge",
+      "publisher": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-cheats/",
+      "date": "2026-11-22T10:35:36Z",
+      "platform": "PS5 + Xbox Series X|S",
+      "evidence": "GamesRadar+ lists 61 cheats. Input: phone open (D-pad Up), hold L1+R1 / LB+RB, then the D-pad code. It reports that a cheat disables trophies/achievements and saving for that session. Many codes are still listed as TBC.",
+      "note": "Not tested by the desk yet. Record a clip before marking any code Tested.",
+      "lastChecked": "2026-11-25T15:00:00Z"
+    },
+    {
+      "id": "first-person-after-patch",
+      "cat": "glitch",
+      "status": "Unverified",
+      "title": "Players say the first-person glitch still works after update 1.002.002",
+      "publisher": "Player posts, via Pure Xbox",
+      "url": "https://www.purexbox.com/news/2026/11/gta-6-update-now-live-on-xbox-series-xs-includes-seven-official-fixes",
+      "date": "2026-11-23T11:00:00Z",
+      "version": "1.002.002",
+      "evidence": "Pure Xbox passes on player impressions and says to take them with a pinch of salt.",
+      "note": "Lead only. Re-test on 1.002.002 before filming.",
+      "lastChecked": "2026-11-25T15:00:00Z"
+    }
+  ]
+}

@@ -1,8 +1,44 @@
 {
-  "_help": "Edit this file to change what the site pulls in automatically. The updater (tools/update-feed.mjs) runs every 30 minutes on GitHub, or by hand with: node tools/update-feed.mjs",
-  "yourChannel": { "name": "SX Exclusive", "handle": "@SXExclusive", "channelId": "UCv7Oux0E9RDu2hLLTxG1QFg", "onlyIfTitleHas": [] },
-  "officialChannel": { "name": "Rockstar Games", "channelId": "UC6VcWc1rAoWdBCM0JxrRQ3A", "onlyIfTitleHas": ["GTA VI", "Grand Theft Auto VI", "GTA 6", "Vice City", "Leonida"] },
+  "_help": "Edit this file to change what the site pulls in automatically. The scanner (tools/update-feed.mjs) runs every 30 minutes on GitHub Actions, or by hand with: node tools/update-feed.mjs --force",
+  "yourChannel": {
+    "name": "SX Exclusive", "handle": "@SXExclusive", "channelId": "UCv7Oux0E9RDu2hLLTxG1QFg",
+    "_onlyIfTitleHas": "Only videos whose title contains one of these (whole words, any case) appear on SX TV. Older SX music videos stay on YouTube, they just are not shown here. Put GTA 6 or #GTA6 in every GTA upload title.",
+    "onlyIfTitleHas": ["GTA 6", "GTA VI", "GTA6", "GTAVI", "Grand Theft Auto VI", "Grand Theft Auto 6", "Leonida"]
+  },
+  "officialChannel": { "name": "Rockstar Games", "channelId": "UC6VcWc1rAoWdBCM0JxrRQ3A", "onlyIfTitleHas": ["GTA VI", "GTA 6", "Grand Theft Auto VI", "Vice City", "Leonida"] },
   "news": { "query": "\"GTA 6\" OR \"GTA VI\" OR \"Grand Theft Auto VI\"", "max": 12, "skipSources": [] },
   "maxClips": 24,
-  "maxOfficial": 10
+  "maxOfficial": 10,
+
+  "intel": {
+    "_help": "Research sources. kind official = Rockstar's own pages (shown as Official). outlet = a gaming outlet's own RSS (Reported). search = Google News topic searches (Reported when the publisher is in trustedPublishers, otherwise Unverified). community = discovery leads only (always Unverified).",
+    "sources": [
+      { "name": "Rockstar Newswire + Support", "kind": "official", "type": "gnews", "q": "site:rockstargames.com \"Grand Theft Auto VI\" when:30d" },
+      { "name": "Rockstar Support", "kind": "official", "type": "gnews", "q": "site:support.rockstargames.com \"Grand Theft Auto VI\"" },
+      { "name": "GameSpot", "kind": "outlet", "type": "rss", "url": "https://www.gamespot.com/feeds/news/", "publisher": "GameSpot" },
+      { "name": "IGN", "kind": "outlet", "type": "rss", "url": "https://feeds.feedburner.com/ign/games-all", "publisher": "IGN" },
+      { "name": "Eurogamer", "kind": "outlet", "type": "rss", "url": "https://www.eurogamer.net/feed", "publisher": "Eurogamer" },
+      { "name": "PC Gamer", "kind": "outlet", "type": "rss", "url": "https://www.pcgamer.com/rss/", "publisher": "PC Gamer" },
+      { "name": "VGC", "kind": "outlet", "type": "rss", "url": "https://www.videogameschronicle.com/feed/", "publisher": "VGC" },
+      { "name": "Push Square", "kind": "outlet", "type": "rss", "url": "https://www.pushsquare.com/feeds/latest", "publisher": "Push Square" },
+      { "name": "Pure Xbox", "kind": "outlet", "type": "rss", "url": "https://www.purexbox.com/feeds/latest", "publisher": "Pure Xbox" },
+      { "name": "Search: patches", "kind": "search", "type": "gnews", "q": "\"GTA 6\" (patch OR update OR \"patch notes\" OR hotfix) when:7d" },
+      { "name": "Search: cheats", "kind": "search", "type": "gnews", "q": "\"GTA 6\" (cheats OR \"cheat codes\") when:14d" },
+      { "name": "Search: glitches", "kind": "search", "type": "gnews", "q": "\"GTA 6\" (glitch OR bug OR exploit OR softlock) when:7d" },
+      { "name": "Search: secrets", "kind": "search", "type": "gnews", "q": "\"GTA 6\" (secret OR \"easter egg\" OR hidden OR tips) when:7d" },
+      { "name": "r/GTA6", "enabled": false, "_why": "Reddit put its RSS behind a login (checked 2026-11-25). Needs a Reddit API app (OAuth) to turn back on; never scrape around it.", "kind": "community", "type": "rss", "url": "https://old.reddit.com/r/GTA6/new/.rss", "publisher": "r/GTA6 (community)", "assumeTopic": true }
+    ],
+    "trustedPublishers": ["Rockstar Games", "GameSpot", "IGN", "Polygon", "Polygon.com", "Eurogamer", "PC Gamer", "GamesRadar+", "GamesRadar", "VGC", "Video Games Chronicle", "Push Square", "Pure Xbox", "Kotaku", "Digital Foundry", "Eurogamer.net", "IGN India", "MP1st", "PlayStation LifeStyle", "TweakTown", "Red Bull", "VICE", "Dexerto", "Insider Gaming", "The Verge", "Game Rant", "TheGamer", "PCGamesN", "Forbes", "GAMINGbible", "PC Guide", "Windows Central", "Rock Paper Shotgun", "Destructoid", "Shacknews", "Gematsu"],
+    "perCategory": 8,
+    "leadsPerCategory": 3,
+    "maxAgeDays": 30,
+    "forgetAfterDays": 45
+  },
+
+  "publish": {
+    "_help": "Scans run every 30 minutes, but each Netlify production deploy can cost credits. New findings are published at most every everyMinutes; a new Official Rockstar item publishes on the next scan. heartbeatHours republishes unchanged findings so last-checked times stay honest.",
+    "everyMinutes": 180,
+    "officialNow": true,
+    "heartbeatHours": 12
+  }
 }

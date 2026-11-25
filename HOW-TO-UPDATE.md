@@ -1,23 +1,39 @@
-# Leonida Intel: how updates work
+# Leonida Intel: how updates work (post-launch, v5)
 
 ## On its own (no one at the keyboard)
-Every 30 minutes `tools/update-feed.mjs` pulls:
-- **Your YouTube channel** (SX Exclusive, @SXExclusive). Anything you upload shows up in SX TV.
-- **Rockstar's YouTube channel**, GTA VI videos only. They show up under "Official drops" and the hero's trailer button.
-- **GTA 6 headlines** from Google News. They feed the yellow tape in the hero and The Wire.
+Every 30 minutes GitHub Actions (`.github/workflows/update.yml`) runs `tools/update-feed.mjs`, which reads:
+- **Rockstar's own pages** (Newswire and Support, via Google News `site:` searches) → **Official**.
+- **Gaming outlets' own RSS**: GameSpot, IGN, Eurogamer, PC Gamer, VGC, Push Square, Pure Xbox → **Reported**.
+- **Topic searches** (patches, cheats, glitches, secrets) on Google News → **Reported** if the publisher is on the trusted list in `content/config.json`, otherwise **Unverified**.
+- **Your YouTube channel** (SX Exclusive), GTA VI titles only (title must contain GTA 6 / GTA VI / #GTA6) → SX TV.
+- **Rockstar's YouTube channel**, GTA VI videos only → "Official drops" and the trailer buttons.
+- **GTA 6 headlines** → the yellow tape and The Wire.
 
-It writes `dist/data/feed.js`. If one source fails, the page keeps its last good items.
-Once the site is on GitHub, `.github/workflows/update.yml` runs this every 30 minutes and republishes. Nothing to pay, no keys.
+Every finding is kept in a ledger (`data/scan-state.json`) with its first-seen and last-checked time, publisher, source link, platform and version when the headline says so. The same story is never listed twice (same link, same video, or same headline). A source that fails keeps everything it found before.
+
+**Publishing:** a new Official Rockstar item goes out on the next scan. Other new findings go out at most every 3 hours, plus a 12-hour heartbeat (`content/config.json` › `publish`). Each publish is one commit of `dist/data/feed.js`, and Netlify deploys that commit to https://gtadropz.netlify.app. Fewer deploys = fewer Netlify credits.
+
+Reddit is switched off: since November 2026 its RSS needs a login. It can come back only through a Reddit API app (OAuth), never by scraping around the login.
+
+## The labels (never bend these)
+- **Official**: Rockstar's own page says it.
+- **Tested**: we did it on camera; the record has the date, game version and platform (and for a cheat: exact input, unlock condition, whether it blocked saves and trophies; for a glitch: whether it still works on the latest update).
+- **Reported**: a named outlet said it.
+- **Patched**: a glitch that no longer reproduces on the latest update.
+- **Unverified**: a lead. Shown under "Street leads", never as fact.
 
 ## By hand (one line each, from this folder)
-- Add a clip (any channel, Shorts too), newest first:
-  `node tools/add-clip.mjs https://youtu.be/VIDEO_ID "Title"`
-- Pin a clip to the big screen: add `--pin` to the line above.
-- Post a drop to The Wire:
-  `node tools/add-drop.mjs "Headline" "One or two lines" Reported https://source.link`
-  Labels: Official (Rockstar or a console maker said it), Reported (a named outlet), Expected (not confirmed), Crew (your own take, no link needed).
-- Refresh everything now: `node tools/update-feed.mjs`
-Then push to GitHub (or wait for the next 30-minute run if you edited on GitHub directly).
+- Add a checked fact, a tested cheat or a re-tested glitch: edit `content/intel.json` (an example of a Tested cheat is at the top), then `node tools/update-feed.mjs --check`. It refuses Tested without the proof fields.
+- New title update: add a row to `content/patches.json` (Official only with Rockstar's own link).
+- Pin an SX clip to the big screen: `node tools/add-clip.mjs https://youtube.com/shorts/VIDEO_ID "Title" --pin`
+- Post a drop to The Wire: `node tools/add-drop.mjs "Headline" "One or two lines" Reported https://source.link`
+- Publish now: `node tools/update-feed.mjs --force`, or on GitHub: Actions › scan-and-publish › Run workflow › force.
+- Run the tests: `node --test tools/test-updater.mjs`
+
+Then commit and push to `main`. Netlify deploys only when something under `dist/` changed.
+
+## Daily Shorts
+See `creator/README.md` (the weekly batch loop) and `creator/queue-*.md` (this week's 7 clips).
 
 ## Settings
-`content/config.json`: which channels, the news search words, sources to skip, how many clips to show.
+`content/config.json`: channels and title filters, research sources, trusted publishers, how many findings per category, publish throttle.

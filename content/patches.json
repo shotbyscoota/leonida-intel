@@ -1,0 +1,35 @@
+{
+  "_help": "The patch log on the site, newest first. status: Official only when the source link is Rockstar's own page; Reported when an outlet quotes it. Add a row for every title update.",
+  "patches": [
+    {
+      "version": "1.002.002",
+      "date": "2026-11-23",
+      "platforms": "PS5 + Xbox Series X|S",
+      "size": "About 1.6 GB on Xbox Series X|S",
+      "summary": "First post-launch update. Seven fixes: crashes, weather, autosave, story phone calls, stuck Wanted Level, gym deadlift, partner bag hand-off.",
+      "status": "Reported",
+      "source": "Pure Xbox, quoting Rockstar Support",
+      "url": "https://www.purexbox.com/news/2026/11/gta-6-update-now-live-on-xbox-series-xs-includes-seven-official-fixes"
+    },
+    {
+      "version": "",
+      "date": "2026-11-16",
+      "platforms": "PS5 + Xbox Series X|S",
+      "size": "",
+      "summary": "Second pre-launch update, installed on top of the preload.",
+      "status": "Reported",
+      "source": "Forbes",
+      "url": "https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/"
+    },
+    {
+      "version": "",
+      "date": "2026-11-13",
+      "platforms": "PS5 + Xbox Series X|S",
+      "size": "",
+      "summary": "First pre-launch update after preload opened on 10 November.",
+      "status": "Reported",
+      "source": "Forbes",
+      "url": "https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/"
+    }
+  ]
+}
