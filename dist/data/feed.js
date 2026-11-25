@@ -1,7 +1,7 @@
 /* written by tools/update-feed.mjs; do not edit by hand */
 window.LEONIDA_FEED = {
- "updated": "2026-11-25T14:45:57.722Z",
- "checked": "2026-11-25T14:45:57.722Z",
+ "updated": "2026-11-25T14:48:01.885Z",
+ "checked": "2026-11-25T14:48:01.885Z",
  "channel": {
   "name": "SX Exclusive",
   "handle": "@SXExclusive",
@@ -95,6 +95,12 @@ window.LEONIDA_FEED = {
    "date": "2026-11-25T14:35:28.000Z"
   },
   {
+   "title": "Vice City’s secret South Florida paradise: Marine biologists fact-check Grand Theft Auto VI’s ‘Leonida Keys’",
+   "link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPSTBGX3ZrZDlESlpWV1VBWGxRa1FyOEFZRk81eWpIOUFSWERoZVRFZGRrZUw1TnRoYjdUNFhqN0hxTXZXOWlpMXFzNDVEYTI2N3FRN1JVMi1wVjlTSk1hY3hPa0djYmJiZnNNQWhiLVFjc0FVNmQtQXZkUnk1ZDZHTzFacFphekhfcUExVzdzT2xyX252NTRxTjI0ZXRCSkpUN1doYld5Sm9YbHBLWWRHYlRaOHBZdmYtY0hKYzh1QUlHRmZpaG5xa043Q0N3elJBSWVaUHRrTG1zUGNk?oc=5",
+   "source": "Sun Sentinel",
+   "date": "2026-11-25T14:30:43.000Z"
+  },
+  {
    "title": "There goes the virtual neighborhood: Grand Theft Auto VI takes over the Florida Keys",
    "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxObXBTVG14aHlZSE1hYzdVamVGTHp6UE1pZDUyTkdvb3Z3MnNsWXNXRlJNcGp0QWdpUjdIcW5BTUg0NFp2bWN2TFg1OENORzdYVkNYNDgyc0hSSFF5bkY0bnFOZklVamZab2VCeEg4UXdJSFdhYVpOQWxvc1VsQmJDTi03VVZLMHl1NUNsZWotM2I2NEFrSWNWVVg0QXFvYXVEYlRLbU14aFBLcVdfVW1n?oc=5",
    "source": "Keys Weekly Newspapers",
@@ -111,12 +117,6 @@ window.LEONIDA_FEED = {
    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQN3psbjJOX1cyaEhEYnJILUFJWHJlaFVFS19WNk5WZGYtczVUQ0ZMNEJvVWVlSG5tVkRSS3BEUU1hbXlqVEJnYklYMGFMTkhwNUhDT012MkhUUmZaRUZYb1RSWTZTZmZ1aFNBNkJ6dV9GZTBrVmR5UUJ3OGRnY0ZzcDJYd29BeHZzWTQ1LTB4RWNzbGVhWnAyLU1NbFlsT2syQWN2STl4dF9lT0pwa2FZQy1HOUtRRUNTTWxFVU5RRFk?oc=5",
    "source": "GameGPU",
    "date": "2026-11-25T14:16:23.000Z"
-  },
-  {
-   "title": "Report: GTA 6 Graphical Settings for Consoles Leak Out, Revealing Platform Differences",
-   "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPenQ0YXY0ZWRQSExZWnNjVDhXNGpkcnhlYUNRbGpKWm8xb3h0QVBHb1RTUkY1WUxYQVBSYWhqNEtMOXprZ3FHM0s0T2g2RHRJVXRUSmE2TS1USFNpSVlwenQ2QnZBd3hDS241cEhDYkNkS21FNHZ5bW9Fcm1tbHZ3aGZRQ1Zwd0dzNDJTZEVCRnBIV2xNRUE0SXpvaFhrTkhLekpzcll3RVRPQk0?oc=5",
-   "source": "MP1st",
-   "date": "2026-11-25T14:15:59.000Z"
   },
   {
    "title": "Even Max Verstappen has succumbed to GTA 6 fever, squeezing in 40 hours around his Las Vegas Grand Prix win",
@@ -173,6 +173,21 @@ window.LEONIDA_FEED = {
  ],
  "intel": [
   {
+   "id": "gn:CBMi1AFBVV95cUxOclhyTDVfV2hlUjVvZ3dPZlZyUzQ5dTRXVHVXX1NHaFpZclFFdksxQV84dUFIWUhFWTZEcFdTZTk3TFdlSUVVYU9mRjB0TTF1R2puQnV5Z0JJS291MHpVS3RSUks3cTdUMjhMUVJMUk93SzZyRGNRWllLMWZzNjlhbFNrQUl1LXgtSlNFWk9xTkJkZVJIcmFPSFRZWW1sWkRyUmk1ZEN5azI5SjF6aFNXeGt1ZGduc0VHWld3M00xekRIV2haNnhkeG1GbWIwMlczLWw3aw",
+   "cat": "official",
+   "status": "Official",
+   "title": "Claiming Vintage Vice City Pack pre-order bonuses in Grand Theft Auto VI",
+   "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOclhyTDVfV2hlUjVvZ3dPZlZyUzQ5dTRXVHVXX1NHaFpZclFFdksxQV84dUFIWUhFWTZEcFdTZTk3TFdlSUVVYU9mRjB0TTF1R2puQnV5Z0JJS291MHpVS3RSUks3cTdUMjhMUVJMUk93SzZyRGNRWllLMWZzNjlhbFNrQUl1LXgtSlNFWk9xTkJkZVJIcmFPSFRZWW1sWkRyUmk1ZEN5azI5SjF6aFNXeGt1ZGduc0VHWld3M00xekRIV2haNnhkeG1GbWIwMlczLWw3aw?oc=5",
+   "publisher": "Rockstar Games",
+   "via": "Rockstar Newswire + Support",
+   "kind": "official",
+   "date": "2026-11-25T10:24:21.000Z",
+   "platform": "",
+   "version": "",
+   "firstSeen": "2026-11-25T14:48:01.885Z",
+   "lastChecked": "2026-11-25T14:48:01.885Z"
+  },
+  {
    "id": "gn:CBMirAFBVV95cUxOc0l3anRyZGRGYUlTa016VXEyTGJyM3FjVXEyQWRIRlUyS0RQWFgtLWhPTHN4RWtET1BKWF8zaDR1blBVRFB2NWdLOWtEY1Mza1IzU1JXX2Qta1oxcVB3b0xMZlpOYzJFaGZnY3ZhaWY1NjN3YmFZSHNYSFktR0V2THRUdFpmbFlFZkVSdm0yR1NXeGxoQTBOUkdkajZQeEJGX3RoNWdtRFJTM09w",
    "cat": "official",
    "status": "Official",
@@ -185,7 +200,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiqgFBVV95cUxQMy1WQ21GcGpGQTlTblpRemlIb2pJZ2RBdlhNRFBqYVlMenJwWEVNb0ZPVG4tTFJwUjBBXzE0Y1BhdzJJMl9LUjZoREt2N29WSlhmU1RVS3haTVg0WDJKOW1kdEJCdHlnZnNHVUdfdWZHNG1iR05XdUxrS3R6a01pMks2NkhvZFhLTmNxcUtFSHEyS0RYYlA2d2RWSDhvV0xiaEFwUVh5QTdEQQ",
@@ -200,7 +215,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiX0FVX3lxTFBIUTBFR05fRS1HNGlEckEwaXZVc1BxVlgtUVdFYmYtMDlkVzY3amRZV1JWSUEza0I4d0l4RkpxNmdWV1k0WEJzUVBGaWpYY0QtWExEd3RBdE5wTWJwM1hj",
@@ -215,7 +230,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiqAFBVV95cUxPOUdHR3lsOTUwbEM0QkdnZHZSRjJTdXFuVjhKV1lvd28xUmhBVURQamg5R3kyZ2YtX0tBX3JoQi14cHk3d18zaV9pcjlid3c3YlZFb1p3Ylc1ZTJYWm1BT2gxN3hUcWRpZ0FCd0RsQW50bEtyWTdkdzI2N1k3cFdVck5IQ2Nyb1VpTkY5Y2lOamRaTHlKUk5lSG1NOEltTHRWckgwNTFGUWs",
@@ -230,7 +245,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiUkFVX3lxTFBtaFUxS2pNTHhQbEVpS1BJdWUyR0NSaU1ZSDZURVFxWVVkYmVyQjJBclNXbzVXQlNMZ1VXdHh3aW5xMUF4RU8xenk0YkxWRkVwdnc",
@@ -245,7 +260,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMimwFBVV95cUxNOWdwZ19FWUxxVGJyMl9peEJpcWRaY3hMcHFDbXE3UzlNMzRhZUthNGY1dmkyOXJ3cndhQnl6dlk0bnpaMzlSNG94RFdscU94RVJzejcweXhmNlRjTjJoY04yQkVNalQwaW1UOVZRSi12b2t5T2pqc2J3cGpQNC1vUFozM3dzSWJVVDJ3UWFGLXE2RlE3MFVZR2FtOA",
@@ -260,7 +275,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiU0FVX3lxTFBSTjFrMUExdk94ZjZ4MjlJVXZUcldOTVNnMGgxWUs4X2ZjWHE3bTQwUmhKTW15akVvVGVkaWplRzBTcF8zTV9fMDBUWUlaaUQtY2Rr",
@@ -275,22 +290,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
-  },
-  {
-   "id": "gn:CBMickFVX3lxTE92S3kyLXRGdG1uMTR5MU1UeHBtLXFMWkJ5bzlQc19yRGhTWlZhTHB0NE9JTTIxM2FRSmhQNHYzV1hOYmd6Qmp6eEphdGtraGstRzFLeEx1eFFlY3AyanVGc09lQWF4NW9FNVB6c3RscTBHdw",
-   "cat": "official",
-   "status": "Official",
-   "title": "Grand Theft Auto VI - Launch Trailer",
-   "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE92S3kyLXRGdG1uMTR5MU1UeHBtLXFMWkJ5bzlQc19yRGhTWlZhTHB0NE9JTTIxM2FRSmhQNHYzV1hOYmd6Qmp6eEphdGtraGstRzFLeEx1eFFlY3AyanVGc09lQWF4NW9FNVB6c3RscTBHdw?oc=5",
-   "publisher": "Rockstar Games",
-   "via": "Rockstar Newswire + Support",
-   "kind": "official",
-   "date": "2026-11-19T12:26:11.000Z",
-   "platform": "",
-   "version": "",
-   "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "desk:patch-1-002-002",
@@ -323,7 +323,7 @@ window.LEONIDA_FEED = {
    "platform": "PS5 + Xbox Series X|S",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMinAFBVV95cUxQekF2RUJTUHZ4SnkwWWNiN3hSaUMzeF9teFlmeTNzZUxFZE5GY0x2TkhNVFUwOU16TGFpLXExQXlTckJpU2JrVW8tejdYOER0TVVERWN3aW1GRWJJV0hJQWVlS1JGbVdmczNPd2RuTWZxYTZEcWg1T3pVcDdlenB2R2Q0eGJ1ZXBEMnNNSk9BTllVQk1BY0xpVlZJQkU",
@@ -338,7 +338,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "1.002.002",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiowFBVV95cUxOSEtfY251VjN0dTBCclRYeGgtWTd2eFF1OGoyNWg4Z2pFcW84WjNHeVJja250ZlFsdTc0TGg4R2VVR1RvejQ2UVR2WFBuY0FtZDFTbW13aVZoUkwzT2VnT3VyVk9OczJUaGtRZFY5cGotMHNROEVwb01TNm1CSGtMWFZPU1JTRnVJamN3VTNVTUtMc04wQnpiZ0l4UDJ3TVlsMmtF",
@@ -353,7 +353,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:34:26.359Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "url:https://pcgamer.com/games/grand-theft-auto/gta-6-players-swore-the-weather-system-was-broken-and-the-latest-patch-has-confirmed-those-suspicions",
@@ -368,7 +368,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiwwFBVV95cUxNVVM5OHl4QkFoVUpfcU5FRUtVYXB4VGYyZ1JRdXJsa1ZlSU9jZUJMWFFwVHp2ZHktazRScDdTTXFKZ0Ffdmt2YV84RTJEdk5lQV9hUFhZVVN1SjFBd05VcFFaV1BaVTZMbUlGT1RmYVg0Z2FTZXdzZUlBQmRzdzFzMjZsRjFnYVZBaFVVblpYanlMc0pyc1RDSDhicXdwTmlBbldPSlI5NXdxaEE1WnRwYm5vMk11YXY1YnhaTGFPc1BGSEU",
@@ -383,7 +383,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMid0FVX3lxTFBFaWYzTnlISjkwMlVRZlpuU3ZTWXd1VEE1RWlYdkdDUWtTRDRfMkNrbVpUSERpblotLXVza0R3Z2tOQm9tWm9PcFVlbTVUR0c1Ql9teDFIRUxyS2RqY1JoQjNmOXI4Y0VuLXR4QkROLXNUTGV6T1Jr",
@@ -398,7 +398,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMibkFVX3lxTE83ZjN5Y3M4N2Y0WHFTTm9rQTRQWVA0MmtnSldvRzNGQnRWTF9qbHp0WjdhOWRrbnlqT3lqTHdZWXprelF0WW1xTjI1aUw0ZkVIdFdRWkhrN2RlTmxqVEdJVU5lN0syQndXWERwRFpB",
@@ -413,7 +413,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiigFBVV95cUxOeTJtYkYtczdkLUlZRXBpUjNobEJHTUVKek9yQ3JRNDNTYzM3blpFbmlqckU1T29mcWhUVFFjUFU1VWtEbTVXOTR4OThnUHc0SHJEVEx0VkRnYVFSWjJPX2ZhdHlIc3QycDFrS21sRE5QbTBZbUxudWctbFd2TkNMc1k2cXF1bHhvYnc",
@@ -428,7 +428,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMijwFBVV95cUxQQksxWktzbWFKTnZrU3gyZ3JtdnI4UUFYUEthVjR3aG5zVnJKUDBBM1Z4dUw4RGpwQVZZTEFOS0FabVA2WDAwaUFuMV8yNnJlWnJUVXJBT0dvbVhLdkFLREZYMmRRaGVQTmVaZXNISk9aZ2ZON3lSQUx4ZWdmN01yaVAzcDBmXy1hOTl4UzMtWQ",
@@ -458,7 +458,7 @@ window.LEONIDA_FEED = {
    "platform": "PS5 + Xbox Series X|S",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:34:26.359Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "desk:cheats-unlock-rule",
@@ -491,7 +491,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMihwFBVV95cUxPaXRUaEVOazBDZ2J0ZlJqZkt4ZmtaelE2ZE43RlFmX1ZwYlVoNDNEejB3SUpoR2QyNjNwUEZKWk5JMzB2ZVk4LWR0X3V3dGNSUUtsbTRqV2VfVVBTd1czWWIzX3F3UmFOX0xNa1lQY0J6Z1lYYXlQMlE1dlBIVE5QUVl3SzdCNkU",
@@ -506,7 +506,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMibkFVX3lxTE41SlhFbFNFN2ZRQ3pGbFBLejZWaHZ5MnFNZjk1S2VTanNQc25yaTY2bmIwdXE1eTJReFcyQjBnMnFrRnFrRWpHYndaWVJGMGU1WjVRM2pGU3o2V2V3LVRnbXlGVTVsVkJBcG9uckpB",
@@ -521,7 +521,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMic0FVX3lxTE0xRk0zREM5aGxvOXlBZUlrR1JKQ0NJOTJYbWRCZjM0RGJ3Zk55YVY3MDE5MmpIWWFYcVlMM1VwbDNBa0J6aFdubDVjUDQ5bWRxNDhjalVmVnM4cmpVbTdKd0hOWF9ETnItVWh2RlRLLTBKQnM",
@@ -536,7 +536,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMioAFBVV95cUxNcFhua1hsbWRscFRqQkxJZnp6WkNTdm9fLVRsWHZiVzR3aWlPSjhZaEFlbkxPMG0yX0NZYVQ5dHBCVEN2MzhfS21qT2dpcWZzMUlnMnIzcHZGY25YbEpiMHNULS15V2Jnakw4VERvRlhfLWtRNk9ydWt4WlN6ajN6YWNxbW96RkVWV0VYekFJZThWMzlqTUVuVzhIUWVFUkFC",
@@ -551,7 +551,7 @@ window.LEONIDA_FEED = {
    "platform": "Xbox Series X|S",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiZEFVX3lxTE51Y2RXVlVZVmN3b2hpRkVlcWdRaFJuQXI3UHlEc1BfWUZBTjRrZVN0WTItRW03bmRCR25nb0RHdDBHSnpxSS05cjBmME5BT0RQLUltamR2d0xrLTJUVmQ1MElRdzI",
@@ -566,7 +566,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiW0FVX3lxTFBCS3pZWnpXVFV3aEczOGg0WlJWZ3FleUMzTEJMb3ROLW9KMVlzbk1vcVlJYWJDa3F2eFBkdUJqMEZLeDVINHNHQnpYVlMwM01xZ0tfVE9hRVBDeTg",
@@ -581,7 +581,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiqgFBVV95cUxOc3Q3OUlQSGg3S0daS0EzN2VLbzE0azZ3Z25ZNENzaTZYWXJ0UG5NTDNkY2szMnJvVE93V1FxVXdfcTJyMGlNeW40RDdjVmJQNnVNRmtsOVE1dVZ6dlFHQXBSRE1aUHpIekM5aHowdTFyZXN6dl84Z3NFR1paeVFPUEkxXzlNZnVqNlZTbFpSeG45OXI1WW9pT2pGWEJjOElpOTBiRnZQalZPd9IBrwFBVV95cUxNZkEzSEQxb3NsODE3THJkSTV6Rkw0QzlsRlpEOHdiRklVb3RqRUxyTGcySlhfeHMzMVJVVTd1V09hX2MzeXUwV0dIek9rRW5LN2pTT3M1V2pwRDR3QjBpVE5rUnpYTm8xMDJOMEx0Qi1DR3BnQzlwVEZWT3RtTXBNZDk2M3pKTnUxa21NemY1LTV5ZU5fTWs0VEpaX2pqdmtSZTFkczJCVTNSVWozOUtz",
@@ -611,7 +611,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMimAFBVV95cUxQWjlEMVM0dzNLQVZZVW1iYlRiSmx4aml5U2FKQXJUend5UzBPZzRicEJjcTRpLTNDRTZDMENjU00wSTlCU1BuOWdYaWJsZno2NXA3LUgtQmkxMFhSVUdfbWlkcHJKaGZoa0hZYzZ5VVpMclpiVWtWNGptV1ZhalBQdHFPMnpOZ2Z6RnNsTVplU1h3NHBIUkVJdg",
@@ -641,7 +641,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMib0FVX3lxTE1uNEFzOHhMSmxLdzkxX2ZCR1VZUjlTelQ5OWhHcm14R1Bxd1BZWHUyV0htaXJxWDJRMVFpemExZE9tdnp6ejZDOUdGNlJqd2NPN3dhVGRHZXAzVnZGNUU4cU1WM3B2V2lCOTlxbVVoOA",
@@ -656,7 +656,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMigAFBVV95cUxNTElNcjVxeGxzeE0teUNxUVpPY2pJWUVZWkVxOUpzWDFDNkVrWjJaWXV6SU9FeGFzbW1EN2k5NzRvcFhFa3hrSmZ0NWR4cDBkbFpRR1pSajJCSkhOUGdSRHkzbFpFVHdkcU9JQS1EMEJ6NUt4MUs4em9QYlpmQzdyNA",
@@ -671,7 +671,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "url:https://pcgamer.com/games/grand-theft-auto/gta-6-players-found-a-60-fps-glitch-but-its-too-unstable-to-stop-me-from-wishing-it-was-on-pc-already",
@@ -686,7 +686,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMi2gFBVV95cUxQVTg3V1VDNmE4RG9jOXJrX0RBUEFnd0IyUmFyZ3BFekV3RzNkSnV3cTlKY2wyTDlISkNLa3BVbHZ4ZzAtQi1PeDZsQnhkdHhWcGRyM05VZDBhNURMU2E2N2pBS2RtdVppQlFwdjBOVmZ0LWZhNGkyQ1ZLTEFkY2ZNNkZwZ1NLNjd6OXIybDNVRE1Zb0s1WXZCWFppLTJsdGIwUUlDQXkwLVhsc3FtNXctU3NMVThqbmNKNzdVUEt4bE12NG12a1FBUThsZ0tLNXBxeDRRd0s1TklIdw",
@@ -701,7 +701,7 @@ window.LEONIDA_FEED = {
    "platform": "Xbox Series X|S",
    "version": "",
    "firstSeen": "2026-11-25T14:45:57.722Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "url:https://gamespot.com/articles/this-gta-6-glitch-almost-ruined-the-games-most-iconic-scene",
@@ -716,7 +716,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMirwFBVV95cUxNS0I4TTRWLV9xLTU5RHdET1ZpcThoMEtZYVVOV2poajZJWXVZcXVlX2VmQUpGQlhSbXE4cGE0WUZVdnZCWGJnQVF2NUthX1RXR1ctQ1F2UU5wUHhYT0ptalkzZWp5TnpWTi0xMFV1TEFVRUNOOTFDbEdHX3ZlS2FRTVhCWUR5UmN3M25zbkdUZW1GNjQ3MHpRSnFzMTlHR09fT0VBV0J6UmdWNFJPaDlv",
@@ -731,7 +731,7 @@ window.LEONIDA_FEED = {
    "platform": "Xbox Series X|S",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiqgFBVV95cUxNZEFROUtiM3lQNVI3VDNRMXdRMkhIOG5rNl9ZczNmUmpUWmtsc2xyb0pvNjc1SFE5UXhSbmc0a3h5b0dvM0FQOVF1QVRGRGgxVTdlRUk1eURRdktFbkUzSDFjY2pMalB6UXVrNG8zQ2NpQ2daV0hROXIxSXgtVUlNRDNXWjRPSjNCQy15VHhoamhGcUdXNjBGV0xDR3JpN1VvOEF1MG8wQktfZw",
@@ -746,7 +746,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "desk:first-person-after-patch",
@@ -779,7 +779,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMidEFVX3lxTFBOY2ZpY09icFVvVXVZN3Z5X1ZQbW5fbXk5c1lDR1JiZmNaLXRlWHJmMjhuakpxUXlMY2xYVjZ4VVhvQ3Mzbk9ZUzRySHI4R2lnMDNNbmRRbVp3R1pWbEFxNmM2a3pFWGZrV2JkdnZtcnRxTDE4",
@@ -809,7 +809,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiggFBVV95cUxOekFESktOSUlMX1Jfb2pUaGZDUF9IOEFFVFZOM1JzN3RWS0xNQ2ZDV1NQWGt6bW9mLWYwMHdfczZfb0RHUTBKMnkwcG1Vb01VYnRFbG45YzIxNkVJSE1jWUd2U0dlSmRSb1Rpc1VLU0tLZ2tJMWc5S003aERkX0lVeVJn",
@@ -824,7 +824,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMia0FVX3lxTFB4b2lDSGp1WVBySEgyM0locVVsaDRQLTB5QlVFS1BnbDN0YkVaZlVGWXRCUVRxSkxJUkdReVZQM1hsOV94QVBMcWhkaHV6aEQ1UFRyOHlhdHB2UVlzbGlvM1NiWFpLZjdfX3Zz",
@@ -854,7 +854,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "url:https://eurogamer.net/gta-6-over-1500-buildings-you-can-enter",
@@ -869,7 +869,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMiaEFVX3lxTE9uZ2pjYWZJaTVyWUdJczBhbzdUdHFNVnpNTV9WZEMtdGtIWXJjM2kwa2kteFAya2xSNHBMUHltcWNNdzVxd21URU5EN1JFZHIta2kyOUpBNFZYNXA5MFk0ekFGVnV0R1U3",
@@ -914,7 +914,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMixAFBVV95cUxOTVV3Q013WFAxNnYwQk9tcV83NTlHMkpMeDhZX0hXaUlBVWZOZXlGaFljQ3RNRDFjcGtsczFUS0prVW5WNm5yb041ZWItSEN2Tkk4bE9pdG5zM051cUZUbGVnS1VNR2s0Ni1JWGctWHRkNmtPYjk3SkR1LXJpSmoyaUZ2a0kzenpvUTQ3SW5CbHF5azNibkxtWlRXUEZMV25nMHkzQWpJbXlrRThCM0JzcG1oeHVrY01MaXpKbTM4MC14NHJ0",
@@ -944,7 +944,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:45:57.722Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   },
   {
    "id": "gn:CBMilgFBVV95cUxORUs4cHVOSTNFa1NmcC1GWE9OblFQeTJxMUlUQzNMbWpRT3VJWHVwLWp4aHQ5RlB6Y1ozOVYtalFkWk5nblE4bm1Na3FFSXI4MkJTSF9vVms2cHNqdUp3Q2JoVmJVc2ItZW9oTy11N3haUFRsNEROb2ZxRFRPdGotUGtpQlJLUGd6X2xucm9ZeHI4em53OGc",
@@ -959,7 +959,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T14:45:57.722Z"
+   "lastChecked": "2026-11-25T14:48:01.885Z"
   }
  ],
  "patches": [
@@ -1006,97 +1006,97 @@ window.LEONIDA_FEED = {
    "name": "Rockstar Newswire + Support",
    "kind": "official",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Rockstar Support",
    "kind": "official",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "GameSpot",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "IGN",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Eurogamer",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "PC Gamer",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "VGC",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Push Square",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Pure Xbox",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Search: patches",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Search: cheats",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Search: glitches",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Search: secrets",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "YouTube: SX Exclusive",
    "kind": "video",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "YouTube: Rockstar Games",
    "kind": "video",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   },
   {
    "name": "Google News: The Wire",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T14:45:57.722Z"
+   "lastOk": "2026-11-25T14:48:01.885Z"
   }
  ],
  "health": {
