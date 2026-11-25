@@ -1,4 +1,4 @@
-# Leonida Intel research scan.
+# Leonida Intel research scan (runs from main, the default branch).
 # Every 30 minutes: read Rockstar, the gaming outlets, the topic searches and the two YouTube channels,
 # update the research ledger, and commit dist/data/feed.js when a publish is due.
 # Netlify (site "gtadropz") is linked to this repo and deploys on those commits; there is no
