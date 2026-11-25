@@ -58,13 +58,34 @@ export function validate(data, outline) {
 const host = (u) => { try { return new URL(u).hostname; } catch { return ''; } };
 const inBox = (p) => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite) && p[0] >= BOX.w && p[0] <= BOX.e && p[1] >= BOX.s && p[1] <= BOX.n;
 
+/**
+ * Segments of the outline that are land borders, not coastline: the vertical cut where the far
+ * panhandle was trimmed, and the old state line along the north. The page draws them as a faint
+ * dashed edge so only real shore glows. Returns { ringIndex: [segmentIndex, ...] } where segment i
+ * joins point i to point i+1 (the last one wraps to point 0).
+ */
+export function borderSegments(outline, { northLat = 30.35, eastLon = -81.7 } = {}) {
+  const out = {}, W = outline.westCrop;
+  outline.land.forEach((r, ri) => {
+    const segs = [];
+    for (let i = 0; i < r.length; i++) {
+      const a = r[i], b = r[(i + 1) % r.length];
+      const cut = a[0] === W && b[0] === W;
+      const north = a[1] > northLat && b[1] > northLat && a[0] < eastLon && b[0] < eastLon;
+      if (cut || north) segs.push(i);
+    }
+    if (segs.length) out[ri] = segs;
+  });
+  return out;
+}
+
 /** The page payload: text cleaned and capped, so a slip in the JSON can never inject markup. */
 export function build(data, outline) {
   const t = (s, n) => clean(s || '', n);
   return {
     schema: SCHEMA,
     updated: data.updated || '',
-    outline: { source: outline.source, land: outline.land, lakes: outline.lakes || [] },
+    outline: { source: outline.source, land: outline.land, lakes: outline.lakes || [], border: borderSegments(outline) },
     regions: data.regions.map((r) => ({ id: r.id, name: t(r.name, 40), anchor: r.anchor, blurb: t(r.blurb, 200) })),
     areas: (data.areas || []).map((a) => ({ name: t(a.name, 40), pos: a.pos })),
     places: data.places.map((p) => {

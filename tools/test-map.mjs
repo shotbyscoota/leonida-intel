@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validate, build, SCHEMA, CATS } from './build-map.mjs';
+import { validate, build, borderSegments, SCHEMA, CATS } from './build-map.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const real = JSON.parse(readFileSync(join(root, 'content/map/places.json'), 'utf8'));
@@ -61,4 +61,18 @@ test('the page payload is plain text only', () => {
   assert.equal(out.places[0].name, 'Tank');
   assert.equal(out.places[0].summary, 'Hi there');
   assert.doesNotMatch(JSON.stringify(out), /<img|onerror|<b>/);
+});
+
+test('only land borders are drawn as borders; every shore segment stays coastline', () => {
+  const b = borderSegments(outline), r = outline.land[0], W = outline.westCrop;
+  const segs = new Set(b[0]);
+  const cut = r.findIndex((p, i) => p[0] === W && r[(i + 1) % r.length][0] === W);
+  assert.ok(segs.has(cut), 'the trimmed west edge is a border');
+  for (const i of segs) {
+    const a = r[i], c = r[(i + 1) % r.length];
+    assert.ok(a[0] < -81.7 && c[0] < -81.7, 'no Atlantic shore segment is marked as border');
+  }
+  assert.ok(segs.size < r.length * 0.1, 'borders are a small part of the ring');
+  for (const [ri, list] of Object.entries(b)) if (ri !== '0') assert.fail('islands have no land borders: ring ' + ri + ' ' + list);
+  assert.ok(build(real, outline).outline.border, 'the page payload carries the border list');
 });

@@ -32,6 +32,7 @@ const D = (v) => new Date(/^\d{4}-\d{2}-\d{2}$/.test(v || '') ? v + 'T12:00:00' 
 const LON0 = -82.4, LAT0 = 27.6, KX = 111.32 * Math.cos(LAT0 * Math.PI / 180), KY = 110.57;
 const W = ([lon, lat]) => [(lon - LON0) * KX, (lat - LAT0) * KY];
 const land = MAP.outline.land.map((r) => r.map(W));
+const borders = land.map((_, i) => new Set((MAP.outline.border || {})[i] || []));
 const lakes = (MAP.outline.lakes || []).map((l) => ({ name: l.name, ring: l.ring.map(W) }));
 let bx0 = Infinity, bx1 = -Infinity, by0 = Infinity, by1 = -Infinity;
 for (const r of land) for (const [x, y] of r) { bx0 = Math.min(bx0, x); bx1 = Math.max(bx1, x); by0 = Math.min(by0, y); by1 = Math.max(by1, y); }
@@ -54,7 +55,8 @@ function measureFree() {
   if (!el('card').hidden) { const k = el('card').getBoundingClientRect(); if (wide) free.r = Math.max(free.l + 200, k.left - c.left - 12); else free.b = Math.max(free.t + 140, k.top - c.top - 8); }
   if (!wide) free.r = cw - 58;
 }
-const CX = () => (free.l + free.r) / 2, CY = () => free.t + (free.b - free.t) * 0.56;
+// Flat view: centred. Tilted: the ground plane sits a little lower, like a horizon.
+const CX = () => (free.l + free.r) / 2, CY = () => free.t + (free.b - free.t) * (0.5 + 0.06 * Math.min(1, cam.pitch / 0.92));
 const focal = () => Math.min(free.r - free.l, (free.b - free.t) * 1.25) * 1.05;
 function proj(x, y, z = 0) {
   const dx = x - cam.x, dy = y - cam.y, c = Math.cos(cam.yaw), s = Math.sin(cam.yaw);
@@ -74,13 +76,30 @@ function unproj(sx, sy) {
   const c = Math.cos(cam.yaw), s = Math.sin(cam.yaw);
   return [cam.x + xr * c + yr * s, cam.y - xr * s + yr * c];
 }
-function fitAll(list = placed, animate = true) {
-  const pts = list.length ? list.map((p) => p.w) : [[bx0, by0], [bx1, by1]];
+function fitAll(list = placed, animate = true, pitch = cam.pitch) {
+  // Exact fit: try camera distances and keep the closest one where every pin (base and beam top)
+  // and, for the full view, the whole coastline land inside the free area with a margin.
+  const pts = list.length ? list.map((p) => p.w) : [];
+  if (!list.length || list.length === placed.length) { for (const r of land) for (let i = 0; i < r.length; i += 4) pts.push(r[i]); for (const r of MAP.regions) pts.push(W(r.anchor)); }
+  if (!pts.length) return;
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
-  const span = Math.max(x1 - x0, (y1 - y0) * (cam.pitch > 0.3 ? 1.35 : 1), 40);
-  const dist = Math.min(MAX_D, Math.max(60, span * focal() / Math.min(free.r - free.l, free.b - free.t) * 0.95));
-  fly({ x: (x0 + x1) / 2, y: (y0 + y1) / 2 - (cam.pitch > 0.3 ? span * 0.12 : 0), dist }, animate);
+  const save = { ...cam }, m = 28;
+  Object.assign(cam, { x: (x0 + x1) / 2, y: (y0 + y1) / 2, pitch });
+  const fits = (d) => {
+    cam.dist = d;
+    const beam = d * 0.075;
+    for (const [x, y] of pts) for (const z of [0, beam]) {
+      const q = proj(x, y, z);
+      if (!q || q[0] < free.l + m || q[0] > free.r - m || q[1] < free.t + m || q[1] > free.b - m - (el('hint').hidden ? 0 : 34)) return false;
+    }
+    return true;
+  };
+  let lo = 60, hi = MAX_D;
+  if (!fits(hi)) lo = hi; else for (let k = 0; k < 22; k++) { const mid = (lo + hi) / 2; fits(mid) ? (hi = mid) : (lo = mid); }
+  const to = { x: cam.x, y: cam.y, dist: Math.max(lo, hi), pitch };
+  Object.assign(cam, save);
+  fly(to, animate);
 }
 
 /* ---------- animation (only while something moves) ---------- */
@@ -111,17 +130,30 @@ const visible = (p) => state.cats.has(p.cat) && (!state.region || p.region === s
 
 /* ---------- render ---------- */
 let selected = null, hover = null, hitList = [];
-function path(ring, z = 0) {
-  let started = false, any = false;
+// Rings are drawn segment by segment, including the closing segment back to the first point.
+// A segment with an end behind the camera is skipped on its own: there is never a closePath()
+// across a gap, which would draw a false straight line across the map.
+// pick: 'coast' (shore only), 'border' (land borders only) or 'all'.
+function path(ring, z = 0, pick = 'all', borders = null) {
+  const n = ring.length, pts = ring.map(([x, y]) => proj(x, y, z));
+  let any = false, pen = -1;
   ctx.beginPath();
-  for (const [x, y] of ring) {
-    const p = proj(x, y, z);
-    if (!p) { started = false; continue; }
-    if (!started) { ctx.moveTo(p[0], p[1]); started = true; } else ctx.lineTo(p[0], p[1]);
-    any = true;
+  for (let i = 0; i < n; i++) {
+    const isB = !!borders && borders.has(i);
+    if ((pick === 'coast' && isB) || (pick === 'border' && !isB)) { pen = -1; continue; }
+    const a = pts[i], b = pts[(i + 1) % n];
+    if (!a || !b) { pen = -1; continue; }
+    if (pen !== i) ctx.moveTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]); pen = i + 1; any = true;
   }
-  if (started) ctx.closePath();
   return any;
+}
+/** Closed fill, only when the whole ring is in front of the camera (a clipped fill would smear). */
+function fillRing(ring) {
+  const pts = ring.map(([x, y]) => proj(x, y));
+  if (pts.some((p) => !p)) return false;
+  ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath();
+  return true;
 }
 function glow(color, widths) {
   for (const [w, a] of widths) { ctx.globalAlpha = a; ctx.lineWidth = w; ctx.strokeStyle = color; ctx.stroke(); }
@@ -145,15 +177,18 @@ function render(t) {
   // land: a faint fill, a "floor" outline below sea level and struts, then the neon coast
   const wall = 7;
   ctx.globalCompositeOperation = 'source-over';
-  for (const r of land) { if (path(r)) { ctx.fillStyle = 'rgba(255,46,126,0.045)'; ctx.fill(); } }
+  for (const r of land) { if (fillRing(r)) { ctx.fillStyle = 'rgba(255,46,126,0.045)'; ctx.fill(); } }
   ctx.globalCompositeOperation = 'lighter';
   if (cam.pitch > 0.25) {
-    for (const r of land) { if (path(r, -wall)) glow('#19e3d0', [[3, 0.08], [1, 0.35]]); }
+    land.forEach((r, i) => { if (path(r, -wall, 'coast', borders[i])) glow('#19e3d0', [[3, 0.08], [1, 0.35]]); });
     ctx.beginPath();
     for (const r of land) for (let i = 0; i < r.length; i += r.length > 100 ? 6 : 3) { const a = proj(r[i][0], r[i][1], 0), b = proj(r[i][0], r[i][1], -wall); if (a && b) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } }
     ctx.strokeStyle = 'rgba(25,227,208,0.18)'; ctx.lineWidth = 1; ctx.stroke();
   }
-  for (const r of land) { if (path(r)) glow('#ff2e7e', [[9, 0.07], [4.5, 0.18], [1.6, 0.95]]); }
+  land.forEach((r, i) => { if (path(r, 0, 'coast', borders[i])) glow('#ff2e7e', [[9, 0.07], [4.5, 0.18], [1.6, 0.95]]); });
+  ctx.setLineDash([6, 6]);
+  land.forEach((r, i) => { if (borders[i].size && path(r, 0, 'border', borders[i])) glow('#b7aeb9', [[1.2, 0.45]]); });
+  ctx.setLineDash([]);
   for (const l of lakes) { if (path(l.ring)) { glow('#19e3d0', [[6, 0.1], [1.4, 0.85]]); } }
 
   // region labels
@@ -340,7 +375,7 @@ el('zin').addEventListener('click', () => fly({ dist: Math.max(MIN_D, cam.dist *
 el('zout').addEventListener('click', () => fly({ dist: Math.min(MAX_D, cam.dist * 1.6) }));
 el('rot').addEventListener('click', () => fly({ yaw: cam.yaw + Math.PI / 4 }));
 el('compass').addEventListener('click', () => fly({ yaw: 0 }));
-el('tilt').addEventListener('click', () => { const on = cam.pitch < 0.3; el('tilt').setAttribute('aria-pressed', String(on)); fly({ pitch: on ? PITCH3D : 0 }); });
+el('tilt').addEventListener('click', () => { const on = cam.pitch < 0.3; el('tilt').setAttribute('aria-pressed', String(on)); if (selected) fly({ pitch: on ? PITCH3D : 0 }); else fitAll(placed.filter(visible), true, on ? PITCH3D : 0); });
 el('home').addEventListener('click', () => fitAll(placed.filter(visible)));
 
 /* ---------- latest patch, for staleness warnings ---------- */
