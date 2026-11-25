@@ -1,0 +1,398 @@
+{
+  "schema": 1,
+  "_help": "The Leonida map. One entry per place. Edit here, then run: node tools/build-map.mjs (writes dist/data/map.js; --check validates only). pos is [longitude, latitude] on the Florida-shaped stand-in outline, placed from the area a source names: precision 'area' = named town/district, position estimated; 'region' = only the region is known. pos null = no source says where yet (listed under Not placed yet). status follows the site's labels: Official, Tested, Reported, Patched, Unverified. A place may only be Tested with checked.on, checked.version and checked.platform. cat: weapon, vehicle, secret, money, mission, landmark, service.",
+  "updated": "2026-11-25",
+  "regions": [
+    { "id": "vice-city", "name": "Vice City", "anchor": [-79.95, 26.0], "blurb": "Neon, money and the biggest city in Leonida. Vice-Dale County.", "official": true },
+    { "id": "leonida-keys", "name": "Leonida Keys", "anchor": [-81.3, 24.38], "blurb": "Island chain and long bridges. Mariana County: Key Lento, where the story starts, and Mile Zero Air Station.", "official": true },
+    { "id": "grassrivers", "name": "Grassrivers", "anchor": [-81.4, 25.65], "blurb": "Swamp, airboats and things with teeth.", "official": true },
+    { "id": "port-gellhorn", "name": "Port Gellhorn", "anchor": [-84.35, 30.35], "blurb": "Faded Gulf town in Kelly County, next to Wild Hog Point.", "official": true },
+    { "id": "ambrosia", "name": "Ambrosia", "anchor": [-81.6, 27.0], "blurb": "Sugar country by Lake Leonida. Raceway and refinery.", "official": true },
+    { "id": "mount-kalaga", "name": "Mount Kalaga", "anchor": [-82.35, 30.55], "blurb": "Forest and rivers in Lummox County: Mount Kalaga National Park and the Kalaga Reservoir.", "official": true }
+  ],
+  "areas": [
+    { "name": "Key Lento", "pos": [-80.95, 24.73] },
+    { "name": "Mile Zero Air Station", "pos": [-81.6, 24.57] },
+    { "name": "Leonard County", "pos": [-80.3, 26.5] },
+    { "name": "Lake Leonida", "pos": [-80.82, 26.95] },
+    { "name": "Wild Hog Point", "pos": [-84.85, 29.85] },
+    { "name": "Lummox County", "pos": [-82.4, 30.15] },
+    { "name": "Vice Beach", "pos": [-80.12, 25.82] },
+    { "name": "Hamlet", "pos": [-80.42, 25.47] }
+  ],
+  "places": [
+    {
+      "id": "mile-zero-air-station", "name": "Mile Zero Air Station", "region": "leonida-keys", "area": "Mariana County", "cat": "vehicle",
+      "pos": [-81.6, 24.57], "precision": "area", "status": "Reported",
+      "summary": "Military base with a row of Rhino tanks and parked combat jets. The fastest way to get a tank or a jet.",
+      "how": ["Drive west from Key Lento through Abismo Key and Southwind.", "Easiest way in: the Mile Zero Air Station Southeast stunt jump on the southern access road.", "Tanks are left of the large building by the runway; jets are to the right, by the hangars."],
+      "reward": "Rhino tank, combat jet", "needs": "Expect a 5-star Wanted Level, 6 if you start blowing things up.",
+      "sources": [
+        { "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-tank-rhino/", "read": "2026-11-25" },
+        { "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-jet-how-to-get/", "read": "2026-11-25" },
+        { "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-military-base-location/", "read": "2026-11-25" }
+      ]
+    },
+    {
+      "id": "vcia", "name": "Vice City International (VCIA)", "region": "vice-city", "area": "Vice City", "cat": "vehicle",
+      "pos": [-80.29, 25.795], "precision": "area", "status": "Reported",
+      "summary": "The airport. Two runways with commercial jets always parked, plus service vehicles and a terminal full of ATMs.",
+      "how": ["Sneak onto either main runway and take a parked jet.", "Break into the ATMs in the central terminal."],
+      "reward": "Commercial jets, Brute Ripley service vehicle, ATM cash",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-airport-location/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "assassin-nipper", "name": "Assassin Nipper .38 cache", "region": "leonida-keys", "area": "Permit Keys", "cat": "weapon",
+      "pos": [-81.25, 24.62], "precision": "region", "status": "Reported",
+      "summary": "A suppressed unique revolver in a hidden cache at the south tip of the eastern island of the Permit Keys. No fight needed.",
+      "how": ["Take a boat to the Permit Keys.", "At the south tip of the eastern island, use Focus Mode (L3+R3) to find the cache."],
+      "reward": "Assassin Nipper .38 with suppressor", "needs": "Available from Chapter 1.",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-unique-weapons/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "la-cascara-motel", "name": "La Cascara Motel", "region": "port-gellhorn", "area": "Port Gellhorn", "cat": "weapon",
+      "pos": [-84.2, 30.13], "precision": "area", "status": "Reported",
+      "summary": "Kolt gang hideout with a safe and the Scrapper VF5C, a unique rifle, on the top floor.",
+      "how": ["Come up the south stairwell (less guarded) and stick to the outer walkways.", "The Scrapper VF5C is on the top floor, by the safe."],
+      "reward": "Scrapper VF5C, safe cash", "needs": "Safe code reported as 6969 by GamesRadar+; some safe codes are randomised per player.",
+      "sources": [
+        { "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-unique-weapons/", "read": "2026-11-25" },
+        { "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-safe-codes/", "read": "2026-11-25" }
+      ]
+    },
+    {
+      "id": "kitty-litter-la-perle", "name": "Kitty Litter labs (gold SMG)", "region": "vice-city", "area": "La Perle", "cat": "weapon",
+      "pos": [-80.195, 25.835], "precision": "area", "status": "Reported",
+      "summary": "Destroy every Kitty Litter lab for Tyrone and you get a unique gold SMG, and Tyrone buys your narcotics at the top price. The first lab is in the La Perle trailer park.",
+      "how": ["First lab: trailer park opposite Zenon's Pawn Shop / Ammu-Nation in La Perle.", "Other labs: Decor District, behind Peterson's Autoshop in Rockridge, by Fleeca Field stadium, south of Vice City Hospital, behind Cross My Heart Tattoos, south-east of the Jack of Hearts.", "Shoot the smoking pink flask, then run."],
+      "reward": "Unique gold SMG", "needs": "Unlocked after missions for Tyrone (Dealer's Choice).",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-kitty-litter-lab-locations/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "crosstown-police", "name": "Crosstown Police Station", "region": "vice-city", "area": "Crosstown", "cat": "weapon",
+      "pos": [-80.225, 25.79], "precision": "area", "status": "Reported",
+      "summary": "Cop car trunks hold assault rifles, shotguns and body armour. Randy's Pegassi Infernus is parked on the top floor of the station car park.",
+      "how": ["Police pickups: climb on the bed and open the crate. No alarm.", "Cruisers: slim jim the door first, then the trunk opens without an alarm.", "Infernus: Clone Key, drive to the top floor, leave over the stunt jump."],
+      "reward": "Free guns and armour, Pegassi Infernus for Randy", "needs": "Slim jim from Moses (Chapter 2); Clone Key for the Infernus.",
+      "sources": [
+        { "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-free-guns-cop-cars/", "read": "2026-11-25" },
+        { "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }
+      ]
+    },
+    {
+      "id": "chucks-tackle", "name": "Chuck's Tackle & Shot", "region": "leonida-keys", "area": "Key Lento", "cat": "service",
+      "pos": [-80.93, 24.735], "precision": "area", "status": "Reported",
+      "summary": "The earliest place to buy a mask (Neckwear aisle), just down the road from Jason's house. Kirk's flyer is by the Ammu-Nation near Jason's place.",
+      "how": ["Walk forward, turn left down the aisle; Neckwear is on the right.", "Set Wear Style to 1 in the items menu to cover the face."],
+      "reward": "Mask (harder for cops to identify you)",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-mask-location/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "badger-tower", "name": "Badger R&D Tower", "region": "leonida-keys", "area": "Key Lento", "cat": "secret",
+      "pos": [-80.97, 24.72], "precision": "area", "status": "Reported",
+      "summary": "Start of the Vice City easter egg: climb to the top and a GTA: Vice City sound plays. Substations across the map lead to a portal into old-school Vice City. The Thelma dancer card is at the top.",
+      "how": ["Climb the tower: inside stairs, then ladders.", "Visit the substations: Downtown, Balsero, Key Lento, Penmarch Isle (Washington Beach), Crosstown, Port Gellhorn, Gloriana Key, south Port Gellhorn, North Mariana County.", "Pull the lever by the portal."],
+      "reward": "Tommy Vercetti shirt and motorcycle, for both Jason and Lucia",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-vice-city-easter-egg-walkthrough", "read": "2026-11-25" }]
+    },
+    {
+      "id": "jasons-house", "name": "Jason's House", "region": "leonida-keys", "area": "Key Lento", "cat": "landmark",
+      "pos": [-80.955, 24.728], "precision": "area", "status": "Reported",
+      "summary": "Five reading collectibles and a basketball hoop. Missable: collect them before the end of Chapter 1. Jason's boat is at the dock.",
+      "how": ["Peach Palm Dr. Books and magazines are on the kitchen table, the round table, the balcony, the bedroom cabinet and in the workshop below."],
+      "reward": "Collectibles toward 100%", "needs": "Before the end of Chapter 1.",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-key-lento-collectibles-and-secrets-walkthrough", "read": "2026-11-25" }]
+    },
+    {
+      "id": "skunk-ape", "name": "Skunk Ape sighting", "region": "leonida-keys", "area": "Gambit Bay", "cat": "secret",
+      "pos": [-80.92, 24.765], "precision": "area", "status": "Reported",
+      "summary": "GTA's Bigfoot. The first sighting is across Gambit Bay from Jason's house, at the dead-end road on the peninsula.",
+      "how": ["Take Jason's boat across Gambit Bay.", "Follow it with Focus Mode (L3+R3) into the mangroves, then call Kirk from the flyer."],
+      "reward": "Starts the Skunk Ape side story with Kirk",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bigfoot-location-skunk-ape/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "christmas-house", "name": "Christmas House", "region": "leonida-keys", "area": "Key Lento", "cat": "secret",
+      "pos": [-80.985, 24.712], "precision": "area", "status": "Reported",
+      "summary": "A house lit up with Christmas decorations at night, where Sunset Dr meets Laguna Dr. A WAiNK Curiosity, and the Nagasaki Rudolph Tao parked outside is a Standout Vehicle.",
+      "how": ["Scan the house and the car with WAiNK.", "A stunt jump is south-east of the house, near Laguna Ln."],
+      "reward": "WAiNK entries, stunt jump",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-key-lento-collectibles-and-secrets-walkthrough", "read": "2026-11-25" }]
+    },
+    {
+      "id": "exotic-animals-front", "name": "Exotic Animals Front", "region": "leonida-keys", "area": "Key Lento", "cat": "money",
+      "pos": [-80.94, 24.718], "precision": "area", "status": "Reported",
+      "summary": "A robbery with a bonus: talk to the chatty parrot in the cage to find an extra hidden money stash.",
+      "how": ["During the robbery, talk to the parrot."],
+      "reward": "Hidden cash stash",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-safe-codes-combinations/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "kentons-wrecks", "name": "Kenton's shipwrecks", "region": "leonida-keys", "area": "South of Key Lento", "cat": "money",
+      "pos": [-80.97, 24.6], "precision": "area", "status": "Reported",
+      "summary": "Sunken Spanish wrecks with sets of treasure to dig up with a metal detector and sell to Kenton. Nuestra Señora de la Noche alone has 7.",
+      "how": ["Get scuba gear at Island Dreams, or use Kenton's Huntress boat.", "Wrecks: south of Key Lento (de la Noche, de la Ética Laxa), off the south-east coast (Urca de Cinco Torres, Lujuriosa), east of Key Lento (Urca de Santa Sierra)."],
+      "reward": "Treasure sets, big payouts for complete sets",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-underwater-discoveries-locations-and-kentons-treasures", "read": "2026-11-25" }]
+    },
+    {
+      "id": "burg-facility-1", "name": "BURG Facility #1 (underwater)", "region": "leonida-keys", "area": "West of Mile Zero", "cat": "secret",
+      "pos": [-81.78, 24.6], "precision": "area", "status": "Reported",
+      "summary": "One of five sunken BURG facilities, marked by a yellow platform sticking out of the water. Each counts as an Underwater Discovery.",
+      "how": ["#1 west of Mile Zero Air Station, #4 north of it, #5 east of Key Lento, #2 east of Little Hardin Island, #3 west of Wild Hog Point."],
+      "reward": "Underwater Discoveries",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-underwater-discoveries-locations-and-kentons-treasures", "read": "2026-11-25" }]
+    },
+    {
+      "id": "watson-bay", "name": "Watson Bay garages", "region": "leonida-keys", "area": "Watson Bay", "cat": "vehicle",
+      "pos": [-80.62, 24.92], "precision": "area", "status": "Reported",
+      "summary": "Wyman's classic cars: collect from the Paradise garage here, and a Reynolds Kit Car scrap sits behind Donnie's Auto Repair, next to the Pay 'n' Spray.",
+      "how": ["Follow the alley behind Donnie's Auto Repair; the Kit Car is in front of the shutters."],
+      "reward": "Reynolds Kit Car part for Wyman",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-wymans-classic-car-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "shoreless-keys-gas", "name": "Old Fort Rd gas station", "region": "leonida-keys", "area": "Shoreless Keys", "cat": "vehicle",
+      "pos": [-80.5, 25.02], "precision": "area", "status": "Reported",
+      "summary": "An abandoned gas station north of Grassrivers Cafe & Deli hides a '70 Riata for Wyman.",
+      "how": ["Old Fort Rd, Shoreless Keys."],
+      "reward": "'70 Riata for Wyman",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-wymans-classic-car-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "paul-walker-car", "name": "Paul Walker's car", "region": "vice-city", "area": "Vespucci Island, Rialto Islands", "cat": "vehicle",
+      "pos": [-80.165, 25.788], "precision": "area", "status": "Reported",
+      "summary": "A Fast & Furious nod: the Penumbra locked in a garage on Vespucci Island. It respawns if you wreck it.",
+      "how": ["Break into the garage; the alarm switch is on the wall to your left.", "Open the door, hotwire the car, drive."],
+      "reward": "Penumbra (Fast & Furious reference)",
+      "sources": [{ "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "honeycomb-emerus", "name": "Honeycomb Emerus", "region": "vice-city", "area": "By Vice City Hospital", "cat": "vehicle",
+      "pos": [-80.21, 25.79], "precision": "area", "status": "Reported",
+      "summary": "One of the fastest cars, in a parking lot outside a dealership and car rental across from the hospital. Advanced security and trackers.",
+      "how": ["Needs a Key Cloner; expect the tracker to call the cops."],
+      "reward": "Progen Honeycomb Emerus", "needs": "Key Cloner.",
+      "sources": [{ "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "dockyard-container", "name": "Dockyard container car", "region": "vice-city", "area": "Vice City County Dockyard", "cat": "vehicle",
+      "pos": [-80.17, 25.772], "precision": "area", "status": "Reported",
+      "summary": "A fast Emerus locked inside a shipping container at the dockyard. Trespassing gets you wanted.",
+      "how": ["Open the container with the cut-off tool."],
+      "reward": "Progen Emerus variant", "needs": "Cut-off tool.",
+      "sources": [{ "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "capri-garage", "name": "North-west Capri garage", "region": "vice-city", "area": "Capri", "cat": "vehicle",
+      "pos": [-80.27, 25.75], "precision": "area", "status": "Reported",
+      "summary": "The Seaspray Emerus sits in a garage you can open with the Snap Gun. Capri driveways also spawn the Pegassi Toros and the Buckingham Windsor Drop.",
+      "how": ["Snap Gun the garage; the car has every security feature, so plan the getaway."],
+      "reward": "Seaspray Emerus", "needs": "Snap Gun (Chapter 3).",
+      "sources": [
+        { "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars/", "read": "2026-11-25" },
+        { "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }
+      ]
+    },
+    {
+      "id": "boone-speedway", "name": "Boone Speedway", "region": "vice-city", "area": "Hamlet, South Vice-Dale County", "cat": "vehicle",
+      "pos": [-80.41, 25.45], "precision": "area", "status": "Reported",
+      "summary": "A Thrax Truffade on a trailer at the raceway entrance, and Randy's Bravado Gauntlet Hellfire at the back of the M7 junkyard just east.",
+      "how": ["Junkyard: off Galerina St; open the gates first, it is M7 gang turf.", "The Thrax is heavily secured; it is easier late in the game."],
+      "reward": "Thrax Truffade, Gauntlet Hellfire for Randy",
+      "sources": [
+        { "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars/", "read": "2026-11-25" },
+        { "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }
+      ]
+    },
+    {
+      "id": "peacock-estates", "name": "Peacock Estates mansion", "region": "vice-city", "area": "Peacock Bay", "cat": "vehicle",
+      "pos": [-80.235, 25.728], "precision": "area", "status": "Reported",
+      "summary": "Randy's Piccia Furia is at a mansion on Palladia Ln.",
+      "how": ["Clone Key the car, open the garage shutters, leave through the gates."],
+      "reward": "Piccia Furia for Randy", "needs": "Clone Key (Randy's jobs, Chapter 3).",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "leaf-links", "name": "Leaf Links mansion", "region": "vice-city", "area": "Vice Beach", "cat": "vehicle",
+      "pos": [-80.125, 25.835], "precision": "area", "status": "Reported",
+      "summary": "Randy's Mamba GT is behind the building on the right. The key is in a bowl on the table behind the sofa. It has a tracker.",
+      "how": ["Get the key inside first, then drive straight to Randy and outpace the police."],
+      "reward": "Mamba GT for Randy",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "status-auto-imports", "name": "Status Auto Imports", "region": "vice-city", "area": "Bayside", "cat": "vehicle",
+      "pos": [-80.187, 25.781], "precision": "area", "status": "Reported",
+      "summary": "The most common spawn for the Buckingham Windsor Drop. Leave through the windows on your left. The Y Hotel in Washington Beach often has one outside too.",
+      "how": ["Clone Key, then out through the windows to the left."],
+      "reward": "Buckingham Windsor Drop",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "vault-night-club", "name": "The Vault Night Club", "region": "vice-city", "area": "Downtown", "cat": "vehicle",
+      "pos": [-80.195, 25.774], "precision": "area", "status": "Reported",
+      "summary": "An Ocelot Jugular is sometimes parked outside; another is almost always in a garage on Atlantic Ave in Vice Beach.",
+      "how": ["If the garage is empty, leave and come back later."],
+      "reward": "Ocelot Jugular for Randy",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "willies-service", "name": "Willie's Service Center", "region": "vice-city", "area": "Salton", "cat": "vehicle",
+      "pos": [-80.21, 25.76], "precision": "area", "status": "Reported",
+      "summary": "The first Reynolds Kit Car scrap for Wyman: a blue and yellow building on SW 7th Ave, just north of the 7th Avenue Garage. Another scrap is on Casanova Island in the Rialto Islands.",
+      "how": ["SW 7th Ave, Salton."],
+      "reward": "Reynolds Kit Car part",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-wymans-classic-car-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "belville-jugular", "name": "Ocelot Bloodless Jugular", "region": null, "area": "Belville, Leonard County", "cat": "money",
+      "pos": [-80.26, 26.42], "precision": "area", "status": "Reported",
+      "summary": "In a garage at the southern house of a four-home cluster on Belville's northern edge. Randy pays $10,615, plus $5,000 if it's pristine. The owner is armed.",
+      "how": ["Key Cloner to get in; the tracker is standard and won't call the cops."],
+      "reward": "$10,615 (+$5,000 pristine)",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-ocelot-bloodless-jugular-location/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "waning-sands-villa", "name": "Waning Sands villa", "region": null, "area": "Leonard County", "cat": "vehicle",
+      "pos": [-80.07, 26.44], "precision": "area", "status": "Reported",
+      "summary": "Randy's Pegassi Vitello is at the posh villa on Flamingo Pkwy, east of Belville.",
+      "how": ["Clone Key the car, then set off your charges for a quick escape."],
+      "reward": "Pegassi Vitello for Randy",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "gellhorn-bunker", "name": "The Gellhorn bunker", "region": "port-gellhorn", "area": "Port Gellhorn", "cat": "mission",
+      "pos": [-84.26, 30.11], "precision": "area", "status": "Reported",
+      "summary": "A foliage-covered bunker across from Burnout Scooters, near Moses' garage. It starts the missing tourists hunt and the serial-killer story.",
+      "how": ["See the missing-person posters, then call the Kelly County Tip Line.", "Bodies: junkyard behind the Pay 'N' Spray; trailer park under the water tower (north); the U-shaped lake on the Wild Hog Point border.", "Wait for the Tip Line to call back, then return to the bunker. Push Square suggests going alone."],
+      "needs": "Chapter 2.",
+      "sources": [
+        { "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-gellhorn-missing-tourists-locations", "read": "2026-11-25" },
+        { "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/all-gta-6-missing-persons-locations-and-how-to-find-the-serial-killer/", "read": "2026-11-25" }
+      ]
+    },
+    {
+      "id": "moses-garage", "name": "Moses' garage", "region": "port-gellhorn", "area": "Port Gellhorn", "cat": "money",
+      "pos": [-84.25, 30.12], "precision": "area", "status": "Reported",
+      "summary": "Sell stolen cars for $1,000 to $20,000 depending on the car. Moses gives you the slim jim and often says where the cars he wants are. He pays around $3,400 for the BF Bandito.",
+      "how": ["After one sale he won't buy again for a while."],
+      "reward": "$1k to $20k a car", "needs": "Chapter 2.",
+      "sources": [
+        { "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-how-to-make-money/", "read": "2026-11-25" },
+        { "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bf-bandito-location/", "read": "2026-11-25" }
+      ]
+    },
+    {
+      "id": "bud-ufo", "name": "Bud and the UFO", "region": "port-gellhorn", "area": "South Kelly County, Gellhorn woods", "cat": "secret",
+      "pos": [-84.42, 30.03], "precision": "region", "status": "Reported",
+      "summary": "At night Bud stands on his car shouting at the sky near the beach in south Kelly County. After you talk, drive the dirt roads in the central Gellhorn woods until the radio cuts out.",
+      "how": ["Meet Bud after dark (around 8:30pm worked for Push Square), alone.", "Find the abandoned car pointing into the woods and follow the trail of clothes."],
+      "reward": "The Truth Is Out There trophy", "needs": "Chapter 2, at night.",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-ufo-walkthrough", "read": "2026-11-25" }]
+    },
+    {
+      "id": "wild-hog-container", "name": "Wild Hog Point coast", "region": "port-gellhorn", "area": "Wild Hog Point", "cat": "vehicle",
+      "pos": [-84.88, 29.82], "precision": "area", "status": "Reported",
+      "summary": "A Reynolds Kit Car scrap in a Scoop shipping container on the coast far west of Port Gellhorn.",
+      "how": ["Look for the Scoop container on the shore."],
+      "reward": "Reynolds Kit Car part",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-wymans-classic-car-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "state-prison-mamba", "name": "Mamba GT by the state prison", "region": "port-gellhorn", "area": "East Gellhorn", "cat": "vehicle",
+      "pos": [-83.95, 30.2], "precision": "area", "status": "Reported",
+      "summary": "A '64 Mamba GT in a garage on the east side of Gellhorn, north of the Leonida State Prison.",
+      "how": ["Check the garages north of the prison."],
+      "reward": "'64 Mamba GT for Wyman",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-wymans-classic-car-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "paradise-wines", "name": "Paradise Wines Vineyard Bar", "region": "port-gellhorn", "area": "North Kelly County", "cat": "vehicle",
+      "pos": [-84.2, 30.5], "precision": "area", "status": "Reported",
+      "summary": "A Pegassi Toros is often parked outside.",
+      "how": ["Check the car park."],
+      "reward": "Pegassi Toros",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "ambrosia-raceway", "name": "Ambrosia Raceway", "region": "ambrosia", "area": "Ambrosia", "cat": "money",
+      "pos": [-81.12, 26.68], "precision": "area", "status": "Reported",
+      "summary": "Demolition derby on the oval: good money even for bad drivers. PC Gamer reports over three grand a win.",
+      "how": ["Enter the demolition race and be the last car running."],
+      "reward": "Race winnings",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-how-to-make-money/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "ambrosia-mamba", "name": "Xero Gas alley Mamba GT", "region": "ambrosia", "area": "Ambrosia", "cat": "vehicle",
+      "pos": [-81.0, 26.76], "precision": "area", "status": "Reported",
+      "summary": "A '64 Mamba GT down the alley next to the Xero Gas Station, between US-35 and Lakewood Way.",
+      "how": ["Follow the alley south from the Xero Gas Station."],
+      "reward": "'64 Mamba GT for Wyman",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-wymans-classic-car-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "grassrivers-trailer", "name": "Trailer south of Grassrivers", "region": "grassrivers", "area": "Grassrivers", "cat": "money",
+      "pos": [-80.95, 25.55], "precision": "region", "status": "Reported",
+      "summary": "A trailer safe whose code is hidden in the postcards on the trailer wall. GamesRadar+ lists it as 44017.",
+      "how": ["Use Focus Mode on the postcards to read the numbers."],
+      "reward": "Safe cash", "needs": "Some safe codes are randomised per player; read the postcards in your own game.",
+      "sources": [{ "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-safe-codes/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "bf-bandito", "name": "BF Bandito swamp loop", "region": "grassrivers", "area": "Swamp search area", "cat": "vehicle",
+      "pos": [-81.1, 25.95], "precision": "region", "status": "Reported",
+      "summary": "The white off-road racer circles a marked search area in the swamp. Block the track with your car and he stops. Moses pays about $3,400.",
+      "how": ["Park across the track and stand by it; press L2 to focus when he calls out.", "His friends chase you out of the swamp; the Bandito outruns them."],
+      "reward": "About $3,400 from Moses",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bf-bandito-location/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "kalaga-mine", "name": "Kalaga Reservoir mine", "region": "mount-kalaga", "area": "Mount Kalaga National Park, Lummox County", "cat": "mission",
+      "pos": [-82.4, 30.42], "precision": "area", "status": "Reported",
+      "summary": "The abandoned mine where the Port Gellhorn serial-killer story ends.",
+      "how": ["Finish the Gellhorn bunker story first; the meeting point is sent to your partner's phone."],
+      "needs": "After the missing tourists in Port Gellhorn.",
+      "sources": [{ "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/all-gta-6-missing-persons-locations-and-how-to-find-the-serial-killer/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "lake-tallaloko", "name": "Lake Tallaloko houses", "region": "mount-kalaga", "area": "East Lummox County", "cat": "vehicle",
+      "pos": [-81.95, 30.05], "precision": "area", "status": "Reported",
+      "summary": "Properties here can spawn a Buckingham Windsor Drop.",
+      "how": ["Check the driveways."],
+      "reward": "Buckingham Windsor Drop",
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-randys-wish-list-vehicle-locations", "read": "2026-11-25" }]
+    },
+    {
+      "id": "bret-hunting", "name": "Bret's hunting jobs", "region": "mount-kalaga", "area": "Lummox County", "cat": "money",
+      "pos": [-82.55, 30.2], "precision": "region", "status": "Reported",
+      "summary": "Jason's old military buddy pays more and more for the animals he asks for.",
+      "how": ["Jason only."],
+      "reward": "Hunting payouts that grow", "needs": "Chapter 2, as Jason.",
+      "sources": [{ "publisher": "PC Gamer", "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-how-to-make-money/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "jet-ski-dog", "name": "Jet Ski Dog", "region": null, "area": "Leonida Bay", "cat": "secret",
+      "pos": null, "precision": "region", "status": "Reported",
+      "summary": "A dog on a jet ski that rescues you at sea. Swim away from your boat, far from the coast and other boats, and listen for Cool Dog.",
+      "how": ["GamesRadar+ found it in Leonida Bay; players report other spots too."],
+      "reward": "A rescue and a laugh",
+      "sources": [{ "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-jet-ski-dog/", "read": "2026-11-25" }]
+    },
+    {
+      "id": "mckittrick-farm", "name": "McKittrick Farm", "region": null, "area": "Frogswater", "cat": "mission",
+      "pos": null, "precision": "region", "status": "Reported",
+      "summary": "Crop-dusting job for Kyle: dust three fields, then land on the strip. An abandoned dino mini golf nearby hides a Vice City Flamingos card, according to a reader.",
+      "how": ["Fly over the pink areas on the mini map, then land and talk to Kyle."],
+      "sources": [{ "publisher": "Push Square", "url": "https://www.pushsquare.com/guides/gta-6-check-out-mckittrick-farm-kyle-walkthrough", "read": "2026-11-25" }]
+    },
+    {
+      "id": "brooks-boatworks", "name": "Brooks Boatworks safe", "region": null, "area": "Unknown", "cat": "money",
+      "pos": null, "precision": "region", "status": "Reported",
+      "summary": "Safe code reported as 6823, written on the wall map in the smallest building of the compound. Kingpin Bowling Alley (0330) and Nova Auto Junkyard (7777) are also listed.",
+      "how": ["Look for the code with Focus Mode, or threaten staff for it."],
+      "needs": "Some codes are randomised per player.",
+      "sources": [{ "publisher": "GamesRadar+", "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-safe-codes/", "read": "2026-11-25" }]
+    }
+  ]
+}

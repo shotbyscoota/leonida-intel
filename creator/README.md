@@ -30,6 +30,8 @@ git add content/clips.json && git commit -m "Pin SX clip" && git push
 
 If a clip proves a cheat or glitch, add it to `content/intel.json` as **Tested**, with the `tested` block (date, version, platform), the `cheat` block (exact input, unlock condition, whether it blocked saves and trophies) or the `glitch` block (`reproducesOnLatest` true/false), and the video link as `url`. Run `node tools/update-feed.mjs --check`: it refuses Tested without the proof.
 
+If the clip shows a **place** (a weapon cache, a car, a secret), also upgrade its pin in `content/map/places.json`: `status: "Tested"`, a `checked` block (`on`, `version`, `platform`, `clip`: the Short's URL), and if you stood on the exact spot, `precision: "spot"`. Then `node tools/build-map.mjs`.
+
 ## File naming (keeps a week of footage findable)
 
 ```

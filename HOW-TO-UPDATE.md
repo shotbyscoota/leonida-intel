@@ -32,6 +32,15 @@ Reddit is switched off: since November 2026 its RSS needs a login. It can come b
 
 Then commit and push to `main`. Netlify deploys only when something under `dist/` changed.
 
+## The map (map.html)
+Built for years of small edits, with no libraries and no build step for the page itself.
+- **Places live in one file:** `content/map/places.json`. Copy an existing entry, change it, then run `node tools/build-map.mjs` (writes `dist/data/map.js`) and commit both files. `node tools/build-map.mjs --check` validates without writing; GitHub runs it on every scan and fails loudly if a rule is broken or the data file is stale.
+- **Rules the builder enforces:** every place needs at least one source link; `pos` is `[longitude, latitude]` inside the map, or `null` when no guide says where (it then shows under "Not placed yet"); `precision` is `area` (named town/district), `region` (only the region known) or `spot` (only when Tested by us or placed by Rockstar); Tested needs `checked.on`, `checked.version`, `checked.platform` (and `checked.clip` for the SX video that proves it).
+- **When Rockstar ships an update**, add it to `content/patches.json`: every map card read before that date shows "read before update X; check in game" until someone re-checks it.
+- **Finding positions:** the outline is the real Florida coast as a stand-in, so place a pin where the named town sits relative to the coast (Vice City ≈ Miami, the Keys ≈ the Florida Keys). Open Rockstar's official map (Downloads on rockstargames.com/VI) side by side.
+- **Changing the shape** (rare): `node tools/map/make-outline.mjs <Natural Earth states.geojson> <lakes.geojson>` regenerates `content/map/outline.json`.
+- **Tests:** `node --test tools/test-map.mjs`.
+
 ## Daily Shorts
 See `creator/README.md` (the weekly batch loop) and `creator/queue-*.md` (this week's 7 clips).
 

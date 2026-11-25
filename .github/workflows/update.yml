@@ -33,8 +33,9 @@ jobs:
           node-version: 22
       - name: Tests and content check
         run: |
-          node --test tools/test-updater.mjs
+          node --test tools/test-updater.mjs tools/test-map.mjs
           node tools/update-feed.mjs --check
+          node tools/build-map.mjs --check
       # The ledger (first-seen / last-checked per finding) lives in the Actions cache between runs,
       # and is committed only together with a publish, so the history is not one commit per scan.
       - name: Restore scan ledger
