@@ -48,6 +48,14 @@ Built for years of small edits, with no libraries and no build step for the page
 - **When a label is lower than its best source** (an outlet confirms the item but only fan guides say where), keep the lower label and add `"statusNote"`: one sentence saying why. It shows on the card.
 - **The List page** (`spots.html`) and the intel board's Map spots tab read the same `dist/data/map.js`, so every spot appears on the map, the list and the board automatically. The board's three examples per category are the `FEATURED` list at the top of the map-spots block in `dist/site.js`; a test fails if one of them is deleted.
 
+## The How-to page (howto.html)
+29 guides to the things GTA VI never explains, in six topics. Each guide is plain HTML in `dist/howto.html` (no build step), so search engines and people without JavaScript see all of it. `dist/howto.js` only adds the search box, topic chips, shared links and Copy link.
+- **Add a guide:** copy one `<li id="...">` block inside the right `<section class="group">`, give it a new short `id` (that becomes its share link, `howto.html#your-id`), and update the number in that section's `<small>` heading and the "29 guides" count in the filter bar.
+- **Every step needs a source you have read.** Link the outlet's own article (not a Google News link), with the date it was published. Label it Reported. Tested is only for something we did on camera (date, game version, platform).
+- **Sites that block robots** (GameSpot, IGN, Rockstar Support) can't be checked automatically, so don't use them as a guide's only source.
+- **After a game update,** change the "Checked" date and "Game update" stamp at the top, and re-read any guide the patch notes touch.
+- **Before every deploy:** `node tools/check-links.mjs --external`. It opens every link on every page and must end with `no broken links`. Anything marked BLOCKED refuses robots; open it in a browser to confirm.
+
 ## Daily Shorts
 See `creator/README.md` (the weekly batch loop) and `creator/queue-*.md` (this week's 7 clips).
 

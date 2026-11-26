@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How To · Leonida Intel</title>
+<meta name="description" content="GTA VI how-to guides for the things the game never explains: hidden controls, saving, fast travel, the HDR fix, ATMs, bank vaults, secret playlists and more. Each one checked against the outlet that published it, with links. Unofficial fan guide.">
+<meta name="theme-color" content="#0b0a0c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How to: the GTA VI stuff the game never tells you">
+<meta property="og:description" content="Hidden controls, saves, fast travel, the HDR fix, ATMs, bank vaults and secret playlists. 29 checked guides with sources.">
+<meta property="og:image" content="https://gtadropz.netlify.app/og.jpg">
+<link rel="canonical" href="https://gtadropz.netlify.app/howto.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Anton;src:url(fonts/anton-400.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Dafoe;src:url(fonts/mr-dafoe-400.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"DM Sans";src:url(fonts/dm-sans-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"DM Sans";src:url(fonts/dm-sans-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"DM Sans";src:url(fonts/dm-sans-700.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{
+  --ink:#0b0a0c; --ink-2:#151318; --line:#2a2630;
+  --bone:#fff3e4; --mute:#b7aeb9;
+  --pink:#ff2e7e; --orange:#ff8a1f; --yellow:#ffd23f; --teal:#19e3d0; --green:#4dff88; --sky:#7ab8ff;
+  --sunset:linear-gradient(100deg,#ff2e7e 0%,#ff5a4e 45%,#ff8a1f 100%);
+  --side:max(16px,3.5vw); --max:1500px; --ease:cubic-bezier(.2,.75,.2,1);
+  --poster:Anton,"Impact","Arial Narrow Bold",sans-serif; --script:Dafoe,"Brush Script MT",cursive; --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --top:64px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--top) + 150px)}
+body{margin:0;background:var(--ink);color:var(--bone);font:400 16px/1.55 var(--body);overflow-x:hidden}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--yellow);color:var(--ink);padding:10px 14px;z-index:99;font-weight:700}
+.skip:focus{left:8px}
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--side)}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.top{position:sticky;top:0;z-index:50;background:rgba(11,10,12,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--top)}
+.brand{display:flex;align-items:baseline;gap:6px;text-decoration:none;white-space:nowrap}
+.brand b{font:400 24px/1 var(--poster);text-transform:uppercase}
+.brand i{font:400 32px/.6 var(--script);color:var(--pink);font-style:normal;text-shadow:0 0 14px rgba(255,46,126,.7)}
+.top nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.top nav::-webkit-scrollbar{display:none}
+.top nav a{font:700 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:12px 10px;white-space:nowrap}
+.top nav a:hover{color:var(--pink)}
+.top nav a[aria-current="page"]{color:var(--ink);background:var(--yellow)}
+
+.lab{display:inline-block;font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;padding:6px 8px;border:2px solid currentColor;text-decoration:none;white-space:nowrap}
+.lab.Official{background:var(--pink);border-color:var(--pink);color:#fff}
+.lab.Tested{background:var(--green);border-color:var(--green);color:var(--ink)}
+.lab.Reported{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+.lab.Unverified{border-style:dashed;color:var(--yellow)}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;background:var(--bone);color:var(--ink);border:0;font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;box-shadow:4px 4px 0 var(--pink);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--pink)}
+.btn:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--pink)}
+.btn.ghost{background:none;color:var(--bone);border:2px solid var(--bone);box-shadow:none}
+.btn.ghost:hover{background:var(--bone);color:var(--ink)}
+.btn.sm{min-height:40px;padding:0 12px;font-size:12px}
+
+/* hero */
+.hero{position:relative;padding:clamp(40px,6vw,80px) 0 clamp(64px,7vw,92px);background:radial-gradient(ellipse at 85% 0%,rgba(255,46,126,.22),transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(25,227,208,.12),transparent 50%);overflow:hidden}
+.hero h1{margin:0;line-height:1}
+.hero h1 .s{display:block;font:400 clamp(34px,4vw,48px)/1 var(--script);color:var(--pink);text-shadow:0 0 12px rgba(255,46,126,.75);transform:rotate(-3deg);transform-origin:left bottom;margin:0 0 14px 4px;line-height:1.1}
+.hero h1 .p{display:block;font:400 clamp(3.2rem,9vw,7.5rem)/.88 var(--poster);text-transform:uppercase;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:4px}
+.hero .lede{max-width:62ch;color:var(--mute);margin:14px 0 18px;font-size:17px}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap}
+.stamp{display:inline-flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 18px;font:700 12px/1.4 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.stamp span::before{content:"";display:inline-block;width:7px;height:7px;background:var(--teal);transform:rotate(45deg);margin-right:8px;vertical-align:1px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:13px;color:var(--mute)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+/* the caution tape, as on the home page (static here) */
+.tape{position:absolute;left:-2%;right:-2%;bottom:14px;height:40px;background:var(--yellow);color:var(--ink);transform:rotate(-1.2deg);display:flex;align-items:center;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.tape .tag{flex:none;height:100%;display:flex;align-items:center;padding:0 18px 0 calc(2% + var(--side));background:var(--ink);color:var(--yellow);font:400 20px/1 var(--poster);letter-spacing:.04em;text-transform:uppercase}
+.tape p{margin:0;white-space:nowrap;font:700 14px/40px var(--body);letter-spacing:.06em;text-transform:uppercase}
+.tape p span{padding:0 22px;display:inline-flex;align-items:center}
+.tape p span::after{content:"";width:8px;height:8px;background:var(--ink);transform:rotate(45deg);margin-left:44px}
+
+/* filter bar */
+.bar{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:40;background:rgba(11,10,12,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-block:1px solid var(--line);padding:12px 0}
+.bar .wrap{display:grid;gap:10px}
+.bar .line1{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search{display:flex;flex:1 1 260px;border:2px solid var(--bone)}
+.search input{flex:1;min-width:0;min-height:44px;padding:0 12px;background:var(--ink);border:0;font-size:16px}
+.search input::placeholder{color:var(--mute)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 12px;border:2px solid var(--line);background:none;cursor:pointer;font:700 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transition:border-color .2s,background .2s}
+.chip i{width:10px;height:10px;border-radius:50%;background:var(--c,var(--bone));box-shadow:0 0 8px var(--c,var(--bone))}
+.chip:hover{border-color:var(--bone)}
+.chip[aria-pressed="true"]{border-color:var(--c,var(--bone));background:color-mix(in srgb,var(--c,var(--bone)) 16%,transparent)}
+.status{font:700 12px/1.3 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:0}
+
+/* groups and rows */
+main{padding-bottom:clamp(56px,7vw,100px)}
+.group{padding-top:clamp(28px,4vw,48px)}
+.group>h2{display:flex;align-items:baseline;gap:12px;margin:0 0 6px;font:400 clamp(2.2rem,5vw,3.8rem)/.95 var(--poster);text-transform:uppercase}
+.group>h2 i{width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c);flex:0 0 auto;align-self:center}
+.group>h2 small{font:700 13px/1 var(--body);letter-spacing:.12em;color:var(--mute)}
+.group>p{margin:0 0 14px;color:var(--mute);max-width:70ch}
+.rows{list-style:none;margin:0;padding:0;border-top:3px solid var(--bone)}
+.rows>li{border-bottom:1px solid var(--line)}
+.rows details>summary{list-style:none;display:grid;grid-template-columns:12px minmax(0,1fr) auto 20px;gap:12px;align-items:center;padding:14px 4px;cursor:pointer}
+.rows details>summary::-webkit-details-marker{display:none}
+.rows summary>i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.rows summary b{display:block;font-weight:700;font-size:17px;line-height:1.3}
+.rows summary small{display:block;color:var(--mute);font-size:14px;line-height:1.35;margin-top:2px}
+.rows summary .lab{font-size:10px;padding:4px 6px}
+.rows summary .chev{width:20px;height:20px;transition:transform .2s var(--ease);stroke:var(--mute);fill:none;stroke-width:2}
+.rows details[open]>summary .chev{transform:rotate(180deg)}
+.rows summary:hover b{color:var(--pink)}
+.rows summary:focus-visible{outline-offset:-3px}
+.rows .body{padding:0 4px 20px 26px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(16px,3vw,40px)}
+.rows .body p{margin:0 0 10px}
+.rows .body h3{margin:14px 0 8px;font:700 11px/1.35 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.rows .body h3:first-child{margin-top:0}
+.rows .body ol,.rows .body ul.notes{margin:0;padding-left:20px}
+.rows .body li{margin:0 0 7px}
+.rows .body ol>li::marker{font-weight:700;color:var(--c)}
+.rows .body ul.notes>li::marker{color:var(--c)}
+.rows .body strong{color:var(--bone)}
+.rows .src{list-style:none;padding:0;margin:0;font-size:14px}
+.rows .src li{margin:0 0 8px}
+.rows .src a{text-decoration-color:var(--pink);text-underline-offset:3px;font-weight:700}
+.rows .src small{color:var(--mute)}
+.rows .warn{font-size:14px;color:var(--yellow);margin-top:10px}
+.rows .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+kbd{display:inline-block;font:700 12px/1.25 var(--body);letter-spacing:.02em;padding:2px 6px;border:1px solid #4a4452;border-bottom-width:3px;background:var(--ink-2);color:var(--bone);white-space:nowrap}
+.tbl{overflow-x:auto;margin:0 0 6px;border-top:2px solid var(--c)}
+.keys{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
+.keys th{font:700 11px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+.keys td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.keys td:first-child{font-weight:500}
+.keys tr:hover td{background:rgba(255,255,255,.03)}
+.wide{grid-column:1/-1}
+.none{padding:40px 0;color:var(--mute);font-size:18px}
+.none[hidden],.group[hidden],.rows>li[hidden]{display:none}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--yellow);color:var(--ink);font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:14px 18px;z-index:80;box-shadow:4px 4px 0 var(--pink)}
+
+footer{background:#000;padding:40px 0 calc(30px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--mute)}
+footer a:hover{color:var(--bone)}
+@media (max-width:760px){
+  .top nav{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 18px),transparent);mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 18px),transparent)}
+  .rows details>summary{grid-template-columns:10px minmax(0,1fr) 18px}
+  .rows summary .lab{grid-column:2;justify-self:start;margin-top:4px}
+  .rows summary .chev{grid-row:1;grid-column:3}
+  .rows .body{grid-template-columns:1fr;padding-left:22px}
+  .bar{position:static}
+  .tape{height:36px}.tape p{line-height:36px;font-size:12px}.tape .tag{font-size:17px}
+  html{scroll-padding-top:calc(var(--top) + 12px)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#list">Skip to the guides</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./"><b>Leonida</b> <i>Intel</i><span class="vh"> home</span></a>
+    <nav aria-label="Site">
+      <a href="./#intel">Intel</a><a href="./#patches">Patches</a><a href="map.html">Map</a><a href="spots.html">List</a><a href="howto.html" aria-current="page">How to</a><a href="index.html#characters">Characters</a><a href="./#tv">SX TV</a><a href="./#wire">The Wire</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <h1 id="h1"><span class="s">Street smarts</span><span class="p">How to</span></h1>
+    <p class="lede">The stuff GTA VI never explains: the buttons it hides, how saving really works, the settings that fix the picture, and the money moves. Every guide is checked against the outlet that published it, with the link.</p>
+    <p class="stamp"><span>Checked 26 Nov 2026</span><span>Game update 1.002.002</span><span>PS5 + Xbox Series X|S buttons</span></p>
+    <div class="acts"><a class="btn" href="#controls">Start with the hidden controls</a><a class="btn ghost" href="map.html">Open the 3D map</a></div>
+    <div class="legend" aria-label="What the labels mean">
+      <span><span class="lab Reported">Reported</span> a named outlet published it; links in each guide</span>
+      <span><span class="lab Tested">Tested</span> we did it in game (none yet; clips coming)</span>
+    </div>
+  </div>
+  <div class="tape" aria-hidden="true"><span class="tag">How to</span><p><span>Hidden controls</span><span>Saves that stick</span><span>Skip the drive</span><span>Fix the dark picture</span><span>Money moves</span><span>Secret playlists</span><span>Hidden controls</span><span>Saves that stick</span><span>Skip the drive</span></p></div>
+</section>
+
+<div class="bar" role="search" aria-label="Filter the guides">
+  <div class="wrap">
+    <div class="line1">
+      <label class="search"><span class="vh">Search the guides</span><input id="q" type="search" placeholder="Search: save, HDR, ATM, earbuds, flip car…" autocomplete="off"></label>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Topic">
+      <button class="chip" type="button" data-g="" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-g="controls" aria-pressed="false" style="--c:var(--pink)"><i></i>Controls</button>
+      <button class="chip" type="button" data-g="around" aria-pressed="false" style="--c:var(--teal)"><i></i>Getting around</button>
+      <button class="chip" type="button" data-g="saves" aria-pressed="false" style="--c:var(--yellow)"><i></i>Saves &amp; time</button>
+      <button class="chip" type="button" data-g="fixes" aria-pressed="false" style="--c:var(--sky)"><i></i>Settings &amp; fixes</button>
+      <button class="chip" type="button" data-g="money" aria-pressed="false" style="--c:var(--green)"><i></i>Money &amp; heists</button>
+      <button class="chip" type="button" data-g="life" aria-pressed="false" style="--c:var(--orange)"><i></i>Life in Leonida</button>
+    </div>
+    <p class="status" id="count" role="status" aria-live="polite">29 guides</p>
+  </div>
+</div>
+
+<div class="wrap" id="list">
+
+<!-- ======================= CONTROLS ======================= -->
+<section class="group" id="controls" data-g="controls" style="--c:var(--pink)" aria-labelledby="g-controls">
+  <h2 id="g-controls"><i></i>Controls nobody tells you <small>6</small></h2>
+  <p>Rockstar explains the big stuff. These are the buttons it leaves out. All for the Default control scheme; PS5 first, then Xbox.</p>
+  <ul class="rows">
+
+  <li id="hidden-controls"><details>
+    <summary><i></i><span><b>17 hidden controls, on one sheet</b><small>Keep the engine running, hide from cops in your car, flip people off, feel the speed limit.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div class="wide">
+        <div class="tbl"><table class="keys">
+          <thead><tr><th scope="col">What it does</th><th scope="col">PS5</th><th scope="col">Xbox</th></tr></thead>
+          <tbody>
+            <tr><td>Get out but keep the engine and lights running (a quicker getaway)</td><td>Double-tap <kbd>Triangle</kbd></td><td>Double-tap <kbd>Y</kbd></td></tr>
+            <tr><td>Get straight into the back seat instead of walking round to the passenger door</td><td>Hold <kbd>Triangle</kbd></td><td>Hold <kbd>Y</kbd></td></tr>
+            <tr><td>Hide from the police inside your parked car</td><td>Hold <kbd>Circle</kbd></td><td>Hold <kbd>B</kbd></td></tr>
+            <tr><td>Rest: lean on a rail, sit on a dock, or just stand around</td><td>Hold <kbd>Circle</kbd> on foot</td><td>Hold <kbd>B</kbd> on foot</td></tr>
+            <tr><td>Look in first person while standing still (great for reading signs)</td><td>Hold <kbd>L2</kbd>, press <kbd>R3</kbd>; <kbd>R2</kbd> zooms</td><td>Hold <kbd>LT</kbd>, press <kbd>RS</kbd>; <kbd>RT</kbd> zooms</td></tr>
+            <tr><td>Flip someone off</td><td>Hold <kbd>L2</kbd>, press <kbd>R1</kbd> (in a car: <kbd>R1</kbd>)</td><td>Hold <kbd>LT</kbd>, press <kbd>RB</kbd> (in a car: <kbd>RB</kbd>)</td></tr>
+            <tr><td>Yell at other drivers</td><td><kbd>R3</kbd> while driving</td><td><kbd>RS</kbd> while driving</td></tr>
+            <tr><td>Swing the car door into bikers and cops</td><td><kbd>Square</kbd> while driving</td><td><kbd>X</kbd> while driving</td></tr>
+            <tr><td>Kick people from a bike</td><td><kbd>Square</kbd> while riding</td><td><kbd>X</kbd> while riding</td></tr>
+            <tr><td>Turn signals</td><td>Tap <kbd>Left</kbd> / <kbd>Right</kbd> on the D-pad</td><td>Tap <kbd>Left</kbd> / <kbd>Right</kbd> on the D-pad</td></tr>
+            <tr><td>Radio on or off (also with earbuds on foot)</td><td>Double-tap <kbd>Left</kbd> on the D-pad</td><td>Double-tap <kbd>Left</kbd> on the D-pad</td></tr>
+            <tr><td>Headlights on, off and full beam</td><td><kbd>Circle</kbd> while driving</td><td><kbd>B</kbd> while driving</td></tr>
+            <tr><td>Vehicle menu: windows, lights, drop a boat's anchor</td><td>Hold <kbd>Left</kbd> on the D-pad, right stick up to Vehicle</td><td>Hold <kbd>Left</kbd> on the D-pad, right stick up to Vehicle</td></tr>
+            <tr><td>Talk to people without leaving the car</td><td>Hold <kbd>Up</kbd> on the D-pad</td><td>Hold <kbd>Up</kbd> on the D-pad</td></tr>
+            <tr><td>Swap your aiming shoulder</td><td><kbd>Left</kbd> on the D-pad while aiming</td><td><kbd>Left</kbd> on the D-pad while aiming</td></tr>
+            <tr><td>Partner commands: tell your partner to drive, or to follow you</td><td>Hold <kbd>Right</kbd> on the D-pad</td><td>Hold <kbd>Right</kbd> on the D-pad</td></tr>
+            <tr><td>Feel the speed limit in the trigger</td><td>Pull <kbd>R2</kbd> to the first point of resistance</td><td>PS5 only</td></tr>
+          </tbody>
+        </table></div>
+        <p class="warn">The speed-limit trick needs Adaptive Triggers Resistance switched on: <strong>Options › Settings › Controller › DualSense Wireless Controller Features</strong>. Using the Classic scheme? Some buttons move (see the guide below).</p>
+      </div>
+      <div>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.pushsquare.com/guides/gta-6-secret-controls-the-game-doesnt-tell-you" target="_blank" rel="noopener">Push Square</a>: GTA 6: Secret Controls the Game Doesn't Tell You <small>· 25 Nov 2026</small></li>
+          <li><a href="https://www.pcgamer.com/games/grand-theft-auto/15-hidden-gta-6-controls-and-features-you-should-know-about/" target="_blank" rel="noopener">PC Gamer</a>: 15 hidden GTA 6 controls and features you should know about <small>· 20 Nov 2026</small></li>
+        </ul>
+      </div>
+      <div><div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div></div>
+    </div>
+  </details></li>
+
+  <li id="flip-car"><details>
+    <summary><i></i><span><b>Flip your car back over (or shove a boat off the beach)</b><small>The old wiggle-the-stick trick is gone. You do it on foot.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Get out and walk into the <strong>side</strong> of the upturned car, as if pushing it with your body.</li>
+          <li>Keep walking into it until Jason or Lucia switches to a pushing pose.</li>
+          <li>Press <kbd>Square</kbd> (PS5) or <kbd>X</kbd> (Xbox) to shove it back onto its wheels.</li>
+        </ol>
+        <h3>In a race</h3>
+        <p>You can't get out, so hold <kbd>Touchpad</kbd> (PS5) or <kbd>View</kbd> (Xbox) to reset onto the road facing the right way. Still ruined? Pause and pick Restart Event.</p>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes">
+          <li>The same shove pushes a beached boat back into the water.</li>
+          <li>Flipping doesn't repair anything: <a href="#repair-refuel">fix it at a gas pump</a>.</li>
+          <li>PC Gamer's list gives <kbd>L3</kbd> for the shove. If <kbd>Square</kbd> / <kbd>X</kbd> does nothing on your control scheme, try that.</li>
+        </ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.videogameschronicle.com/guide/gta-6-how-to-flip-car-grand-theft-auto/" target="_blank" rel="noopener">VGC</a>: How to flip a car in Grand Theft Auto 6 <small>· 25 Nov 2026</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-flip-car/" target="_blank" rel="noopener">GamesRadar+</a>: How to flip your car in GTA 6 <small>· 22 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="two-cars"><details>
+    <summary><i></i><span><b>Make your partner drive a second getaway car</b><small>Two cars, one crew: your partner follows you in their own ride.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>With your partner next to you, hold <kbd>Right</kbd> on the D-pad to open the command menu.</li>
+          <li>Press <kbd>Cross</kbd> (PS5) / <kbd>A</kbd> (Xbox) to tell your partner to drive.</li>
+          <li>Get into a different car yourself.</li>
+          <li>Hold <kbd>Right</kbd> on the D-pad again and press <kbd>Square</kbd> / <kbd>X</kbd>: your partner now follows right behind you.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Handy for parking a second getaway car near a robbery, or to bring two cars home at once.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.pushsquare.com/guides/gta-6-secret-controls-the-game-doesnt-tell-you" target="_blank" rel="noopener">Push Square</a>: GTA 6: Secret Controls the Game Doesn't Tell You <small>· 25 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="auto-drive"><details>
+    <summary><i></i><span><b>Let the car drive itself (Auto Drive)</b><small>A cinematic cruise to any waypoint. It isn't fast travel: it waits in traffic.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Get in a vehicle and set a destination marker on the map.</li>
+          <li>Hold <kbd>Down</kbd> on the D-pad for the camera options and, still holding it, press <kbd>Options</kbd> (PS5) / <kbd>Menu</kbd> (Xbox) to open the Cinematic menu.</li>
+          <li>Hold the button shown next to <strong>Enable Auto Drive</strong> in the bottom right.</li>
+          <li>Use the triggers to pick one of three speeds. The right stick moves the camera and <kbd>R3</kbd> / <kbd>RS</kbd> changes the view. Move the map marker any time to reroute.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Your driver obeys the road rules and sits in traffic, so it is slow. It's made for screenshots, clips and sightseeing.</li><li>Other drivers can still crash into you.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-auto-drive/" target="_blank" rel="noopener">GamesRadar+</a>: How to use auto drive in GTA 6 to cruise around Leonida <small>· 23 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="classic-controls"><details>
+    <summary><i></i><span><b>Get GTA V's controls back</b><small>Sprint on X / A again, the way your thumbs remember.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Press <kbd>Options</kbd> (PS5) / <kbd>Menu</kbd> (Xbox) and open <strong>Settings</strong>.</li>
+          <li>Open <strong>Control Scheme</strong> and switch from Default to <strong>Classic</strong>.</li>
+        </ol>
+        <h3>What moves</h3>
+        <p>Default: sprint is <kbd>L3</kbd> / <kbd>LS</kbd>, jump is <kbd>Cross</kbd> / <kbd>A</kbd>, melee is <kbd>Square</kbd> / <kbd>X</kbd>.<br>Classic: run is <kbd>Cross</kbd> / <kbd>A</kbd>, melee is <kbd>Circle</kbd> / <kbd>B</kbd>, jump and climb are <kbd>Square</kbd> / <kbd>X</kbd>.</p>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>The HUD hides itself by default. Press <kbd>Down</kbd> on the D-pad to show the minimap, money, health, stamina and Focus, or set them to stay on in Settings.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-classic-controls/" target="_blank" rel="noopener">GamesRadar+</a>: How to get classic GTA 5 controls in GTA 6 <small>· 18 Nov 2026</small></li>
+          <li><a href="https://www.pushsquare.com/guides/gta-6-secret-controls-the-game-doesnt-tell-you" target="_blank" rel="noopener">Push Square</a>: the Control Scheme menu path <small>· 25 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="walk-faster"><details>
+    <summary><i></i><span><b>Make Jason and Lucia walk faster</b><small>One setting, no extra button: a quicker everyday pace.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Open <strong>Settings › Gameplay</strong> and scroll to <strong>Movement</strong>.</li>
+          <li>Set <strong>Movement Speed</strong> to Fast Walk, Jog or Run (Walk is the default).</li>
+          <li>Optional: <strong>Combat Movement Speed</strong> sets your pace in a gunfight (Fast Walk, Jog or Run).</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>It changes your pace with the stick pushed all the way, not your sprint, so it costs no stamina.</li><li>Tilt the stick only a little and you still walk slowly.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.pcgamer.com/games/grand-theft-auto/gta-6-movement-speed-setting-walk-faster/" target="_blank" rel="noopener">PC Gamer</a>: Try this GTA 6 movement speed setting to make Jason and Lucia walk faster <small>· 20 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+  </ul>
+</section>
+
+<!-- ======================= GETTING AROUND ======================= -->
+<section class="group" id="around" data-g="around" style="--c:var(--teal)" aria-labelledby="g-around">
+  <h2 id="g-around"><i></i>Getting around <small>5</small></h2>
+  <p>Leonida is huge and cars break. How to skip the drive, keep your ride, and get into the good ones.</p>
+  <ul class="rows">
+
+  <li id="fast-travel"><details>
+    <summary><i></i><span><b>Fast travel: skip the drive for $100</b><small>There's no teleport menu. Taxis, the RydeMe app and buses do the job.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>Three ways</h3>
+        <ol>
+          <li><strong>Taxi.</strong> You get Paradise Taxi's number in Chapter 1. Press <kbd>Up</kbd> on the D-pad for your phone, open Contacts and call. It takes Pocket Cash. In the cab, focus on the driver with <kbd>L2</kbd> / <kbd>LT</kbd> and pick skip with <kbd>Triangle</kbd> / <kbd>Y</kbd>: $100 extra and you're there.</li>
+          <li><strong>RydeMe app</strong> (from Chapter 2). Phone › RydeMe, then home to your safehouse or any destination. It charges your BuckMe account. Same $100 skip.</li>
+          <li><strong>Bus or train.</strong> Hold <kbd>Down</kbd> on the D-pad to see nearby stops, wait for the next one, set a destination on the route, then hold <kbd>Triangle</kbd> / <kbd>Y</kbd> to skip the journey.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Skipping a long ride also moves the clock forward.</li><li>Short of cash for the taxi? An ATM turns bank money into Pocket Cash.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-how-to-fast-travel/" target="_blank" rel="noopener">GamesRadar+</a>: How to fast travel in GTA 6 <small>· 19 Nov 2026, updated 23 Nov</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="own-cars"><details>
+    <summary><i></i><span><b>Keep a car for good, and get it back when it's wrecked</b><small>Only registered cars come back. Everything else is gone for good, trunk and all.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Drive the car to a Pay 'n' Spray (Index › Vehicles) and choose <strong>Register</strong>. The fee depends on the car.</li>
+          <li>Lost, destroyed or impounded? The <strong>ScooterBros</strong> app on your phone brings a registered car back for a fee, and it can deliver any registered car to you.</li>
+          <li>Each of Jason and Lucia has one personal vehicle. Buy garages to register more.</li>
+          <li>Not registered? Leave it in a parking space outside your safehouse or in a garage, or you may lose it.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes">
+          <li>Cars with a standard or advanced tracker can't be registered until later in the story.</li>
+          <li>Your personal vehicle's trunk holds stash bags, and you can change your loadout and outfit there.</li>
+          <li>Impounded with loot in the trunk? Check the Personal tab of the Index for the lot and steal it back yourself; the paid recovery can lose stash bags.</li>
+        </ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-personal-vehicles-how-to-register-switch-recover-car/" target="_blank" rel="noopener">GamesRadar+</a>: GTA 6 Personal Vehicles explained <small>· 19 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="repair-refuel"><details>
+    <summary><i></i><span><b>Repair your car at the gas pump</b><small>Gas stations fix wrecks too, and most players drive straight past.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Pull up close to a pump (gas pump icons on the map) until <strong>Services</strong> appears.</li>
+          <li>Choose <strong>Repair</strong>. The price depends on the damage, and the car comes back fixed.</li>
+          <li>Low on fuel? Same menu, choose <strong>Refuel</strong> and hold the button shown until the tank is full.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>A full tank lasts a long time. A car you've just stolen may be nearly empty, though.</li><li>Electric cars use charging stations: pull up and choose Charge Vehicle.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.pcgamer.com/games/grand-theft-auto/gta-6-refuel-repair-cars/" target="_blank" rel="noopener">PC Gamer</a>: Refueling cars in GTA 6 is barely necessary, but there's much better reason to visit garages <small>· 19 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="key-cloner"><details>
+    <summary><i></i><span><b>Steal keyless cars with the Key Cloner</b><small>The best cars have no key. From Chapter 3, your phone opens them.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Play to the Chapter 3 story mission where Randy asks you to steal the Zorrusso ("Clonin' Keys, Makin' Gs"). Randy puts the Key Cloner app on your phone. There's no way to get it sooner.</li>
+          <li>Before you steal, scan the car with the WAiNK app (<kbd>Up</kbd> on the D-pad). It tells you if the key needs cloning and what tracker the car has.</li>
+          <li>At the driver's door press <kbd>Triangle</kbd> / <kbd>Y</kbd> (Clone Key) and turn the right stick until the meter turns pink, with a whir and a rumble. Hold it there until the meter fills.</li>
+          <li>Get in: no alarm, no hotwiring.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Watch the tracker</h3>
+        <ul class="notes">
+          <li><strong>Standard tracker:</strong> no mods until you register the car at Randy's.</li>
+          <li><strong>Advanced tracker:</strong> it tells the police where you are if you drive too slowly, so keep your speed up. You can't sell or keep these until you're further through Randy's Wish List.</li>
+        </ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-key-cloner-how-to-get/" target="_blank" rel="noopener">GamesRadar+</a>: How to get a GTA 6 Key Cloner <small>· 21 Nov 2026, updated 25 Nov</small></li>
+          <li><a href="https://www.vice.com/en/article/gta-6-key-cloner/" target="_blank" rel="noopener">VICE</a>: How to Clone Keys in GTA 6 and Unlock the Key Cloner <small>· 20 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="lose-heat"><details>
+    <summary><i></i><span><b>Shake the heat: respray, mask up, change clothes</b><small>Cops now remember your car and your outfit, not just your face.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>Vehicle Heat</h3>
+        <ol>
+          <li>Find a Pay 'n' Spray: Index › Vehicles › Pay 'n' Spray lists them, nearest first.</li>
+          <li>Drive in and respray. That clears the car's heat. You can't get in while the police can see you (stars fully filled).</li>
+          <li>No time? Dumping the car also clears Vehicle Heat, but the police will probably impound it.</li>
+        </ol>
+        <h3>Appearance Heat</h3>
+        <ol>
+          <li>Buy a mask at Chuck's Tackle &amp; Shot in Key Lento (from the start of the game) or any Ammu-Nation.</li>
+          <li>At your wardrobe, add it to your loadout (Accessories › Masks).</li>
+          <li>Hold <kbd>L1</kbd> / <kbd>LB</kbd>, press <kbd>R1</kbd> / <kbd>RB</kbd> to the items, pick the neckwear slot at the top of the wheel and press <kbd>Cross</kbd> / <kbd>A</kbd>. Up and down on that slot changes how it's worn.</li>
+          <li>Or change your outfit at your personal vehicle's trunk.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Robbed a store with cameras? Mask up to shed Appearance Heat.</li><li>One wear style covers your face and makes shop clerks panic; the other wears it down.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-respray-cars-how-to/" target="_blank" rel="noopener">GamesRadar+</a>: How to respray cars in GTA 6 and shift your vehicle heat level <small>· 19 Nov 2026</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-masks-how-to-get-equip/" target="_blank" rel="noopener">GamesRadar+</a>: How to get a mask in GTA 6 and disguise yourself from cops <small>· 21 Nov 2026, updated 25 Nov</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-personal-vehicles-how-to-register-switch-recover-car/" target="_blank" rel="noopener">GamesRadar+</a>: GTA 6 Personal Vehicles explained <small>· 19 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button><a class="btn ghost sm" href="map.html#p=chucks-tackle">Chuck's on the map</a></div>
+      </div>
+    </div>
+  </details></li>
+  </ul>
+</section>
+
+<!-- ======================= SAVES & TIME ======================= -->
+<section class="group" id="saves" data-g="saves" style="--c:var(--yellow)" aria-labelledby="g-saves">
+  <h2 id="g-saves"><i></i>Saves, time and things you can miss <small>5</small></h2>
+  <p>No mission replays, a long day and night, and bonus items that vanish after a chapter.</p>
+  <ul class="rows">
+
+  <li id="save"><details>
+    <summary><i></i><span><b>Save by hand, and why it sometimes won't let you</b><small>15 manual slots, a hidden 16th for the autosave, and no quit button.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Open the main menu (<kbd>Options</kbd> / <kbd>Menu</kbd>).</li>
+          <li>Choose <strong>Game</strong>, then <strong>Save Game</strong>.</li>
+          <li>Pick one of the 15 slots and save.</li>
+        </ol>
+        <h3>Save greyed out?</h3>
+        <ul class="notes">
+          <li>You can't save during a mission. Restart from a checkpoint in the pause menu instead.</li>
+          <li>In free roam it can block you right after a phone call or objective: leave the building or vehicle and try again.</li>
+          <li>Cheats switch saving off until you reload.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes">
+          <li>There's no Quit option. Save, then close the game from the console's home screen.</li>
+          <li>The autosave misfired at launch and some players lost hours. Update 1.002.002 (23 Nov) fixed "an issue that resulted in the game not autosaving correctly". Save by hand anyway.</li>
+        </ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-how-to-save/" target="_blank" rel="noopener">GamesRadar+</a>: How to save your game progress in GTA 6 <small>· updated 23 Nov 2026</small></li>
+          <li><a href="https://www.pcgamer.com/games/grand-theft-auto/gta-6-save-game/" target="_blank" rel="noopener">PC Gamer</a>: Here's how to save your game in GTA 6 <small>· 18 Nov 2026</small></li>
+          <li><a href="https://insider-gaming.com/gta-6-auto-save-how-to-save-game-wipe-issues/" target="_blank" rel="noopener">Insider Gaming</a>: Does GTA 6 Auto Save? <small>· 19 Nov 2026</small></li>
+          <li><a href="https://www.eurogamer.net/gta-6-xbox-playstation-patch-autosave-vignette" target="_blank" rel="noopener">Eurogamer</a>: the 23 Nov patch notes <small>· 23 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="replay"><details>
+    <summary><i></i><span><b>Want to replay a mission? Plan your saves</b><small>GTA VI has no mission replay. Your save slots are the replay.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Keep one manual save at the start of each chapter, and one at the end.</li>
+          <li>Before a big story mission, save in a fresh slot.</li>
+          <li>To play a mission again, load the save from just before it.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Rockstar dropped mission replay on purpose and made missions harder to fail instead.</li><li>15 slots cover the whole story, so spend them on chapter starts and big missions.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.eurogamer.net/gta-6-multiple-save-files-replay-missions" target="_blank" rel="noopener">Eurogamer</a>: You cannot replay missions in GTA 6, but you can use multiple save files <small>· 18 Nov 2026</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-how-to-save/" target="_blank" rel="noopener">GamesRadar+</a>: How to save your game progress in GTA 6 <small>· updated 23 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="skip-time"><details>
+    <summary><i></i><span><b>Skip to night (or morning)</b><small>Some jobs only run at certain hours. Sleep, and you pick the hour you wake up.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Check the Index first for jobs with an hourglass: they're time-limited, and you can sleep through them.</li>
+          <li>Go to a bed at one of your safehouses and lie down.</li>
+          <li>Press <kbd>Square</kbd> / <kbd>X</kbd> to sleep and choose to wake in the morning, at noon, in the evening or at night.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes">
+          <li>Skipping a taxi ride and fixing up the house also move the clock.</li>
+          <li>Night changes things: police take a little longer to show up, especially far from the city.</li>
+          <li>After the story, two cheats move or pause time. They unlock by finding 10 and 20 collectible watches.</li>
+        </ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-skip-time-pass/" target="_blank" rel="noopener">GamesRadar+</a>: How to skip and pass time in GTA 6 <small>· 20 Nov 2026</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/how-to-change-the-time-of-day-in-gta-6/" target="_blank" rel="noopener">GamesRadar+</a>: How to change the time of day in GTA 6 <small>· 19 Nov 2026</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-cheats/" target="_blank" rel="noopener">GamesRadar+</a>: All GTA 6 cheats for PS5 and Xbox <small>· 18 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="ultimate-edition"><details>
+    <summary><i></i><span><b>Ultimate Edition: ride the Chapter 1 extras before they're gone</b><small>Some bonus vehicles only work in Chapter 1.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>In Chapter 1, use Jason's <strong>Dinka Enduro</strong> motorbike and <strong>Crest Kayak</strong>.</li>
+          <li>Pick up the retro <strong>Vapid Ganado</strong> at Coastal Auto Care in Key Lento.</li>
+          <li>All three only work during Chapter 1, so enjoy them before you move the story on.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>When the rest unlocks</h3>
+        <ul class="notes"><li>The exclusive shops open in Chapter 1, and a lot more by the end of Chapter 2.</li><li>The Shitzu Squalo and the Vice City Style outfits come in Chapter 4, and the '95 Grotti Cheetah in Chapter 5. Eurogamer puts that at around 60 hours.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.eurogamer.net/gta-6-ultimate-edition-unlock-details-temporary-content" target="_blank" rel="noopener">Eurogamer</a>: Some of GTA 6's Ultimate Edition content is only available for the first chapter <small>· 18 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="pink-growler"><details>
+    <summary><i></i><span><b>Find the free pink "Porsche" (Vanessa's Growler)</b><small>A free car locked behind a laptop password in Chapter 3.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>In Chapter 3 you move into Vanessa's apartment in Vice City. She left her laptop behind.</li>
+          <li>Work out the laptop password and read the message about something waiting for her in La Perle, next to Auntie's Place.</li>
+          <li>Open that lock-up with the door code <strong>92665</strong>. The baby-pink Pfister Growler is free to keep.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-growler-pink-porsche/" target="_blank" rel="noopener">GamesRadar+</a>: Don't miss out on getting Vanessa's Pink Porsche Growler in GTA 6 <small>· 24 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button><a class="btn ghost sm" href="map.html#p=vanessas-growler">See it on the map</a></div>
+      </div>
+    </div>
+  </details></li>
+  </ul>
+</section>
+
+<!-- ======================= SETTINGS & FIXES ======================= -->
+<section class="group" id="fixes" data-g="fixes" style="--c:var(--sky)" aria-labelledby="g-fixes">
+  <h2 id="g-fixes"><i></i>Settings and fixes <small>4</small></h2>
+  <p>The picture, the difficulty, a crash, and the clips your Xbox shares without asking.</p>
+  <ul class="rows">
+
+  <li id="hdr"><details>
+    <summary><i></i><span><b>Game too dark? Fix the HDR settings</b><small>The in-game check can mislead you. Here are starting values that work.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Go to <strong>Options › Settings › Display › HDR Calibration</strong>.</li>
+          <li>Ignore whether the Rockstar logo is "just visible". Judge by the two pictures of the boat party instead; <kbd>R1</kbd> switches between the light and dark one.</li>
+          <li>Start from <strong>Brightness 2,000</strong>, <strong>Black Levels 20</strong>, <strong>Paper White 35</strong> (for a TV that reaches 1,000 nits or more).</li>
+          <li>Adjust from there for your TV and your room.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>The game ignores the PS5's own system HDR calibration, so tuning that won't help here.</li><li>The values come from HDTV Test's measurements on a reference monitor.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.pushsquare.com/guides/gta-6-hdr-settings" target="_blank" rel="noopener">Push Square</a>: GTA 6: Why Is It Too Dark? Here's How to Fix HDR Settings <small>· 20 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="easy-mode"><details>
+    <summary><i></i><span><b>Make it easier without cheats</b><small>No difficulty slider, but two switches do the same job.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Open <strong>Settings › Gameplay</strong>.</li>
+          <li>Turn on <strong>Accessible Combat</strong>: enemies have less health and do less damage to you.</li>
+          <li>Turn on <strong>Reduced Vehicle Damage</strong>: your ride takes less from gunfire, crashes and the world.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Rockstar warns that these "significantly change the balance and experience" of the game.</li><li>Cheats are no help mid-story: they only work after the ending, and they switch off saving.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.eurogamer.net/gta-6-easy-mode-accessibility-options" target="_blank" rel="noopener">Eurogamer</a>: Does GTA 6 have an 'easy mode'? <small>· 19 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="ps5-crash"><details>
+    <summary><i></i><span><b>PS5 keeps crashing (error CE-108255-1)</b><small>No named fix yet. These are the steps to try, in order.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>Try these</h3>
+        <ol>
+          <li>Install the latest update first (1.002.002 fixed "several issues that caused the game to crash").</li>
+          <li>Make sure the game fully installed: highlight GTA VI, press <kbd>Options</kbd> and check Download Status.</li>
+          <li>Restore your licences: <strong>Settings › Users and Accounts › Other › Restore Licenses</strong>.</li>
+          <li>Clear the cache and rebuild the database from the PS5's Safe Mode.</li>
+          <li>Delete and reinstall. If it's on an external drive, move it to internal storage.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Players report it after about 40 minutes of play, or at fixed moments (in the opening, or the plunger in Pipework).</li><li>As of 23 Nov, Rockstar hasn't named this error code as fixed.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.eurogamer.net/gta-6-ps5-crashing-ce-108255-1-error-fix" target="_blank" rel="noopener">Eurogamer</a>: GTA 6 keeps crashing on some PS5s with error CE-108255-1 <small>· 21 Nov 2026</small></li>
+          <li><a href="https://www.eurogamer.net/gta-6-xbox-playstation-patch-autosave-vignette" target="_blank" rel="noopener">Eurogamer</a>: the 23 Nov patch notes <small>· 23 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="xbox-uploads"><details>
+    <summary><i></i><span><b>Stop your Xbox uploading your GTA clips</b><small>Clips upload by default, and some GTA scenes can break Xbox's content rules.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Press the <kbd>Xbox</kbd> button.</li>
+          <li>Go to <strong>Profile &amp; system › Settings › Preferences › Capture &amp; share</strong>.</li>
+          <li>Under Automatic uploads, choose <strong>Xbox network</strong> and set it to <strong>Don't upload</strong>.</li>
+          <li>Do the same for OneDrive if you don't want anything uploaded.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Why</h3>
+        <ul class="notes"><li>Xbox's Community Standards ban mature sexual content in shared clips and screenshots. A GTA clip can cross that line without you noticing.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-xbox-auto-uploads/" target="_blank" rel="noopener">GamesRadar+</a>: How to turn off GTA 6 auto uploads on Xbox <small>· 21 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+  </ul>
+</section>
+
+<!-- ======================= MONEY & HEISTS ======================= -->
+<section class="group" id="money" data-g="money" style="--c:var(--green)" aria-labelledby="g-money">
+  <h2 id="g-money"><i></i>Money and heists <small>4</small></h2>
+  <p>Where your money lives, how you lose it, and the two big scores the game never explains.</p>
+  <ul class="rows">
+
+  <li id="money-basics"><details>
+    <summary><i></i><span><b>Where your money lives, and how you lose it</b><small>Pocket cash disappears when you're Wasted or Busted. Savings can never come back out.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>The three pots</h3>
+        <ol>
+          <li><strong>Pocket Cash.</strong> Real bills. Jason and Lucia can each carry up to $20,000. You lose all of it if you're Wasted or Busted, so put big sums in the bank at an ATM.</li>
+          <li><strong>BuckMe Checking.</strong> The bank app on your phone (<kbd>Up</kbd> on the D-pad). Shops take cash up to $1,000; anything bigger comes from here. The account limit rises in Chapters 2, 3 and 4. At the limit, new payments sit pending until there's room.</li>
+          <li><strong>BuckMe Family Savings.</strong> Shared by both of them, with five goals and growing interest. Money paid in can <strong>never</strong> be taken back out.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-money-buckme-bank-account-manage/" target="_blank" rel="noopener">GamesRadar+</a>: How to manage money in GTA 6 and use BuckMe bank <small>· 19 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="steal-atm"><details>
+    <summary><i></i><span><b>Rip an ATM out of the wall</b><small>Wait for the dye pack jammer, or the cash blows up pink.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>Before you start</h3>
+        <ul class="notes">
+          <li>The <strong>Dye Pack Jammer</strong> comes from the Chapter 3 story mission Credit Check. Without it the cash explodes.</li>
+          <li>A <strong>winch</strong>: fit one to a pickup or off-roader at a mod shop. PC Gamer also names ready-made winch trucks at the crop duster strip in Frogswater and behind Yasmani's vape shop in Little Cuba.</li>
+        </ul>
+        <h3>How to do it</h3>
+        <ol>
+          <li>In a winched vehicle, ATMs you can tow show on the map. Only wall-mounted outdoor ones work.</li>
+          <li>Reverse up to it until it hooks on ("Unhook" appears bottom right).</li>
+          <li>Floor it to tear the ATM out, then get away from the alarm and the police first.</li>
+          <li>Somewhere quiet, swerve hard so the cash canisters break loose. Unhook with <kbd>Right</kbd> on the D-pad.</li>
+          <li>Get out and smash each canister (melee), grab the marked bills, and take them to a fence.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Finish Yasmani's three jewelry jobs and he tips you off to three full ATMs, but you only get one in-game day.</li><li>PC Gamer got about $11,000 per tipped ATM.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-steal-atm-winch/" target="_blank" rel="noopener">GamesRadar+</a>: How to steal GTA 6 ATMs and get away with it <small>· 26 Nov 2026</small></li>
+          <li><a href="https://www.pcgamer.com/games/grand-theft-auto/gta-6-atm-winched-vehicle/" target="_blank" rel="noopener">PC Gamer</a>: How to get a winched vehicle to steal ATM machines in GTA 6 <small>· 25 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button><a class="btn ghost sm" href="map.html#p=yasmani-fence">Yasmani on the map</a></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="bank-vault"><details>
+    <summary><i></i><span><b>Open a bank vault (you can't; the guard can)</b><small>Vault doors won't budge. Follow the armored car guard in, and he opens it for you.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Find an armored car. Either finish all of Yasmani's jobs until, in Chapter 4, he sells you a $10,000 tip (two vans appear as pink icons), or watch the streets near the big banks.</li>
+          <li>Banks with vaults are on the map under Robberies › Big Bank Jobs: four in Ocean Beach, two Downtown, one in Tequesta, one at the airport.</li>
+          <li>Follow the van to the bank and let the guard walk deep inside. He goes to the vault and opens it.</li>
+          <li>Now start the robbery. Get to the back (explosives, or a door your snap gun opens), subdue the guard and take the cash cart.</li>
+        </ol>
+        <h3>Extra loot</h3>
+        <ul class="notes"><li>Safe deposit boxes: use Focus to see which ones open, then shoot them (or one grenade opens the lot).</li><li>The tills out front and office safes (with a safe code).</li><li>The van itself: stick a bomb on its back door so it can't despawn while you're inside, and blow it on your way out.</li></ul>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Bring your partner: there's enough for four bags, and one of you keeps the crowd down.</li><li>Use silenced guns. Big banks keep their camera footage in the cloud, so shoot the cameras.</li><li>An alarm means four stars at once. Park the getaway car where you can reach it.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.pcgamer.com/games/grand-theft-auto/gta-6-vault-how-to-open/" target="_blank" rel="noopener">PC Gamer</a>: GTA 6 vault: How to open them during big bank jobs <small>· 25 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="cheats"><details>
+    <summary><i></i><span><b>How cheats actually work in GTA VI</b><small>Only after the ending, one challenge per code, and no saves or trophies while on.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Finish the main story. Until then no code works, even if you know it.</li>
+          <li>Open the main menu, press <kbd>R1</kbd> / <kbd>RB</kbd> to the Progress tab and find the new Cheats page. Each of the 61 cheats has its own unlock condition, mostly challenges.</li>
+          <li>In free roam, take out your phone (<kbd>Up</kbd> on the D-pad), hold <kbd>L1</kbd> + <kbd>R1</kbd> / <kbd>LB</kbd> + <kbd>RB</kbd>, and enter the code on the D-pad.</li>
+        </ol>
+        <p>Example, the $250,000 cheat (unlocked by finishing the story): <kbd>Up</kbd> <kbd>Right</kbd> <kbd>Down</kbd> <kbd>Left</kbd> <kbd>Up</kbd> <kbd>Left</kbd> <kbd>Down</kbd> <kbd>Right</kbd></p>
+      </div>
+      <div>
+        <h3>The catch</h3>
+        <ul class="notes"><li>Once a cheat is on, trophies and achievements are off for that session, and so is saving. Reload a save to get them back.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-cheats/" target="_blank" rel="noopener">GamesRadar+</a>: All GTA 6 cheats for PS5 and Xbox <small>· 18 Nov 2026</small></li>
+          <li><a href="https://www.eurogamer.net/gta-6-easy-mode-accessibility-options" target="_blank" rel="noopener">Eurogamer</a>: on cheats locking saves and progress <small>· 19 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button><a class="btn ghost sm" href="./#intel">Cheats on the intel board</a></div>
+      </div>
+    </div>
+  </details></li>
+  </ul>
+</section>
+
+<!-- ======================= LIFE IN LEONIDA ======================= -->
+<section class="group" id="life" data-g="life" style="--c:var(--orange)" aria-labelledby="g-life">
+  <h2 id="g-life"><i></i>Life in Leonida <small>5</small></h2>
+  <p>Music on foot, the secret playlists, the relationship meter, pets, and getting fitter.</p>
+  <ul class="rows">
+
+  <li id="earbuds"><details>
+    <summary><i></i><span><b>Listen to the radio on foot</b><small>Buy earbuds once and the radio and podcasts follow you everywhere.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Find an electronics store: Index › Style › Electronics, nearest first (headphone icon). PC Gamer points to Zeke's Gadgets, about $150.</li>
+          <li>Walk up to the earbud case and buy a pair.</li>
+          <li>Put them in: hold <kbd>L1</kbd> / <kbd>LB</kbd>, press <kbd>R1</kbd> / <kbd>RB</kbd> to the items, pick them with the right stick, press <kbd>Cross</kbd> / <kbd>A</kbd>.</li>
+          <li>Hold <kbd>Left</kbd> on the D-pad for the stations. Double-tap <kbd>Left</kbd> to switch the music on or off.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Podcasts: hold <kbd>Left</kbd> on the D-pad and push the right stick down. Pause one there and it picks up where you left off, on foot or in a car.</li><li>A fight can knock your earbuds out. Pick them up afterwards or they're gone.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://kotaku.com/heres-how-to-listen-to-the-radio-on-foot-in-gta-6-using-headphones-2001000040" target="_blank" rel="noopener">Kotaku</a>: Here's How To Listen To The Radio On Foot In GTA 6 Using Headphones <small>· 24 Nov 2026</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-headphones-music-radio-podcasts-how-to-use/" target="_blank" rel="noopener">GamesRadar+</a>: How to change radio stations and listen to podcasts in GTA 6 <small>· 19 Nov 2026</small></li>
+          <li><a href="https://www.pcgamer.com/games/grand-theft-auto/15-hidden-gta-6-controls-and-features-you-should-know-about/" target="_blank" rel="noopener">PC Gamer</a>: 15 hidden GTA 6 controls and features <small>· 20 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="secret-playlists"><details>
+    <summary><i></i><span><b>Unlock the two secret playlists</b><small>Scan posters with the WAiNK app: Kodak Black's mixtape and The Vault Radio.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>The Sniper of La Perle (hosted by Kodak Black)</h3>
+        <p>Scan all four posters in La Perle and Crosstown. Your phone pings when one is close.</p>
+        <ol>
+          <li><strong>TWA Ponya Tattoo:</strong> on the small table to the right of the door.</li>
+          <li><strong>Drip Drops:</strong> lying on the cash register counter.</li>
+          <li><strong>Aunt Zola's Soul Food:</strong> on the corkboard just left of the entrance, by the register.</li>
+          <li><strong>Jack of Hearts</strong> (from Chapter 3): upstairs in the recording studio's control room, on the table by a fan.</li>
+        </ol>
+        <h3>The Vault Radio</h3>
+        <p>One poster at The Vault nightclub: down the entrance corridor, on the back wall (a gas mask on red).</p>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Both count toward 100% completion.</li><li>Their songs play nowhere else in the game.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.pcgamer.com/games/grand-theft-auto/gta-6-unique-playlists/" target="_blank" rel="noopener">PC Gamer</a>: GTA 6 has secret radio stations you can unlock by scanning posters <small>· 21 Nov 2026</small></li>
+          <li><a href="https://kotaku.com/gta-6-has-two-secret-music-playlists-heres-how-to-find-them-2000759608" target="_blank" rel="noopener">Kotaku</a>: GTA 6 Has Two Secret Music Playlists, Here's How To Find Them <small>· 23 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button><a class="btn ghost sm" href="map.html#p=sniper-of-la-perle-mixtape">La Perle on the map</a><a class="btn ghost sm" href="map.html#p=vault-radio-station">The Vault on the map</a></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="relationship"><details>
+    <summary><i></i><span><b>Raise Jason and Lucia's relationship</b><small>Four levels, a heart for every kind act, and you have to play both of them.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>The levels</h3>
+        <p>Running on Empty, Partners in Crime, Crazy in Love, Hot Together. A chime and a +♥ on the right of the screen tell you it went up.</p>
+        <h3>What raises it</h3>
+        <ul class="notes"><li>Holding hands, greeting your partner, starting a conversation.</li><li>A hug or a kiss (the prompt with a heart).</li><li>Buying food or drinks and handing them over.</li><li>Going to bed at the same time, hanging out on the couch.</li></ul>
+      </div>
+      <div>
+        <h3>What lowers it</h3>
+        <ul class="notes"><li>Failing a joint mission, ignoring your partner for a while, some mission choices they disagree with, and hitting them with your car.</li></ul>
+        <h3>Good to know</h3>
+        <ul class="notes"><li>Rockstar says a strong relationship takes both sides: play as Lucia and treat Jason well too.</li></ul>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.pcgamer.com/games/grand-theft-auto/gta-6-romance-jason-lucia/" target="_blank" rel="noopener">PC Gamer</a>: How Jason and Lucia's relationship actually works <small>· 18 Nov 2026</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-relationship-status-romance/" target="_blank" rel="noopener">GamesRadar+</a>: How to change your relationship status <small>· 18 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="pet-animals"><details>
+    <summary><i></i><span><b>Pet the dogs (and cats)</b><small>There's no prompt on screen. Praise them first, and the pet option appears.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>How to do it</h3>
+        <ol>
+          <li>Walk up to a dog or cat and press <kbd>L2</kbd> / <kbd>LT</kbd> to focus on it.</li>
+          <li>Choose <strong>Praise</strong> a few times.</li>
+          <li>The <strong>Pet</strong> option appears (it doesn't always work first time).</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="notes"><li><strong>Study</strong> in the same menu is the only way to add an animal to your collection.</li><li>Only tame animals. There is one alligator you can pet, at the yard sale round the corner from Jason's house.</li></ul>
+        <h3>Source</h3>
+        <ul class="src"><li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-pet-animals/" target="_blank" rel="noopener">GamesRadar+</a>: How do you pet animals in GTA 6? <small>· 19 Nov 2026</small></li></ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+
+  <li id="get-fit"><details>
+    <summary><i></i><span><b>Raise your strength and stamina</b><small>Workouts hit a daily wall; protein halves the wait. One odd side quest adds max stamina.</small></span><span class="lab Reported">Reported</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="body">
+      <div>
+        <h3>Workouts</h3>
+        <ol>
+          <li><strong>Strength:</strong> the deck behind Jason's house has the gear. Hold both triggers to lift, ease them off to lower, and watch your stamina bar.</li>
+          <li><strong>Cardio:</strong> hang the punching bag (behind the workshop under the house) and hit it with melee, or just run and swim for a while.</li>
+          <li>When you hit the wall for the day, rest. Protein afterwards halves the wait. The Fitness app on your phone shows where you stand.</li>
+        </ol>
+        <h3>The Final Flush (max stamina)</h3>
+        <ol>
+          <li>In the men's toilet at the north tip of Corsair Key (north-east of Key Lento), scan the #NOFLUSHERS QR poster with WAiNK and reply "Truth".</li>
+          <li>Meet the stranger at Frank's Waffles in Tequesta. He seems to show up only at night.</li>
+          <li>Follow the quest to the sewage plant in Hamlet. At the end, step into the chamber: you wake up outside Jason's house with more max stamina.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Sources</h3>
+        <ul class="src">
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-workout/" target="_blank" rel="noopener">GamesRadar+</a>: How to workout in GTA 6 to gain Strength and Cardio fast <small>· 20 Nov 2026</small></li>
+          <li><a href="https://www.gamesradar.com/games/grand-theft-auto/gta-6-final-flush-increase-maximum-stamina/" target="_blank" rel="noopener">GamesRadar+</a>: How to complete The Final Flush in GTA 6 <small>· 21 Nov 2026</small></li>
+        </ul>
+        <div class="acts"><button class="btn ghost sm copy" type="button">Copy link</button></div>
+      </div>
+    </div>
+  </details></li>
+  </ul>
+</section>
+
+<p class="none" id="none" hidden>Nothing matches. Try one word, or <button class="btn ghost" type="button" id="reset">clear the search</button></p>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Leonida Intel is an unofficial fan desk from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks. Every guide here is a summary of the outlet linked on it, checked on 26 Nov 2026 against game update 1.002.002. A later update can change things; if a step no longer works, tell us.</p>
+  </div>
+</footer>
+<script src="howto.js"></script>
+</body>
+</html>
