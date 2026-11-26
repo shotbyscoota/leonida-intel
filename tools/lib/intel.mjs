@@ -61,7 +61,10 @@ export function parseFeed(xml = '') {
 const GTA = /\b(gta\s*(6|vi)|grand theft auto\s*(6|vi))\b|\bleonida\b/i;
 export const aboutGta6 = (t) => GTA.test(t);
 const RX = {
-  patch: /\b(patch(es|ed)?|hotfix|title update|update[sd]?|patch notes|version\s*\d|v?0?1\.\d{3}\.\d{3}|fix(es|ed)\b)/i,
+  patch: /\b(patch(es|ed)?|hotfix|patch notes|version\s*\d|v?0?1\.\d{3}\.\d{3}|fix(es|ed)\b)/i,
+  // "update" alone is not a patch ("Kevin Durant delivers update", "movie gets update"): it must sit
+  // next to a patch word or a version. Checked against every headline in the ledger on 2026-11-26.
+  update: /\b((first|new|latest|next|big|major|huge|small|launch|day[- ]one|post-launch|post-release|second|third|surprise|hotfix|title)\s+(gta\s*(6|vi)\s+)?(official\s+)?(post-(launch|release)\s+)?updates?|updates?\s+(v?\d|notes|now live|is live|is out|out now|rolling out|released|arrives|drops|sized?|fix(es|ing)|adds|adding|gives|brings|removes|changes|nerfs|buffs|breaks)|(rolls?|rolled|rolling|pushes|pushed|releases|released|drops|dropped)\s+(out\s+)?(a\s+|an\s+|the\s+)?(new\s+)?(gta\s*(6|vi)\s+)?updates?|updated?\s+to\s+(version|v?\d))\b/i,
   cheat: /\bcheats?\b|cheat codes?/i,
   glitch: /\bglitch(es|ed)?\b|\bbugs?\b|\bbugged\b|\bexploits?\b|soft-?lock|\bcrash(es|ing)?\b|\bdupe\b|duplication/i,
   secret: /\bsecrets?\b|easter eggs?|\bhidden\b|\bdiscover(ed|y|s)?\b|\btips?\b|\btricks?\b|\bhacks\b|how to|locations?\b|\bguide\b|walkthrough|you (can|didn.t)|\bencounters?\b|\bunlock(s|ed)?\b/i,
@@ -71,10 +74,46 @@ export function classify(title = '') {
   const t = clean(title, 400);
   if (/anti-?cheat|competitor/i.test(t)) return null;
   if (RX.cheat.test(t)) return 'cheat';
-  if (RX.patch.test(t) && !/money glitch|glitch unlocks/i.test(t)) return 'patch';
+  if ((RX.patch.test(t) || RX.update.test(t)) && !/money glitch|glitch unlocks/i.test(t)) return 'patch';
   if (RX.glitch.test(t)) return 'glitch';
   if (RX.secret.test(t)) return 'secret';
   return null;
+}
+/**
+ * Re-sorts automatic items with today's rules, so a fix to classify() also corrects what an older scan
+ * filed in the wrong bucket. An item that is no longer research at all leaves the ledger. Desk entries
+ * are a person's decision and are never touched.
+ */
+export function reclassify(ledger) {
+  for (const [k, v] of Object.entries(ledger.items || {})) {
+    if (v.desk) continue;
+    const c = classify(v.title);
+    if (v.kind === 'official') v.cat = c === 'patch' ? 'patch' : 'official';
+    else if (!c) delete ledger.items[k];
+    else v.cat = c;
+  }
+}
+
+/**
+ * Rejected (content/intel.json › rejected): automatic findings a person checked and found wrong, or a
+ * repeat of a story already on the board. Each rule names a headline, a link or a whole publisher, and
+ * says why. Matching items are kept out of the ledger for good. Desk entries are never rejected.
+ */
+export function rejectProblems(r) {
+  const p = [];
+  if (!r || !(r.title || r.url || r.publisher)) p.push('needs a title, url or publisher');
+  if (!r?.why) p.push('needs a why (one sentence: what was wrong)');
+  return p;
+}
+export function isRejected(item, rules = []) {
+  const tk = titleKey(item.title || ''), cu = item.url ? (gnId(item.url) ? item.url : canonicalUrl(item.url)) : '';
+  const pub = String(item.publisher || '').toLowerCase();
+  return rules.some((r) => (r.title && titleKey(r.title) === tk)
+    || (r.url && cu && (gnId(r.url) ? r.url : canonicalUrl(r.url)) === cu)
+    || (r.publisher && r.publisher.toLowerCase() === pub));
+}
+export function dropRejected(ledger, rules = []) {
+  for (const [k, v] of Object.entries(ledger.items || {})) if (!v.desk && isRejected(v, rules)) delete ledger.items[k];
 }
 export function platformOf(t = '') {
   const ps = /\bps5\b|playstation\s*5/i.test(t), xb = /\bxbox\b|series\s*[xs]\b/i.test(t);

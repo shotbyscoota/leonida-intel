@@ -1,9 +1,21 @@
 {
   "_help": "Desk entries: things a person has checked or tested. They always show on the site and override an automatic item with the same URL or headline. status: Official (Rockstar said it, link to Rockstar), Tested (we reproduced it ourselves; needs the tested block, and for cheats the cheat block, for glitches the glitch block), Reported (a named outlet said it; link to that outlet), Patched (a glitch that no longer reproduces), Unverified (a lead, not checked). The updater refuses to show Tested without the proof fields. Run: node tools/update-feed.mjs --check to validate this file.",
   "_example_tested_cheat": {
-    "id": "cheat-250k", "cat": "cheat", "status": "Tested", "title": "$250,000 cheat",
-    "cheat": { "input": "Phone open, hold L1+R1 / LB+RB, then Up, Right, Down, Left, Up, Left, Down, Right", "unlock": "Finish the story", "affectsSaves": true, "affectsAchievements": true },
-    "tested": { "on": "2026-11-27", "version": "1.002.002", "platform": "PS5" },
+    "id": "cheat-250k",
+    "cat": "cheat",
+    "status": "Tested",
+    "title": "$250,000 cheat",
+    "cheat": {
+      "input": "Phone open, hold L1+R1 / LB+RB, then Up, Right, Down, Left, Up, Left, Down, Right",
+      "unlock": "Finish the story",
+      "affectsSaves": true,
+      "affectsAchievements": true
+    },
+    "tested": {
+      "on": "2026-11-27",
+      "version": "1.002.002",
+      "platform": "PS5"
+    },
     "evidence": "Recorded in SX clip 2026-11-27, take 3. Saving greyed out after use; trophy pop blocked until reload.",
     "url": "https://www.youtube.com/watch?v=VIDEOID"
   },
@@ -47,6 +59,29 @@
       "evidence": "Pure Xbox passes on player impressions and says to take them with a pinch of salt.",
       "note": "Lead only. Re-test on 1.002.002 before filming.",
       "lastChecked": "2026-11-25T15:00:00Z"
+    }
+  ],
+  "_help_rejected": "rejected: automatic findings a person checked and found wrong, or a repeat of a story already on the board. Each rule names a title (the headline as the scanner saw it), a url, or a whole publisher, plus why (one sentence). Matching items never show again. Desk entries above are never rejected.",
+  "rejected": [
+    {
+      "publisher": "shattered.io",
+      "checked": "2026-11-26",
+      "why": "Its 26 Nov launch-glitch piece said Rockstar confirmed only crash fixes, but Rockstar's 23 Nov notes list seven fixes (GamesRadar+, Pure Xbox); its other GTA posts carry claims with no source."
+    },
+    {
+      "title": "GTA 6 for Xbox Series X may receive FSR 4.1 support in future patches",
+      "checked": "2026-11-26",
+      "why": "Speculation: Rockstar has said nothing about FSR 4.1, and outlets disagree on which Xbox even has it."
+    },
+    {
+      "title": "How to Find the SUPER Mario Bros Easter Egg in GTA 6",
+      "checked": "2026-11-26",
+      "why": "Repeat: the Mario and Luigi hats egg is already in the ledger as Reported by GameSpot, Kotaku and Rock Paper Shotgun (23-24 Nov)."
+    },
+    {
+      "title": "GTA 6 Hyde Island Saw mission: Complete guide with screen shots",
+      "checked": "2026-11-26",
+      "why": "Repeat: the Hyde Island hunt is already in the ledger as Reported by GameSpot, Rock Paper Shotgun and GAMINGbible; guides disagree on the cash prize."
     }
   ]
 }

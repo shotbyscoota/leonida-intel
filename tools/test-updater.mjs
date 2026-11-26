@@ -202,3 +202,35 @@ test('canonical URLs and ids', () => {
   assert.equal(I.versionOf('GTA 6 01.002.002 Patch Notes'), '1.002.002');
   assert.equal(I.titleKey('Guide: GTA 6: Vice City Easter Egg Walkthrough'), I.titleKey('GTA 6: Vice City Easter Egg Walkthrough'));
 });
+
+test('"update" alone is not a patch (real headlines from the 2026-11-26 scan)', () => {
+  assert.equal(I.classify('Kevin Durant delivers update everybody wanted to hear – his GTA 6 progress'), null);
+  assert.equal(I.classify("'Grand Theft Auto' Live-Action Movie Gets Update From Rockstar After 'GTA 6' Debut"), null);
+  assert.equal(I.classify('GTA 6 Boss Gives Official Update On GTA 7'), null);
+  assert.equal(I.classify("GTA 6's First Official Post-Release Update Has A Catch"), 'patch');
+  assert.equal(I.classify('Rockstar rolls out GTA 6 update sized 603.8 MB on PS5, 1.6 GB on Xbox'), 'patch');
+  assert.equal(I.classify('Rockstar releases new GTA 6 update fixing crashes and several annoying bugs'), 'patch');
+  assert.equal(I.classify('GTA 6 Weather Still Not Varied Even After the Patch?'), 'patch');
+  assert.equal(I.classify('How To Fix Weather Bug In GTA 6'), 'glitch');
+});
+
+test('reclassify fixes old buckets; rejected rules keep checked-wrong items out for good', () => {
+  const ledger = { items: {
+    a: { title: 'Kevin Durant delivers update everybody wanted to hear – his GTA 6 progress', cat: 'patch', kind: 'search', status: 'Unverified', url: 'https://news.google.com/rss/articles/KD1' },
+    b: { title: 'GTA 6 infinite money glitch', cat: 'patch', kind: 'outlet', status: 'Reported', url: 'https://example.com/b' },
+    c: { title: 'GTA VI Launch Glitches: 5 Issues Rockstar Logged', cat: 'glitch', kind: 'search', status: 'Unverified', publisher: 'shattered.io', url: 'https://news.google.com/rss/articles/SH1' },
+    d: { title: 'How to Find the SUPER Mario Bros Easter Egg in GTA 6', cat: 'secret', kind: 'search', status: 'Unverified', publisher: 'Mobalytics', url: 'https://news.google.com/rss/articles/MB1' },
+    e: { title: 'Desk: GTA 6 update', cat: 'patch', desk: true, status: 'Reported', publisher: 'shattered.io', url: 'https://example.com/e' },
+  } };
+  I.reclassify(ledger);
+  assert.equal(ledger.items.a, undefined, 'not research any more: leaves the ledger');
+  assert.equal(ledger.items.b.cat, 'glitch');
+  assert.equal(ledger.items.e.cat, 'patch', 'desk entries are never re-sorted');
+  const rules = [{ publisher: 'Shattered.io', why: 'x' }, { title: 'How to Find the SUPER Mario Bros Easter Egg in GTA 6', why: 'repeat' }];
+  I.dropRejected(ledger, rules);
+  assert.equal(ledger.items.c, undefined);
+  assert.equal(ledger.items.d, undefined);
+  assert.ok(ledger.items.e, 'desk entries are never rejected');
+  assert.ok(I.isRejected({ title: 'GTA 6 Mario Easter Egg', publisher: 'shattered.io' }, rules));
+  assert.deepEqual(I.rejectProblems({ title: 'x' }), ['needs a why (one sentence: what was wrong)']);
+});

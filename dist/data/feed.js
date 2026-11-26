@@ -1,7 +1,7 @@
 /* written by tools/update-feed.mjs; do not edit by hand */
 window.LEONIDA_FEED = {
- "updated": "2026-11-25T23:29:11.534Z",
- "checked": "2026-11-25T23:29:11.534Z",
+ "updated": "2026-11-26T14:10:27.271Z",
+ "checked": "2026-11-26T14:10:27.271Z",
  "channel": {
   "name": "SX Exclusive",
   "handle": "@SXExclusive",
@@ -83,76 +83,76 @@ window.LEONIDA_FEED = {
  ],
  "news": [
   {
-   "title": "Scranton native voices character in newly released GTA VI video game",
-   "link": "https://news.google.com/rss/articles/CBMipAJBVV95cUxOV1hXSDZuZFhNZFJxM2l6SHZDcHFaNUVsSlhpdW9KeHh4SFJlSWVaT3MzSHFtTTc3SUhjb0FQN01JSmczSUxFZW40cUcxSzRYX2tlWWt6anJIX3I0WDdmc0Zyd2YwNjdYMDNvMEw2MTFFdjFfdDZGRHNvZUh1ZDQ3MmptcF9laktDRm9hY3RvTGx6NU5QaHR4YW9KVjNINS1RcmM0eFVFaUdudkxEYVdmbVNTdDBmMHJ1YlgyeGFuaTI4N212aVVfWFdCNHRMV2NFeFFMSXZqUVZ3RTNtanRLd1RPMFNkS055M284MWVTbk91czFVT3MtRnFmaHJoOHFla3UtTk0wSnlPTVNzTWJnRExBaUM4TndITVJUOWNnUGlyeEc3?oc=5",
-   "source": "WNEP",
-   "date": "2026-11-25T23:21:00.000Z"
+   "title": "No disc no problem: GTA 6 is the biggest physical game launch since 2019",
+   "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBvWF85MHBlM3dwcXNjcnFWRGZqaUU5SE5RTVBoczlrd09RaXhYd2pTenAyV0cyYlkzMkFoY29peFp3UWlUZlM3OXprMUl6TzFRdDBIWndvOEZRS1dXMjJELWI2SHZ5bDA0QWwxcllyTlhKLWw2UGNKX3VxYl9mUQ?oc=5",
+   "source": "The Game Business",
+   "date": "2026-11-26T14:03:25.000Z"
   },
   {
-   "title": "Rockstar is handing out 100 of these gorgeous limited-edition GTA 6 PS5 consoles, and you can't buy one",
-   "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQc0h4SndJMmhtTmdfd3RxbDlPZ1R4cGR2OUF4SGlNUldjYXlqeFYtYU5TVlZzc0lPM1ZYSzZ0NU9SSXoydHhGbFhCT2tpbVo1b1VpWi1UZkxnUmRPVkNDZmFnMUFVRkdubWg0b1hieGdwRWtUZFJGZEl2U1lNS1lsaEZHN3B4MUJaQVhQa1hoZlNpdi1FU1hNMGgxNXE4enB6dVFXeS1YODNvVnEtSEdQRVo1OHR5MWVyLUVKMjJkVEY1Zm1DZmxDNmtfb1pQelItWTdZQUpqUXA3aURhMEhKWm1EQnA?oc=5",
+   "title": "Watching TV in GTA 6 Is More Depressing Than Fun, Except for One Show",
+   "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxPVGhoUmVEQjBKcVgwekNBWEpieDNYUFp4NThqS0ZaaHNBU095anZ0cFFyZjB1bGV6YWcyVjYtM0VOVmZTUkxic3M2Nk9VSG5ZQWlBM1RfRVYtTXA4MG1WRXdYSlgwb0VwVmpmQzdJNWVLU2ZwWnRwX3llaEZpNmU0blBZOVA0VnBPTFZqczRqYlN5QTZXVWd5X1VfemtvQQ?oc=5",
+   "source": "IGN",
+   "date": "2026-11-26T14:00:00.000Z"
+  },
+  {
+   "title": "Hidden Control Options In GTA 6",
+   "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE9vendxWFNXWVBYaE83SldLRlNTSGljRGNDVC1TeGVNbXY2ZjljbElZTEVmQ0tSb3R0ZHRPZFZUTG9CWnFYcC1JbExhTlNMWkpxbXJVemJTaTBUU3BJZEsxX1JiYWd3ajNUeW9CWmdtV0MxUQ?oc=5",
+   "source": "GameSpot",
+   "date": "2026-11-26T14:00:00.000Z"
+  },
+  {
+   "title": "CD Projekt Red says The Witcher 4 upgrade over The Witcher 3 will be just as big as GTA 6 over GTA 5",
+   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQbXdnYlFSaGt5OGM5TEhLblJwNjhyRW9ZQkN0c3h0S3F0a0psUFFkdHQ0ck9WRnZQZXFMTnZsb0FnTl9LZWFIWTJCUmt1eERQa205ZUFPN1dyUFhVMElLckxEdWRLNFVldjVCa3FYdmdFZnprUzZnd1JBRjhFOXZXajAxYVlKZUZYSGg5dGRESFhPS1BjMzZIME9uYURmdm5fYmJNOFJXNGxhb3p5RndLY3VsTm5MMUNfb1FsS2poSmEwelU0bk9YdWdn?oc=5",
+   "source": "PC Guide",
+   "date": "2026-11-26T13:47:41.000Z"
+  },
+  {
+   "title": "GTA 6's Cartel Heist Might Be Rockstar's Best Ever Mission, But Only If You Do It Badly",
+   "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQNXRtelAzM3VhWldlOHlfRDlVOEw4ci1xUXlsaU8xUWhZUld2S2ZMNkIwbEN2OEwyZ25US3hSYjdUWVh2ZFBHTE94TU5CZjBhNW9UZ0IzWXVxbWJWS1JDbUUzVzA1aTlZckR6SUNFMnU5ZnN4QjZuQUY1MG5feWtQRWo5N0pVaHlkYWpZZWswYk9wY0pEZ09mSGJCSTFNaEF1b3hMdnoySTI5ZTd3TDcyTm9KT2daajBma29aZmg2bEpXeGlxY2RPOW1NQ0lOeGs?oc=5",
+   "source": "IGN Nordic",
+   "date": "2026-11-26T13:45:10.000Z"
+  },
+  {
+   "title": "Every Snapmatic Animal Location In GTA 6—Hunting Legendary Animals",
+   "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNOGVfVGwxdFZjLUhYaVFwd1hTOFAtT2s3cldneEI3QW84Mi1qVTNhZmJTLW1CYUdaQ2g3ZDlzVkdxSEppbzM2SXRvMmVPaDdablB6TEZfNEFiajhXelprWG13dkZGUlpubWh2UGpIZHphbGpRRnUyOVp5OUxyd2NkQnFIMHJWa215TTFmVFkxTFBSSUdqSnc?oc=5",
+   "source": "Insider Gaming",
+   "date": "2026-11-26T13:39:08.000Z"
+  },
+  {
+   "title": "GTA 6 has reportedly sold more copies on PS5 than Xbox has sold Series X/S consoles",
+   "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQRkQ0ZVViUDdmclVOQ0NRdUs3OWJwZmNKWWx2b3I0ZmE1TUk5Zi1nWGxrQ3lua1B0RHpHZkNqNUc0amVIOEl3OEczelUwcVRTN2pLbFVvNEFjMkhqTWNMY0w2NklsTm5EMURwN1hxUUVpdWYybkI1UldHTk5CZlVCMjNxUnU3VF96WnZpbzM1QVBQV0YxU3hCT2dhSFIyeE1LOE9qZ3R3LVZkOUxIUGxJN2NZOA?oc=5",
+   "source": "PC Guide",
+   "date": "2026-11-26T13:33:23.000Z"
+  },
+  {
+   "title": "GTA 6’s Criminal Profiles Are Meant to Encourage Choices “Beyond Just Violence”",
+   "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNS1NpSEgxQUZENjR5cjVRZ05YWXdDM3o4NDRHUnI0YlhQMnZYQ1VGekJWbTdydE5RcWlRak16Nk5sSnVManNjRk5SNGF4NnlrS2Npa2M4OEJhZW9yUF9QRXNFbGJvYkdZNU1ORjNpcmZobi16SnBQalN2T1FhZWItOVRhRDlMeFNTaHRmdmx3WWd4TE9DMXoxaGxUSlNWWTNM?oc=5",
+   "source": "GamingBolt",
+   "date": "2026-11-26T13:33:14.000Z"
+  },
+  {
+   "title": "10 Reasons You Will Be Playing GTA 6 For More Than a Decade",
+   "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxONTdEdTZoZ2VHcGNndXhrLThSQ0NkUmFVWTROQ3V4QzJoaGNHMVp0dW9rYTA4MGUwMm1DclJDdHVvclB3OV9vbjBYbmFBMk9uSlhvSDRLQmp2eHRoc3VEMmxfXzRobHJWWTI1My0xVEZQcGw5dndYd0FhWkxmYU1wS3BoajVDYWVLbHFEYVl1OA?oc=5",
+   "source": "DualShockers",
+   "date": "2026-11-26T13:32:57.000Z"
+  },
+  {
+   "title": "GTA 6 PC port hits 20 FPS just days after drawing one frame every two seconds",
+   "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPLXZoQUNjZnMtczVfekpOYnlYMnlqMzRpVy11WUROMzU5Mnd4UGcwQl9lUUYxaGtVbnFudTQtaktRekdIRzBaRzh3NTk5bVh3Z3lnZjB5a2lSVk1wLUt6T3BtaGQyOXRZWmdCY1FCWUV6aF9vLXBXMkNBa2tiZFJjUmFPR0VQVUExNG82RWpIaUdhSXdHT3BDcmtnLVRhdHRSbGhyTmtkekZyVlVaZlVPbktJNnZ3X3NOY0Vqc0hUWnB2V21S?oc=5",
    "source": "TweakTown",
-   "date": "2026-11-25T23:13:02.000Z"
+   "date": "2026-11-26T13:30:03.000Z"
   },
   {
-   "title": "5 Best GTA 6 Weapons, Ranked",
-   "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5FalpWRTRhZndZLV9XN181bGFvZmlqLWxhdUo4Tm1rN0hIQTdyelNaQ1Q4NUEzdTI0ZlljYVhfakRoN09lQXYwcEx3X0l0QjMzUDJFWURQalU1ckR2ZUNvajdNSGc?oc=5",
-   "source": "SVG",
-   "date": "2026-11-25T23:08:36.000Z"
+   "title": "I’ve completed GTA 6 – this is what the driving physics are really like",
+   "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPaEhKYWswbFI2RmVEekRlV3g5WVE2azdMWGYzc1VGSVF1eThaYkRiOGFVd1h1Qk5jdFlOcVVDNGlBRnR2VmRJZXdEN3ZwNzFVZGh4NjN6dy1tWTE3RDQ2WWxKYVBYWGVYUXY4Y2RqWHVaYkU5ckkyVzBDYUZoSTEtanBfekFMVkJrbUlLWVl6VG1yU29YOGxMdklhVUxYWS1mb1lRcV9tZXgtZWxWOWt6b1dvaVRTOXdwVFU1bA?oc=5",
+   "source": "The Independent",
+   "date": "2026-11-26T13:29:00.000Z"
   },
   {
-   "title": "GTA 6 is causing technical glitches on PlayStation 5 and Xbox Series X.",
-   "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOQnpsM2htb3FaWkRVcGNiWDd4MlBwMzZ4cmRIclBfTTFvZGIwTUF3NTNMazAtYW5CN0lubVo3WVJVelg3bU5HSExoYTJVOTN6RWJURzU0ZXhDMjBxdDgxY1JSenBMSHotaUd6Y0kxWWVpU1pFanJITkNLNjFXRlRsczJLNWJnaDZkdm5EOUhPVV95WVNsX01mcmxBWTlnUQ?oc=5",
-   "source": "GameGPU",
-   "date": "2026-11-25T23:06:14.000Z"
-  },
-  {
-   "title": "Why do GTA 6 streetlights look like that?",
-   "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPbGxlc3d6QTR1dTNZby05em1waXNEZnFuRW9kekRaVGpRRGFsbkp5WE15ZnNjcHdEdHVBbktjTFg0U0hyTDFlNHJnQU1EdmdoLXlTeWhKNHdRdGtveHNlc2szQ3dMQVhlUHdFazBoRU5YdVl5M1lyN3MySGVuMEJMQ3R5a2xmUllQbzI1VjUwTENaRUdiMmJVWktEM20yc1hXQWpSdXlSMzdpbzhtOEpoRmdxVmNNSU00N0dtdE51VXA0YS1kMTNZREhuNUZVUlk?oc=5",
-   "source": "PC Gamer",
-   "date": "2026-11-25T22:36:12.000Z"
-  },
-  {
-   "title": "How to play GTA 6 with 60fps and DLSS 5",
-   "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9OeEQwUHlEWWRDNjVPWlEwbkhBeHZuczdBQnFVWmJjVnZCV09qcGU0UHE5bFEzR3VSczdjTVJ6ZGktcm56ODBpS1NEY0l2NmVpTksxLXlkdkFDZ0dIbXRSOQ?oc=5",
+   "title": "How to get abducted by aliens in GTA 6",
+   "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBnTWc3dmlCNkVvXzk1ckFKOVl3eHQ0Q2hwc29pQ3U4U2o1b01IU29pSHN3N1h1c0g0WmpreFpteUhNVFE5bGI5Z1hWeGd6RnVIQzlaOEItRV9ROTVUV2hobGxZVkQ?oc=5",
    "source": "Rock Paper Shotgun",
-   "date": "2026-11-25T22:32:50.000Z"
-  },
-  {
-   "title": "All Peewees Billboard locations in GTA 6",
-   "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBQN01YeFoyZXFSbjhqX0lLbndZSE1RSmRZWVNjc0lVV2hIdGE1T0lKNmtaTjFIaGp4bWJuZTNONG1VQXBCODhTbUdWMHJDdFZGMnlPWC01VUh6YjFxUnE3d05jSEhOZGtLb0RfcUhNOWY0MDZjVFQtU3kyZ3dLQQ?oc=5",
-   "source": "Polygon.com",
-   "date": "2026-11-25T22:18:47.000Z"
-  },
-  {
-   "title": "GTA 6: Secret Controls the Game Doesn't Tell You",
-   "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQQmU4dmtHTUt5TTFUR2pOQWp1NS1tVnpXaHhYcGVud0pRLU0yd0hacHdLSkVOTlk2aHZYQWNPZERJN1BIeVRmX2EtcWR0Mk85NXNGWDBpQ3BJdWtfcG05SER2UEJoQ2lUX1J5dDVKaTlkaVA5c2toSWZ1ODdJRENHc0RxX3hYQ1E?oc=5",
-   "source": "Push Square",
-   "date": "2026-11-25T22:10:54.000Z"
-  },
-  {
-   "title": "'GTA VI': 19 Insanely Specific Details We've Noticed So Far",
-   "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1uaXJLQnRvcld1bmVzMW8yVk9IeE45RmRLREUzVlo5ZTZLdHFiZE9nYzgxRmxnM3VibUlUVFpzblBoQjJpNEVrSzJJdUxLVUZpeW13cDRQR2VzcnEtTmMtRXJyYVZkcUV2NlJ6RFc5T1k?oc=5",
-   "source": "Complex",
-   "date": "2026-11-25T22:10:39.000Z"
-  },
-  {
-   "title": "Can You Play GTA 6 From An External Hard Drive On PS5 Or Xbox Series X/S?",
-   "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNR05NZHI2ck9IdjdaZUZ6Tkx3WDdXdXRIZ3hSWUhuTVdpWXRwUlZZSlRzTjNYMHp4RE5iZk1jd1BHYVJYd1JlSDJPanNPek9DT0k0REpfNV9WUGJmS0RTa21mUmhDUm9abnQ1SmFraEU0UGxZWjZVeWdSdHNWdGtrLWt3MA?oc=5",
-   "source": "Engadget",
-   "date": "2026-11-25T22:07:07.000Z"
-  },
-  {
-   "title": "GTA 6 Animation Director Reveals Rockstar Made 3 Animations for Each Item Interaction",
-   "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQN18tZXJNM2QtMFltb2VCQnhNS2FJcFUwbE9OZnJjNVkwVjR5ZHNSbjl5SFhmdWg3NmN2X1FacE15ZHdRYkZGUDhFXzJxUTloTGVpeWVoT1NLdFFoM3J5T09HVndOa3dTRnJwNFJpbjRRWDNYMUt2Y0tMQjF3clhSWWVJUHBCTFU1RjczZ2Nkc3hlYzhFR0lCdjN0b0tGcHkyU19qanNqaFZVQUphb0dzR1QzdUlDZ2FnbE5oUzV6MW1SM1gyRFJfRXRXQ2xTMGpNRzE1aGVRaFgxV0VMTXpz?oc=5",
-   "source": "IGN Southeast Asia",
-   "date": "2026-11-25T22:03:39.000Z"
-  },
-  {
-   "title": "Buckingham Jubilee GTA 6 Location – Where to Find the Rolls-Royce SUV",
-   "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE53UUozUUp0LXF4bE42VTA4NXVQYzFlaEZHVjFjOWYxODZuemM5STVBdXZuWXlaM3RQU0d4U3M4aGo5X3QtSW5USVgtMm9ZbGgtejBQZWZ0ejJ4d2NJcV9LU2R5S3FqZkQ2dmFpQ1ExazlrdFFZ?oc=5",
-   "source": "VICE",
-   "date": "2026-11-25T22:01:39.000Z"
+   "date": "2026-11-26T13:27:40.000Z"
   }
  ],
  "drops": [
@@ -185,7 +185,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:48:01.885Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMirAFBVV95cUxOc0l3anRyZGRGYUlTa016VXEyTGJyM3FjVXEyQWRIRlUyS0RQWFgtLWhPTHN4RWtET1BKWF8zaDR1blBVRFB2NWdLOWtEY1Mza1IzU1JXX2Qta1oxcVB3b0xMZlpOYzJFaGZnY3ZhaWY1NjN3YmFZSHNYSFktR0V2THRUdFpmbFlFZkVSdm0yR1NXeGxoQTBOUkdkajZQeEJGX3RoNWdtRFJTM09w",
@@ -200,7 +200,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiqgFBVV95cUxQMy1WQ21GcGpGQTlTblpRemlIb2pJZ2RBdlhNRFBqYVlMenJwWEVNb0ZPVG4tTFJwUjBBXzE0Y1BhdzJJMl9LUjZoREt2N29WSlhmU1RVS3haTVg0WDJKOW1kdEJCdHlnZnNHVUdfdWZHNG1iR05XdUxrS3R6a01pMks2NkhvZFhLTmNxcUtFSHEyS0RYYlA2d2RWSDhvV0xiaEFwUVh5QTdEQQ",
@@ -215,7 +215,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiX0FVX3lxTFBIUTBFR05fRS1HNGlEckEwaXZVc1BxVlgtUVdFYmYtMDlkVzY3amRZV1JWSUEza0I4d0l4RkpxNmdWV1k0WEJzUVBGaWpYY0QtWExEd3RBdE5wTWJwM1hj",
@@ -230,7 +230,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiqAFBVV95cUxPOUdHR3lsOTUwbEM0QkdnZHZSRjJTdXFuVjhKV1lvd28xUmhBVURQamg5R3kyZ2YtX0tBX3JoQi14cHk3d18zaV9pcjlid3c3YlZFb1p3Ylc1ZTJYWm1BT2gxN3hUcWRpZ0FCd0RsQW50bEtyWTdkdzI2N1k3cFdVck5IQ2Nyb1VpTkY5Y2lOamRaTHlKUk5lSG1NOEltTHRWckgwNTFGUWs",
@@ -245,7 +245,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiUkFVX3lxTFBtaFUxS2pNTHhQbEVpS1BJdWUyR0NSaU1ZSDZURVFxWVVkYmVyQjJBclNXbzVXQlNMZ1VXdHh3aW5xMUF4RU8xenk0YkxWRkVwdnc",
@@ -260,7 +260,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMimwFBVV95cUxNOWdwZ19FWUxxVGJyMl9peEJpcWRaY3hMcHFDbXE3UzlNMzRhZUthNGY1dmkyOXJ3cndhQnl6dlk0bnpaMzlSNG94RFdscU94RVJzejcweXhmNlRjTjJoY04yQkVNalQwaW1UOVZRSi12b2t5T2pqc2J3cGpQNC1vUFozM3dzSWJVVDJ3UWFGLXE2RlE3MFVZR2FtOA",
@@ -275,7 +275,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiU0FVX3lxTFBSTjFrMUExdk94ZjZ4MjlJVXZUcldOTVNnMGgxWUs4X2ZjWHE3bTQwUmhKTW15akVvVGVkaWplRzBTcF8zTV9fMDBUWUlaaUQtY2Rr",
@@ -290,7 +290,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "desk:patch-1-002-002",
@@ -323,7 +323,22 @@ window.LEONIDA_FEED = {
    "platform": "PS5 + Xbox Series X|S",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
+  },
+  {
+   "id": "url:https://ign.com/articles/ps5-workaround-weather-gta-6",
+   "cat": "patch",
+   "status": "Reported",
+   "title": "GTA 6 Weather Still Not Varied Even After the Patch? PS5 Players Are Sharing a Method That May Help Rain and Thunderstorms Kick In",
+   "url": "https://ign.com/articles/ps5-workaround-weather-gta-6",
+   "publisher": "IGN",
+   "via": "IGN",
+   "kind": "outlet",
+   "date": "2026-11-26T11:26:17.000Z",
+   "platform": "PS5",
+   "version": "",
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiWEFVX3lxTE04SUpSV0NQamYtRFZULWh5Z0dUeHZwWV9lYldSQnhMVkpobWVJZHJNZW1vUTlxdUI1OHZBUlRiVU5lb0M3dFNxUm5VVW1rR25mVENmdVVDUUQ",
@@ -338,7 +353,22 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
+  },
+  {
+   "id": "gn:CBMigAFBVV95cUxQeGxLMUF5dlZtdThFQTl5OFljM0x4ZW5DWE9vM25NN2pic2xZOGpxQWdrQWlRWUVhSmNnaDl3bE4xdDdnSGRQMVpwLTU5U3NwOG9rRHAtc3NXaExZNGhJWUNZbURmZjJoTFl5V29rMjJwOGJCVmtSNDNhNzhOaGdidA",
+   "cat": "patch",
+   "status": "Reported",
+   "title": "All GTA 6 first update patch notes",
+   "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQeGxLMUF5dlZtdThFQTl5OFljM0x4ZW5DWE9vM25NN2pic2xZOGpxQWdrQWlRWUVhSmNnaDl3bE4xdDdnSGRQMVpwLTU5U3NwOG9rRHAtc3NXaExZNGhJWUNZbURmZjJoTFl5V29rMjJwOGJCVmtSNDNhNzhOaGdidA?oc=5",
+   "publisher": "GamesRadar+",
+   "via": "Search: patches",
+   "kind": "search",
+   "date": "2026-11-24T11:58:25.000Z",
+   "platform": "",
+   "version": "",
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:04:47.620Z"
   },
   {
    "id": "gn:CBMinAFBVV95cUxQekF2RUJTUHZ4SnkwWWNiN3hSaUMzeF9teFlmeTNzZUxFZE5GY0x2TkhNVFUwOU16TGFpLXExQXlTckJpU2JrVW8tejdYOER0TVVERWN3aW1GRWJJV0hJQWVlS1JGbVdmczNPd2RuTWZxYTZEcWg1T3pVcDdlenB2R2Q0eGJ1ZXBEMnNNSk9BTllVQk1BY0xpVlZJQkU",
@@ -353,7 +383,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "1.002.002",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiowFBVV95cUxOSEtfY251VjN0dTBCclRYeGgtWTd2eFF1OGoyNWg4Z2pFcW84WjNHeVJja250ZlFsdTc0TGg4R2VVR1RvejQ2UVR2WFBuY0FtZDFTbW13aVZoUkwzT2VnT3VyVk9OczJUaGtRZFY5cGotMHNROEVwb01TNm1CSGtMWFZPU1JTRnVJamN3VTNVTUtMc04wQnpiZ0l4UDJ3TVlsMmtF",
@@ -368,7 +398,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "url:https://pcgamer.com/games/grand-theft-auto/gta-6-players-swore-the-weather-system-was-broken-and-the-latest-patch-has-confirmed-those-suspicions",
@@ -383,37 +413,22 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
-   "id": "gn:CBMiwwFBVV95cUxNVVM5OHl4QkFoVUpfcU5FRUtVYXB4VGYyZ1JRdXJsa1ZlSU9jZUJMWFFwVHp2ZHktazRScDdTTXFKZ0Ffdmt2YV84RTJEdk5lQV9hUFhZVVN1SjFBd05VcFFaV1BaVTZMbUlGT1RmYVg0Z2FTZXdzZUlBQmRzdzFzMjZsRjFnYVZBaFVVblpYanlMc0pyc1RDSDhicXdwTmlBbldPSlI5NXdxaEE1WnRwYm5vMk11YXY1YnhaTGFPc1BGSEU",
+   "id": "gn:CBMixwFBVV95cUxPOFF6YlVFZWJqNnJmQzl5bThQMFRUYzF2WUpnODlnSTBJT21WamtUTkY0TTFjNjZiSzFLMXZmQXZRS1lHbTh2UFcyRmo0YzBQSWlxUFB2c2tRWkUxNUZQbXdCajY0Umc0SlQta3BrX0tlSzFYY09qYWZYVUtXREduSFZKZjFpLVpHVXFDM3hmTFpxU2JJZ19nQWRoeC01MEp2S2gxYW1sa2d0ZzZub3JWcHZWUnZoYTVCbkVGaTE3VGdYaFVOVUp3",
    "cat": "patch",
-   "status": "Reported",
-   "title": "First GTA 6 update fixes weather, game crashes, wanted level glitches, and more",
-   "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNVVM5OHl4QkFoVUpfcU5FRUtVYXB4VGYyZ1JRdXJsa1ZlSU9jZUJMWFFwVHp2ZHktazRScDdTTXFKZ0Ffdmt2YV84RTJEdk5lQV9hUFhZVVN1SjFBd05VcFFaV1BaVTZMbUlGT1RmYVg0Z2FTZXdzZUlBQmRzdzFzMjZsRjFnYVZBaFVVblpYanlMc0pyc1RDSDhicXdwTmlBbldPSlI5NXdxaEE1WnRwYm5vMk11YXY1YnhaTGFPc1BGSEU?oc=5",
-   "publisher": "TweakTown",
+   "status": "Unverified",
+   "title": "GTA 6's First Patch Fixes Story-Blocking Phone Calls, but Players Say One Problem Is Still There",
+   "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPOFF6YlVFZWJqNnJmQzl5bThQMFRUYzF2WUpnODlnSTBJT21WamtUTkY0TTFjNjZiSzFLMXZmQXZRS1lHbTh2UFcyRmo0YzBQSWlxUFB2c2tRWkUxNUZQbXdCajY0Umc0SlQta3BrX0tlSzFYY09qYWZYVUtXREduSFZKZjFpLVpHVXFDM3hmTFpxU2JJZ19nQWRoeC01MEp2S2gxYW1sa2d0ZzZub3JWcHZWUnZoYTVCbkVGaTE3VGdYaFVOVUp3?oc=5",
+   "publisher": "OpenCritic",
    "via": "Search: patches",
    "kind": "search",
-   "date": "2026-11-23T18:29:15.000Z",
+   "date": "2026-11-26T10:12:28.000Z",
    "platform": "",
    "version": "",
-   "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
-  },
-  {
-   "id": "gn:CBMid0FVX3lxTFBFaWYzTnlISjkwMlVRZlpuU3ZTWXd1VEE1RWlYdkdDUWtTRDRfMkNrbVpUSERpblotLXVza0R3Z2tOQm9tWm9PcFVlbTVUR0c1Ql9teDFIRUxyS2RqY1JoQjNmOXI4Y0VuLXR4QkROLXNUTGV6T1Jr",
-   "cat": "patch",
-   "status": "Reported",
-   "title": "GTA 6: First post-launch patch notes",
-   "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBFaWYzTnlISjkwMlVRZlpuU3ZTWXd1VEE1RWlYdkdDUWtTRDRfMkNrbVpUSERpblotLXVza0R3Z2tOQm9tWm9PcFVlbTVUR0c1Ql9teDFIRUxyS2RqY1JoQjNmOXI4Y0VuLXR4QkROLXNUTGV6T1Jr?oc=5",
-   "publisher": "Rock Paper Shotgun",
-   "via": "Search: patches",
-   "kind": "search",
-   "date": "2026-11-23T18:17:20.000Z",
-   "platform": "",
-   "version": "",
-   "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:04:47.620Z"
   },
   {
    "id": "gn:CBMivwFBVV95cUxQX05KVVRXdGc4TXFDUldLaG5Va2ZkNFFPUTl4M2RSV2Y3WWdCY0l2cDZWRXphWWd5M3hLOUk5LUNNczFhN2NsNW1qUjRIQkNJY0JNME1UamQyMjRrOUw4am5UNGhoNnI1YThSMm1abjN6cFlJSHM4ZzgtTXlOMFQ2NXVVb3BlWjN3VlJrVXFjckc3UWtXdnJvWC1UZ0hJSmJzMmVYMzcwMGlhSVluWlV1TXRSQWNSQzRDXzVDX1BaSQ",
@@ -428,7 +443,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:04:47.620Z"
   },
   {
    "id": "gn:CBMiigFBVV95cUxOeTJtYkYtczdkLUlZRXBpUjNobEJHTUVKek9yQ3JRNDNTYzM3blpFbmlqckU1T29mcWhUVFFjUFU1VWtEbTVXOTR4OThnUHc0SHJEVEx0VkRnYVFSWjJPX2ZhdHlIc3QycDFrS21sRE5QbTBZbUxudWctbFd2TkNMc1k2cXF1bHhvYnc",
@@ -443,22 +458,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
-  },
-  {
-   "id": "gn:CBMijwFBVV95cUxQQksxWktzbWFKTnZrU3gyZ3JtdnI4UUFYUEthVjR3aG5zVnJKUDBBM1Z4dUw4RGpwQVZZTEFOS0FabVA2WDAwaUFuMV8yNnJlWnJUVXJBT0dvbVhLdkFLREZYMmRRaGVQTmVaZXNISk9aZ2ZON3lSQUx4ZWdmN01yaVAzcDBmXy1hOTl4UzMtWQ",
-   "cat": "patch",
-   "status": "Unverified",
-   "title": "GTA 6’s first post-launch update fixes crashes, weather and autosave",
-   "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQQksxWktzbWFKTnZrU3gyZ3JtdnI4UUFYUEthVjR3aG5zVnJKUDBBM1Z4dUw4RGpwQVZZTEFOS0FabVA2WDAwaUFuMV8yNnJlWnJUVXJBT0dvbVhLdkFLREZYMmRRaGVQTmVaZXNISk9aZ2ZON3lSQUx4ZWdmN01yaVAzcDBmXy1hOTl4UzMtWQ?oc=5",
-   "publisher": "GamesHub",
-   "via": "Search: patches",
-   "kind": "search",
-   "date": "2026-11-24T16:14:51.000Z",
-   "platform": "",
-   "version": "",
-   "firstSeen": "2026-11-25T14:45:57.722Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "desk:cheats-unlock-rule",
@@ -491,7 +491,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMihwFBVV95cUxPaXRUaEVOazBDZ2J0ZlJqZkt4ZmtaelE2ZE43RlFmX1ZwYlVoNDNEejB3SUpoR2QyNjNwUEZKWk5JMzB2ZVk4LWR0X3V3dGNSUUtsbTRqV2VfVVBTd1czWWIzX3F3UmFOX0xNa1lQY0J6Z1lYYXlQMlE1dlBIVE5QUVl3SzdCNkU",
@@ -506,7 +506,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMibkFVX3lxTE41SlhFbFNFN2ZRQ3pGbFBLejZWaHZ5MnFNZjk1S2VTanNQc25yaTY2bmIwdXE1eTJReFcyQjBnMnFrRnFrRWpHYndaWVJGMGU1WjVRM2pGU3o2V2V3LVRnbXlGVTVsVkJBcG9uckpB",
@@ -521,7 +521,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMic0FVX3lxTE0xRk0zREM5aGxvOXlBZUlrR1JKQ0NJOTJYbWRCZjM0RGJ3Zk55YVY3MDE5MmpIWWFYcVlMM1VwbDNBa0J6aFdubDVjUDQ5bWRxNDhjalVmVnM4cmpVbTdKd0hOWF9ETnItVWh2RlRLLTBKQnM",
@@ -536,7 +536,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMioAFBVV95cUxNcFhua1hsbWRscFRqQkxJZnp6WkNTdm9fLVRsWHZiVzR3aWlPSjhZaEFlbkxPMG0yX0NZYVQ5dHBCVEN2MzhfS21qT2dpcWZzMUlnMnIzcHZGY25YbEpiMHNULS15V2Jnakw4VERvRlhfLWtRNk9ydWt4WlN6ajN6YWNxbW96RkVWV0VYekFJZThWMzlqTUVuVzhIUWVFUkFC",
@@ -551,7 +551,7 @@ window.LEONIDA_FEED = {
    "platform": "Xbox Series X|S",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiZEFVX3lxTE51Y2RXVlVZVmN3b2hpRkVlcWdRaFJuQXI3UHlEc1BfWUZBTjRrZVN0WTItRW03bmRCR25nb0RHdDBHSnpxSS05cjBmME5BT0RQLUltamR2d0xrLTJUVmQ1MElRdzI",
@@ -566,7 +566,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiW0FVX3lxTFBCS3pZWnpXVFV3aEczOGg0WlJWZ3FleUMzTEJMb3ROLW9KMVlzbk1vcVlJYWJDa3F2eFBkdUJqMEZLeDVINHNHQnpYVlMwM01xZ0tfVE9hRVBDeTg",
@@ -581,7 +581,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiekFVX3lxTE5iMGV2TTBOZThDckw1ZUpjblhkQlNOeVhfSTdRUWl6ajVpSXlLVnJ0NE9ZLWJLb21jSXZfMy1RWmVKSGV3dkMwaGZySTNxaElINXJjWDhhakNJem9sX1ZRMFJEcUxoeFRqaTZyNnlCbWVZZTJINk11THFB",
@@ -596,7 +596,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMiqgFBVV95cUxOc3Q3OUlQSGg3S0daS0EzN2VLbzE0azZ3Z25ZNENzaTZYWXJ0UG5NTDNkY2szMnJvVE93V1FxVXdfcTJyMGlNeW40RDdjVmJQNnVNRmtsOVE1dVZ6dlFHQXBSRE1aUHpIekM5aHowdTFyZXN6dl84Z3NFR1paeVFPUEkxXzlNZnVqNlZTbFpSeG45OXI1WW9pT2pGWEJjOElpOTBiRnZQalZPd9IBrwFBVV95cUxNZkEzSEQxb3NsODE3THJkSTV6Rkw0QzlsRlpEOHdiRklVb3RqRUxyTGcySlhfeHMzMVJVVTd1V09hX2MzeXUwV0dIek9rRW5LN2pTT3M1V2pwRDR3QjBpVE5rUnpYTm8xMDJOMEx0Qi1DR3BnQzlwVEZWT3RtTXBNZDk2M3pKTnUxa21NemY1LTV5ZU5fTWs0VEpaX2pqdmtSZTFkczJCVTNSVWozOUtz",
@@ -626,7 +626,22 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
+  },
+  {
+   "id": "gn:CBMibkFVX3lxTE5LR29zYk4wN1ZBejFoeUJjQ0pNN3c0V202Tm11RHFkZ2lpMkpJNFVDeFpHNnBMNmNfSVRkZ09SSDJiWHdNMmZIRXBKLXBIZTkyWVpUTVZ3Y3RqWG11TmZrSDNOa0RLLXhDUS1ibEhB",
+   "cat": "glitch",
+   "status": "Reported",
+   "title": "How To Fix Weather Bug In GTA 6—Rain, Storms & More",
+   "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5LR29zYk4wN1ZBejFoeUJjQ0pNN3c0V202Tm11RHFkZ2lpMkpJNFVDeFpHNnBMNmNfSVRkZ09SSDJiWHdNMmZIRXBKLXBIZTkyWVpUTVZ3Y3RqWG11TmZrSDNOa0RLLXhDUS1ibEhB?oc=5",
+   "publisher": "Insider Gaming",
+   "via": "Search: patches",
+   "kind": "search",
+   "date": "2026-11-26T11:04:09.000Z",
+   "platform": "",
+   "version": "",
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMid0FVX3lxTFB5ZVdCdEZHbi1FdXRKZEhORDdZVWJ0emZnR1o4VUttdkx5aXgxYUUxWDZFT29XLWNrcjZJMkJvQkhadUlsbHh4ZE9XeHJLX1hSZnptd0NNREx3MDFXdUtGTUlmY2tQa2hpUXl2SVNlLVV1UldUSFhF",
@@ -641,7 +656,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMixgFBVV95cUxPNzNTZWJyU2pyVUZDaXhYQkxobVRlSlVwVXVNb201U25qdUJRTHh0YWFkYW5VaFpJeFNocFpfc0RoWTBCVDdLVDdvVG9wQW5ObjJpNnRlUXZ2TzRoSlRoTlNxdGt1a0Q3ZnJzdk5EbWUybjlxMkxBanNGSF9yMVppeGd6enh2bGlIbjVtMi1qTEhHUDJPc2FlcUFzYjNIWTJ0UDg1eGVjMVFKTDNSZjAwTm1tam9IY0RDa0EzeXJxZFRTTWozdFE",
@@ -656,7 +671,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMib0FVX3lxTE1uNEFzOHhMSmxLdzkxX2ZCR1VZUjlTelQ5OWhHcm14R1Bxd1BZWHUyV0htaXJxWDJRMVFpemExZE9tdnp6ejZDOUdGNlJqd2NPN3dhVGRHZXAzVnZGNUU4cU1WM3B2V2lCOTlxbVVoOA",
@@ -671,7 +686,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMigAFBVV95cUxNTElNcjVxeGxzeE0teUNxUVpPY2pJWUVZWkVxOUpzWDFDNkVrWjJaWXV6SU9FeGFzbW1EN2k5NzRvcFhFa3hrSmZ0NWR4cDBkbFpRR1pSajJCSkhOUGdSRHkzbFpFVHdkcU9JQS1EMEJ6NUt4MUs4em9QYlpmQzdyNA",
@@ -686,7 +701,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "url:https://pcgamer.com/games/grand-theft-auto/gta-6-players-found-a-60-fps-glitch-but-its-too-unstable-to-stop-me-from-wishing-it-was-on-pc-already",
@@ -701,7 +716,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMi2gFBVV95cUxQVTg3V1VDNmE4RG9jOXJrX0RBUEFnd0IyUmFyZ3BFekV3RzNkSnV3cTlKY2wyTDlISkNLa3BVbHZ4ZzAtQi1PeDZsQnhkdHhWcGRyM05VZDBhNURMU2E2N2pBS2RtdVppQlFwdjBOVmZ0LWZhNGkyQ1ZLTEFkY2ZNNkZwZ1NLNjd6OXIybDNVRE1Zb0s1WXZCWFppLTJsdGIwUUlDQXkwLVhsc3FtNXctU3NMVThqbmNKNzdVUEt4bE12NG12a1FBUThsZ0tLNXBxeDRRd0s1TklIdw",
@@ -731,22 +746,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
-  },
-  {
-   "id": "gn:CBMirwFBVV95cUxNS0I4TTRWLV9xLTU5RHdET1ZpcThoMEtZYVVOV2poajZJWXVZcXVlX2VmQUpGQlhSbXE4cGE0WUZVdnZCWGJnQVF2NUthX1RXR1ctQ1F2UU5wUHhYT0ptalkzZWp5TnpWTi0xMFV1TEFVRUNOOTFDbEdHX3ZlS2FRTVhCWUR5UmN3M25zbkdUZW1GNjQ3MHpRSnFzMTlHR09fT0VBV0J6UmdWNFJPaDlv",
-   "cat": "glitch",
-   "status": "Reported",
-   "title": "A Glitch Unlocks GTA 6's Frame Rate on Xbox Series X, but It Just Proves a 60fps Mode Was Out of the Question",
-   "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNS0I4TTRWLV9xLTU5RHdET1ZpcThoMEtZYVVOV2poajZJWXVZcXVlX2VmQUpGQlhSbXE4cGE0WUZVdnZCWGJnQVF2NUthX1RXR1ctQ1F2UU5wUHhYT0ptalkzZWp5TnpWTi0xMFV1TEFVRUNOOTFDbEdHX3ZlS2FRTVhCWUR5UmN3M25zbkdUZW1GNjQ3MHpRSnFzMTlHR09fT0VBV0J6UmdWNFJPaDlv?oc=5",
-   "publisher": "IGN",
-   "via": "Search: glitches",
-   "kind": "search",
-   "date": "2026-11-23T19:47:44.000Z",
-   "platform": "Xbox Series X|S",
-   "version": "",
-   "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "desk:first-person-after-patch",
@@ -767,6 +767,21 @@ window.LEONIDA_FEED = {
    "lastChecked": "2026-11-25T15:00:00.000Z"
   },
   {
+   "id": "gn:CBMiigFBVV95cUxPZE44ZlVIRk52RTU3enJYaUpZS0UxZ0NzV0twUWJwNGRHZ2VTa3ZsVlpXZEtXS25CSm8wRnZiSl9lcVhHVnBfclpEZjZMUXo2a2tuUjQxd1NmeEFHaVJPSlplUXZCZ0FfME9hM2wtRXIzd04wWXpVc040dklRdUlzQXhKNVlXRnBXRHc",
+   "cat": "glitch",
+   "status": "Unverified",
+   "title": "How To Perform the Infinite Money Glitch in GTA 6",
+   "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPZE44ZlVIRk52RTU3enJYaUpZS0UxZ0NzV0twUWJwNGRHZ2VTa3ZsVlpXZEtXS25CSm8wRnZiSl9lcVhHVnBfclpEZjZMUXo2a2tuUjQxd1NmeEFHaVJPSlplUXZCZ0FfME9hM2wtRXIzd04wWXpVc040dklRdUlzQXhKNVlXRnBXRHc?oc=5",
+   "publisher": "Turtle Beach",
+   "via": "Search: patches",
+   "kind": "search",
+   "date": "2026-11-26T03:49:43.000Z",
+   "platform": "",
+   "version": "",
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:10:27.271Z"
+  },
+  {
    "id": "gn:CBMingFBVV95cUxOQnpsM2htb3FaWkRVcGNiWDd4MlBwMzZ4cmRIclBfTTFvZGIwTUF3NTNMazAtYW5CN0lubVo3WVJVelg3bU5HSExoYTJVOTN6RWJURzU0ZXhDMjBxdDgxY1JSenBMSHotaUd6Y0kxWWVpU1pFanJITkNLNjFXRlRsczJLNWJnaDZkdm5EOUhPVV95WVNsX01mcmxBWTlnUQ",
    "cat": "glitch",
    "status": "Unverified",
@@ -779,22 +794,52 @@ window.LEONIDA_FEED = {
    "platform": "PS5 + Xbox Series X|S",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
-   "id": "gn:CBMihwFBVV95cUxNaml2dW9BMzcxS0hoVHk1RjlwaUFhcDhKd1ZreDBVVkctT3l1YW9Ybzh2RGw3WjVlQUpOUU5hbUVWY3hLWkFqYi1nNTIwZjhiTzFVMGs4cGtmMHMxaHdxOHdLQVFkWWlJTlE3NXA3c0gyYmF6RXB4VXY5dFo5RzFIcW1SLWtxcDA",
-   "cat": "glitch",
-   "status": "Unverified",
-   "title": "GTA 6 players found a first-person camera glitch, but getting back takes another step",
-   "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNaml2dW9BMzcxS0hoVHk1RjlwaUFhcDhKd1ZreDBVVkctT3l1YW9Ybzh2RGw3WjVlQUpOUU5hbUVWY3hLWkFqYi1nNTIwZjhiTzFVMGs4cGtmMHMxaHdxOHdLQVFkWWlJTlE3NXA3c0gyYmF6RXB4VXY5dFo5RzFIcW1SLWtxcDA?oc=5",
-   "publisher": "MIXED News",
-   "via": "Search: glitches",
-   "kind": "search",
-   "date": "2026-11-24T20:43:22.000Z",
+   "id": "url:https://videogameschronicle.com/guide/gta-6-bricked-up-walkthrough-how-to-get-the-bonus-reward-in-bricked-up",
+   "cat": "secret",
+   "status": "Reported",
+   "title": "GTA 6 Bricked Up walkthrough: How to get the bonus reward in Bricked Up",
+   "url": "https://videogameschronicle.com/guide/gta-6-bricked-up-walkthrough-how-to-get-the-bonus-reward-in-bricked-up",
+   "publisher": "VGC",
+   "via": "VGC",
+   "kind": "outlet",
+   "date": "2026-11-26T13:36:44.000Z",
    "platform": "",
    "version": "",
-   "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:10:27.271Z"
+  },
+  {
+   "id": "url:https://videogameschronicle.com/guide/gta-6-secret-mission-in-capri-how-to-find-and-complete-the-hidden-mission",
+   "cat": "secret",
+   "status": "Reported",
+   "title": "GTA 6 Secret Mission in Capri: How to Find and Complete the Hidden Mission",
+   "url": "https://videogameschronicle.com/guide/gta-6-secret-mission-in-capri-how-to-find-and-complete-the-hidden-mission",
+   "publisher": "VGC",
+   "via": "VGC",
+   "kind": "outlet",
+   "date": "2026-11-26T13:00:13.000Z",
+   "platform": "",
+   "version": "",
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:10:27.271Z"
+  },
+  {
+   "id": "url:https://pcgamer.com/games/grand-theft-auto/gta-6-missing-persons-locations",
+   "cat": "secret",
+   "status": "Reported",
+   "title": "All Missing Persons locations in GTA 6",
+   "url": "https://pcgamer.com/games/grand-theft-auto/gta-6-missing-persons-locations",
+   "publisher": "PC Gamer",
+   "via": "PC Gamer",
+   "kind": "outlet",
+   "date": "2026-11-26T05:24:13.000Z",
+   "platform": "",
+   "version": "",
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "url:https://pushsquare.com/guides/gta-6-secret-controls-the-game-doesnt-tell-you",
@@ -809,7 +854,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "url:https://pcgamer.com/games/grand-theft-auto/gta-6-vault-how-to-open",
@@ -824,7 +869,22 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
+  },
+  {
+   "id": "gn:CBMimgFBVV95cUxNZWVZRm04SlNUOVJwSFpjMDg0TTFHSDVzZFhGREtqVHluYWluVi1yclNiNWVsUmktRkp4bkRNSWM3SXVXNnVPRXQtblp1RzQzOTFsZk8wTVozY2NVWHZGUG52dE43TUc4bW1kUTJsMkIwa0hwV3NtTkxCNE8wUFdURWp4MGgxNnhEX0NGejZoOS1HLXFRRzl4WWNB",
+   "cat": "secret",
+   "status": "Reported",
+   "title": "GTA 6: Check Out the Mud Club (Billy - Thrillbillies) Walkthrough",
+   "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNZWVZRm04SlNUOVJwSFpjMDg0TTFHSDVzZFhGREtqVHluYWluVi1yclNiNWVsUmktRkp4bkRNSWM3SXVXNnVPRXQtblp1RzQzOTFsZk8wTVozY2NVWHZGUG52dE43TUc4bW1kUTJsMkIwa0hwV3NtTkxCNE8wUFdURWp4MGgxNnhEX0NGejZoOS1HLXFRRzl4WWNB?oc=5",
+   "publisher": "Push Square",
+   "via": "Search: patches",
+   "kind": "search",
+   "date": "2026-11-25T21:25:00.000Z",
+   "platform": "",
+   "version": "",
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:04:47.620Z"
   },
   {
    "id": "url:https://videogameschronicle.com/guide/gta-6-cooties-mission-walkthrough",
@@ -839,7 +899,7 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "url:https://videogameschronicle.com/guide/gta-6-marbelle-hotel-location-and-safe-code-how-to-find-the-silent-hill-easter-egg",
@@ -854,67 +914,22 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
-   "id": "gn:CBMicEFVX3lxTE5Tb245al9QNzMwUjA4aEMteEcyYm83VDF1ei1kU1pMN01CMXIweUt5ZVpvSmg0YUVUaGxXdFc4QlVTZERKTm9UY1IwX0ZVWnNMbi1MdFBuLW1FaGxLM2o3T0FIMVFzMjZmeWo5LXc2N0s",
+   "id": "gn:CBMiigFBVV95cUxPb25OSjV3RWxrSlBHbThreUJneUFSNzl5NzlhNW14b1JkUlVqaERROF9BeHVlQVJuUWw4WHdjYWdaQ3B4bngxUXNVaW9mLURrcWtRYXRHbHA5eWl5QWhFQlQwa2FpeUpqdHlBLThzb2g2ZEhIVFVidTgzajZ4dUFFZDlWZl9rbXg5cnc",
    "cat": "secret",
-   "status": "Reported",
-   "title": "How to Find GTA 6 TMNT Easter Egg – Teenage Mutant Ninja Turtles Location",
-   "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5Tb245al9QNzMwUjA4aEMteEcyYm83VDF1ei1kU1pMN01CMXIweUt5ZVpvSmg0YUVUaGxXdFc4QlVTZERKTm9UY1IwX0ZVWnNMbi1MdFBuLW1FaGxLM2o3T0FIMVFzMjZmeWo5LXc2N0s?oc=5",
-   "publisher": "VICE",
+   "status": "Unverified",
+   "title": "10 Hidden Details in GTA 6 You Definitely Missed",
+   "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPb25OSjV3RWxrSlBHbThreUJneUFSNzl5NzlhNW14b1JkUlVqaERROF9BeHVlQVJuUWw4WHdjYWdaQ3B4bngxUXNVaW9mLURrcWtRYXRHbHA5eWl5QWhFQlQwa2FpeUpqdHlBLThzb2g2ZEhIVFVidTgzajZ4dUFFZDlWZl9rbXg5cnc?oc=5",
+   "publisher": "Mobalytics",
    "via": "Search: secrets",
    "kind": "search",
-   "date": "2026-11-25T18:25:00.000Z",
+   "date": "2026-11-26T10:47:08.000Z",
    "platform": "",
    "version": "",
-   "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
-  },
-  {
-   "id": "url:https://videogameschronicle.com/guide/gta-6-hidden-charges-ask-for-help-or-go-solo",
-   "cat": "secret",
-   "status": "Reported",
-   "title": "GTA 6 Hidden Charges: Ask for Help or Go Solo?",
-   "url": "https://videogameschronicle.com/guide/gta-6-hidden-charges-ask-for-help-or-go-solo",
-   "publisher": "VGC",
-   "via": "VGC",
-   "kind": "outlet",
-   "date": "2026-11-25T17:51:10.000Z",
-   "platform": "",
-   "version": "",
-   "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
-  },
-  {
-   "id": "gn:CBMiY0FVX3lxTFBoaF9JdVRKTFJDVkpkYlg1bGhpMjBfdW5LX0VrYXJ6Wmx6MGl4NFhXTThTRGZTT2RWSzd1LWZueWpwaXhPaW9CbF90WVJZZ0x5MmFBVzRodlZiWXd3RWwyUmROOA",
-   "cat": "secret",
-   "status": "Reported",
-   "title": "All GTA 6 Guides, Walkthroughs, Best Tips & Tricks",
-   "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBoaF9JdVRKTFJDVkpkYlg1bGhpMjBfdW5LX0VrYXJ6Wmx6MGl4NFhXTThTRGZTT2RWSzd1LWZueWpwaXhPaW9CbF90WVJZZ0x5MmFBVzRodlZiWXd3RWwyUmROOA?oc=5",
-   "publisher": "Insider Gaming",
-   "via": "Search: secrets",
-   "kind": "search",
-   "date": "2026-11-25T17:50:43.000Z",
-   "platform": "",
-   "version": "",
-   "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
-  },
-  {
-   "id": "url:https://videogameschronicle.com/guide/gta-6-hidden-charges-walkthrough-how-to-plant-all-three-explosives",
-   "cat": "secret",
-   "status": "Reported",
-   "title": "GTA 6 Hidden Charges walkthrough: How to plant all three explosives",
-   "url": "https://videogameschronicle.com/guide/gta-6-hidden-charges-walkthrough-how-to-plant-all-three-explosives",
-   "publisher": "VGC",
-   "via": "VGC",
-   "kind": "outlet",
-   "date": "2026-11-25T17:41:21.000Z",
-   "platform": "",
-   "version": "",
-   "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   },
   {
    "id": "gn:CBMif0FVX3lxTE9xdFRRUV9ZN0JVaXJMZ2hzVExOeWlpUTlaLWtRR3JkckNBX2JWeWtQTWVQZ1E0QzVXWFlhbDA3U25wZlhSVVpNaTRIMjhqQk1lMTI2aExvSjN6RHhsRlRlVWp4cW1iR3VPYmYzdlp2ZDZ3YkNMM0FHTUJuNk1DSDA",
@@ -929,37 +944,22 @@ window.LEONIDA_FEED = {
    "platform": "",
    "version": "",
    "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
+   "lastChecked": "2026-11-26T14:04:47.620Z"
   },
   {
-   "id": "gn:CBMilwFBVV95cUxNUjRFNTVVM0lwZkN6RXZjclFtVGM1cjJpdVFhemtsLVVHNGNsQzAzejFESjFmWnE1VlFzcEgtSWktNFRPOVhOMFdtcnpzZE9jUExyc0E3UXY0WHdYX1pleV9HU0x2RkFaY08ydGFNUzhhZG5FSFBNakoyVzB5WTdpYXJWZXRWa3J2bnhTWFR4WXFYSXFJUHpB",
+   "id": "gn:CBMiX0FVX3lxTE14ZGNYYlBzT0tLbkdBek9RS3FrMHExbEVxMWxIOUNNZE5rZ1FEZXpxNWp1dGpvRmdpb0tLRVhaeFJndWdUb08ybFU5U0QxUGRlRDU3M0ZLQnR0WTQwSm0w",
    "cat": "secret",
    "status": "Unverified",
-   "title": "Welcome to Vice City: 15 GTA 6 Tips to Rule the Underworld Fast",
-   "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNUjRFNTVVM0lwZkN6RXZjclFtVGM1cjJpdVFhemtsLVVHNGNsQzAzejFESjFmWnE1VlFzcEgtSWktNFRPOVhOMFdtcnpzZE9jUExyc0E3UXY0WHdYX1pleV9HU0x2RkFaY08ydGFNUzhhZG5FSFBNakoyVzB5WTdpYXJWZXRWa3J2bnhTWFR4WXFYSXFJUHpB?oc=5",
-   "publisher": "PCMag",
-   "via": "Search: glitches",
+   "title": "11 Secret GTA 6 Controls To Unlock Even More Chaos In Vice City",
+   "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE14ZGNYYlBzT0tLbkdBek9RS3FrMHExbEVxMWxIOUNNZE5rZ1FEZXpxNWp1dGpvRmdpb0tLRVhaeFJndWdUb08ybFU5U0QxUGRlRDU3M0ZLQnR0WTQwSm0w?oc=5",
+   "publisher": "HotHardware",
+   "via": "Search: secrets",
    "kind": "search",
-   "date": "2026-11-25T16:43:21.000Z",
+   "date": "2026-11-25T18:11:00.000Z",
    "platform": "",
    "version": "",
-   "firstSeen": "2026-11-25T23:29:11.534Z",
-   "lastChecked": "2026-11-25T23:29:11.534Z"
-  },
-  {
-   "id": "gn:CBMixAFBVV95cUxOTVV3Q013WFAxNnYwQk9tcV83NTlHMkpMeDhZX0hXaUlBVWZOZXlGaFljQ3RNRDFjcGtsczFUS0prVW5WNm5yb041ZWItSEN2Tkk4bE9pdG5zM051cUZUbGVnS1VNR2s0Ni1JWGctWHRkNmtPYjk3SkR1LXJpSmoyaUZ2a0kzenpvUTQ3SW5CbHF5azNibkxtWlRXUEZMV25nMHkzQWpJbXlrRThCM0JzcG1oeHVrY01MaXpKbTM4MC14NHJ0",
-   "cat": "secret",
-   "status": "Unverified",
-   "title": "GTA 6, 61 tricks discovered: infinite money, ammo and vehicles. Here’s how to unlock them",
-   "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOTVV3Q013WFAxNnYwQk9tcV83NTlHMkpMeDhZX0hXaUlBVWZOZXlGaFljQ3RNRDFjcGtsczFUS0prVW5WNm5yb041ZWItSEN2Tkk4bE9pdG5zM051cUZUbGVnS1VNR2s0Ni1JWGctWHRkNmtPYjk3SkR1LXJpSmoyaUZ2a0kzenpvUTQ3SW5CbHF5azNibkxtWlRXUEZMV25nMHkzQWpJbXlrRThCM0JzcG1oeHVrY01MaXpKbTM4MC14NHJ0?oc=5",
-   "publisher": "KotaWorld",
-   "via": "Search: cheats",
-   "kind": "search",
-   "date": "2026-11-25T13:48:37.000Z",
-   "platform": "",
-   "version": "",
-   "firstSeen": "2026-11-25T14:34:00.110Z",
-   "lastChecked": "2026-11-25T15:33:10.554Z"
+   "firstSeen": "2026-11-26T14:04:47.620Z",
+   "lastChecked": "2026-11-26T14:10:27.271Z"
   }
  ],
  "patches": [
@@ -1006,97 +1006,97 @@ window.LEONIDA_FEED = {
    "name": "Rockstar Newswire + Support",
    "kind": "official",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Rockstar Support",
    "kind": "official",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "GameSpot",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "IGN",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Eurogamer",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "PC Gamer",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "VGC",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Push Square",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Pure Xbox",
    "kind": "outlet",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Search: patches",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Search: cheats",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Search: glitches",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Search: secrets",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "YouTube: SX Exclusive",
    "kind": "video",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "YouTube: Rockstar Games",
    "kind": "video",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   },
   {
    "name": "Google News: The Wire",
    "kind": "search",
    "ok": true,
-   "lastOk": "2026-11-25T23:29:11.534Z"
+   "lastOk": "2026-11-26T14:10:27.271Z"
   }
  ],
  "health": {

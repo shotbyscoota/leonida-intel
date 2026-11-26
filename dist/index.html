@@ -532,6 +532,19 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   .film .belt{overflow-x:auto;width:auto}
   html{scroll-behavior:auto}
 }
+/* Real people in Leonida */
+#characters { scroll-margin-top:72px; padding-block:clamp(64px,8vw,120px); background:#18121a; }
+.people-layout { display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1fr); align-items:start; gap:clamp(32px,7vw,100px); }
+#characters .poster { font-size:clamp(3.4rem,7vw,7.2rem); line-height:.98; }
+#characters .poster span { display:block; color:var(--pink); }
+.people-list { margin:0; }
+.people-list > div { padding:18px 0; border-top:1px solid #65505e; }
+.people-list > div:first-child { border-top:3px solid var(--pink); }
+.people-list dt { font:400 clamp(1.6rem,3vw,2.5rem)/1.15 var(--poster); }
+.people-list dd { margin:6px 0 0; max-width:52ch; color:var(--bone); }
+.people-sources { margin:22px 0 0; font-size:.95rem; }
+.people-sources a { text-underline-offset:4px; }
+@media(max-width:760px) { .people-layout { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -543,7 +556,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   <div class="wrap">
     <a class="brand" href="#hero" aria-label="Leonida Intel, back to top"><b>Leonida</b><i>Intel</i></a>
     <nav id="nav" aria-label="Sections">
-      <a href="#intel">Intel</a><a href="#patches">Patches</a><a href="map.html">Map</a><a href="spots.html">List</a><a href="#tv">SX TV</a><a href="#wire">The Wire</a><a href="#facts">Rap sheet</a><a href="#prep">Kit</a>
+      <a href="#intel">Intel</a><a href="#patches">Patches</a><a href="map.html">Map</a><a href="spots.html">List</a><a href="#characters">Characters</a><a href="#tv">SX TV</a><a href="#wire">The Wire</a><a href="#facts">Rap sheet</a><a href="#prep">Kit</a>
     </nav>
     <div class="heat" title="Heat = new checked intel in the last 24 hours">
       <small>Heat</small>
@@ -679,6 +692,36 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
     <figure><img src="img/cash-s.webp" alt="" loading="lazy" width="800" height="533"><span class="word">The score</span></figure>
     <figure><img src="img/bridge-s.webp" alt="" loading="lazy" width="800" height="533"><span class="word">Skyline</span></figure>
     <figure><img src="img/car-red-s.webp" alt="" loading="lazy" width="800" height="533"><span class="word">Car meet</span></figure>
+  </div>
+</section>
+
+<section id="characters" aria-labelledby="characters-h">
+  <div class="wrap people-layout">
+    <div>
+      <h2 class="poster" id="characters-h">Real people <span>in Leonida</span></h2>
+      <p class="lede">Recognize a voice on the radio? Here's where real people turn up in GTA VI, straight from Rockstar's own credits.</p>
+    </div>
+    <div>
+      <dl class="people-list">
+        <div>
+          <dt>Kodak Black</dt>
+          <dd>The rapper plays himself. You can also hear him hosting <cite>The Sniper of La Perle</cite>.</dd>
+        </div>
+        <div>
+          <dt>Big Mike</dt>
+          <dd>Look for Big Mike under his own name in the full cast. Rockstar credits him with playing himself.</dd>
+        </div>
+        <div>
+          <dt>Trina and Trick Daddy</dt>
+          <dd>Tune to <cite>Dirty South Classics</cite> to hear the two hosts as themselves. Gucci Mane appears under his own name on the station's <cite>The Tap In</cite>.</dd>
+        </div>
+        <div>
+          <dt>Tyreek Hill</dt>
+          <dd>The NFL receiver is in the full cast as Maleek Rivers, a character of Rockstar's own.</dd>
+        </div>
+      </dl>
+      <p class="people-sources">Source &middot; <a href="https://www.rockstargames.com/VI/credits" target="_blank" rel="noopener">Rockstar's cast and radio credits</a> (checked 26 Nov 2026)</p>
+    </div>
   </div>
 </section>
 
@@ -822,6 +865,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
         <h3>The desk</h3>
         <ul>
           <li><a href="https://www.youtube.com/@SXExclusive" target="_blank" rel="noopener">SX Exclusive on YouTube</a></li>
+          <li><a href="#characters">Characters</a></li>
           <li><a href="#tv">SX TV</a></li>
           <li><a href="#wire">The Wire</a></li>
           <li><a href="#intel">Intel board</a></li>

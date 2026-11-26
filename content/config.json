@@ -6,7 +6,7 @@
     "onlyIfTitleHas": ["GTA 6", "GTA VI", "GTA6", "GTAVI", "Grand Theft Auto VI", "Grand Theft Auto 6", "Leonida"]
   },
   "officialChannel": { "name": "Rockstar Games", "channelId": "UC6VcWc1rAoWdBCM0JxrRQ3A", "onlyIfTitleHas": ["GTA VI", "GTA 6", "Grand Theft Auto VI", "Vice City", "Leonida"] },
-  "news": { "query": "\"GTA 6\" OR \"GTA VI\" OR \"Grand Theft Auto VI\"", "max": 12, "skipSources": [] },
+  "news": { "query": "\"GTA 6\" OR \"GTA VI\" OR \"Grand Theft Auto VI\"", "max": 12, "skipSources": ["shattered.io"], "skipIfTitleHas": ["deals", "Black Friday", "Cyber Monday", "lowest price"], "_skip": "skipSources: publishers checked and found unreliable (see content/intel.json rejected). skipIfTitleHas: shopping posts, not news (whole words, any case)." },
   "maxClips": 24,
   "maxOfficial": 10,
 

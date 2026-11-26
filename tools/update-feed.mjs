@@ -32,6 +32,8 @@ const warn = (m) => { warnings.push(m); console.log('WARN ' + m); };
 /* ---------- --check: validate hand-edited files, no network ---------- */
 const desk = read('content/intel.json', { entries: [] });
 for (const e of desk.entries || []) { const p = I.deskProblems(e); if (p.length) warn(`content/intel.json "${e.title || e.id || '?'}": ${p.join('; ')}`); }
+for (const r of desk.rejected || []) { const p = I.rejectProblems(r); if (p.length) warn(`content/intel.json rejected "${r?.title || r?.publisher || r?.url || '?'}": ${p.join('; ')}`); }
+const rejected = (desk.rejected || []).filter((r) => !I.rejectProblems(r).length);
 for (const f of ['content/config.json', 'content/clips.json', 'content/drops.json', 'content/intel.json', 'content/patches.json'])
   if (existsSync(join(root, f)) && read(f, null) === null) warn(`${f} is not valid JSON`);
 if (args.has('--check')) { console.log(warnings.length ? `${warnings.length} problem(s)` : 'content OK'); process.exit(warnings.length ? 1 : 0); }
@@ -86,6 +88,7 @@ async function channel(ch, from) {
 async function news(n) {
   if (!n?.query) return [];
   const skip = (n.skipSources || []).map((s) => s.toLowerCase());
+  const skipTitle = titleFilter(n.skipIfTitleHas);   // shopping posts ("Black Friday deals") are not news
   const seen = new Set();
   return I.parseFeed(await get(gnews(n.query))).map((it) => {
     const source = I.clean(it.source, 60); let title = I.clean(it.title, 200);
@@ -94,7 +97,7 @@ async function news(n) {
     return { title, link: I.safeUrl(it.link), source, date: isNaN(d) ? NOW : d.toISOString() };
   }).filter((x) => {
     const k = I.titleKey(x.title).slice(0, 60);
-    if (!x.link || seen.has(k) || skip.includes(x.source.toLowerCase())) return false;
+    if (!x.link || seen.has(k) || skip.includes(x.source.toLowerCase()) || skipTitle?.test(x.title)) return false;
     seen.add(k); return true;
   }).sort((a, b) => b.date.localeCompare(a.date)).slice(0, n.max || 12);
 }
@@ -121,8 +124,10 @@ const mine = mineR.ok ? mineR.v : (prev.mine || []).filter(keepFor(cfg.yourChann
 const official = offR.ok ? offR.v : (prev.official || []);
 const headlines = newsR.ok ? newsR.v : (prev.news || []);
 
-const found = srcR.filter((r) => r.ok).flatMap((r) => r.v);
+const found = srcR.filter((r) => r.ok).flatMap((r) => r.v).filter((it) => !I.isRejected(it, rejected));
 const added = I.merge(state, found, NOW);
+I.reclassify(state);
+I.dropRejected(state, rejected);
 I.applyDesk(state, desk.entries || [], NOW, warn);
 I.prune(state, NOW, ic.forgetAfterDays || 45);
 console.log(`intel: ${found.length} seen this scan, ${added.length} new, ${Object.keys(state.items).length} in ledger`);
