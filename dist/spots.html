@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Every Spot · Leonida Intel</title>
+<meta name="description" content="Every GTA VI map spot in one list: free and hidden cars, weapons, money, secrets, missions and shops in Leonida. Filter, search, and open any spot on the map. Unofficial fan guide.">
+<meta name="theme-color" content="#0b0a0c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Every spot in Leonida: cars, weapons, money, secrets">
+<meta property="og:description" content="The whole GTA VI fan map as a list you can filter. Every spot sourced and labelled.">
+<meta property="og:image" content="https://gtadropz.netlify.app/og.jpg">
+<link rel="canonical" href="https://gtadropz.netlify.app/spots.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Anton;src:url(fonts/anton-400.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Dafoe;src:url(fonts/mr-dafoe-400.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"DM Sans";src:url(fonts/dm-sans-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"DM Sans";src:url(fonts/dm-sans-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"DM Sans";src:url(fonts/dm-sans-700.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{
+  --ink:#0b0a0c; --ink-2:#151318; --line:#2a2630;
+  --bone:#fff3e4; --mute:#b7aeb9;
+  --pink:#ff2e7e; --orange:#ff8a1f; --yellow:#ffd23f; --teal:#19e3d0; --green:#4dff88; --sky:#7ab8ff;
+  --sunset:linear-gradient(100deg,#ff2e7e 0%,#ff5a4e 45%,#ff8a1f 100%);
+  --side:max(16px,3.5vw); --max:1500px; --ease:cubic-bezier(.2,.75,.2,1);
+  --poster:Anton,"Impact","Arial Narrow Bold",sans-serif; --script:Dafoe,"Brush Script MT",cursive; --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --top:64px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--top) + 150px)}
+body{margin:0;background:var(--ink);color:var(--bone);font:400 16px/1.55 var(--body);overflow-x:hidden}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--yellow);color:var(--ink);padding:10px 14px;z-index:99;font-weight:700}
+.skip:focus{left:8px}
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--side)}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.top{position:sticky;top:0;z-index:50;background:rgba(11,10,12,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--top)}
+.brand{display:flex;align-items:baseline;gap:6px;text-decoration:none;white-space:nowrap}
+.brand b{font:400 24px/1 var(--poster);text-transform:uppercase}
+.brand i{font:400 32px/.6 var(--script);color:var(--pink);font-style:normal;text-shadow:0 0 14px rgba(255,46,126,.7)}
+.top nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.top nav::-webkit-scrollbar{display:none}
+.top nav a{font:700 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:12px 10px;white-space:nowrap}
+.top nav a:hover{color:var(--pink)}
+.top nav a[aria-current="page"]{color:var(--ink);background:var(--yellow)}
+
+.lab{display:inline-block;font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;padding:6px 8px;border:2px solid currentColor;text-decoration:none;white-space:nowrap}
+.lab.Official{background:var(--pink);border-color:var(--pink);color:#fff}
+.lab.Tested{background:var(--green);border-color:var(--green);color:var(--ink)}
+.lab.Reported{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+.lab.Patched{color:var(--mute);text-decoration:line-through}
+.lab.Unverified{border-style:dashed;color:var(--yellow)}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;background:var(--bone);color:var(--ink);border:0;font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;box-shadow:4px 4px 0 var(--pink);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--pink)}
+.btn:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--pink)}
+.btn.ghost{background:none;color:var(--bone);border:2px solid var(--bone);box-shadow:none}
+.btn.ghost:hover{background:var(--bone);color:var(--ink)}
+
+/* hero */
+.hero{padding:clamp(40px,6vw,80px) 0 clamp(20px,3vw,32px);background:radial-gradient(ellipse at 85% 0%,rgba(255,46,126,.22),transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(25,227,208,.12),transparent 50%)}
+.hero h1{margin:0;line-height:1}
+.hero h1 .s{display:block;font:400 clamp(34px,4vw,48px)/1 var(--script);color:var(--pink);text-shadow:0 0 12px rgba(255,46,126,.75);transform:rotate(-3deg);transform-origin:left bottom;margin:0 0 14px 4px;line-height:1.1}
+.hero h1 .p{display:block;font:400 clamp(3.2rem,9vw,7.5rem)/.88 var(--poster);text-transform:uppercase;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:4px}
+.hero .lede{max-width:62ch;color:var(--mute);margin:14px 0 18px;font-size:17px}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:13px;color:var(--mute)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+
+/* filter bar */
+.bar{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:40;background:rgba(11,10,12,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-block:1px solid var(--line);padding:12px 0}
+.bar .wrap{display:grid;gap:10px}
+.bar .line1{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search{display:flex;flex:1 1 260px;border:2px solid var(--bone)}
+.search input{flex:1;min-width:0;min-height:44px;padding:0 12px;background:var(--ink);border:0;font-size:16px}
+.search input::placeholder{color:var(--mute)}
+.bar select{min-height:44px;padding:0 10px;background:var(--ink);border:2px solid var(--line);flex:0 1 auto;max-width:100%}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 12px;border:2px solid var(--line);background:none;cursor:pointer;font:700 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transition:border-color .2s,background .2s}
+.chip i{width:10px;height:10px;border-radius:50%;background:var(--c,var(--bone));box-shadow:0 0 8px var(--c,var(--bone))}
+.chip:hover{border-color:var(--bone)}
+.chip[aria-pressed="true"]{border-color:var(--c,var(--bone));background:color-mix(in srgb,var(--c,var(--bone)) 16%,transparent)}
+.status{font:700 12px/1.3 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:0}
+
+/* groups and rows */
+main{padding-bottom:clamp(56px,7vw,100px)}
+.group{padding-top:clamp(28px,4vw,48px)}
+.group>h2{display:flex;align-items:baseline;gap:12px;margin:0 0 6px;font:400 clamp(2.2rem,5vw,3.8rem)/.95 var(--poster);text-transform:uppercase}
+.group>h2 i{width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c);flex:0 0 auto;align-self:center}
+.group>h2 small{font:700 13px/1 var(--body);letter-spacing:.12em;color:var(--mute)}
+.group>p{margin:0 0 14px;color:var(--mute);max-width:70ch}
+.rows{list-style:none;margin:0;padding:0;border-top:3px solid var(--bone)}
+.rows>li{border-bottom:1px solid var(--line)}
+.rows details>summary{list-style:none;display:grid;grid-template-columns:12px minmax(0,1fr) auto 20px;gap:12px;align-items:center;padding:14px 4px;cursor:pointer}
+.rows details>summary::-webkit-details-marker{display:none}
+.rows summary i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.rows summary b{display:block;font-weight:700;font-size:17px;line-height:1.3}
+.rows summary small{display:block;color:var(--mute);font-size:14px;line-height:1.35;margin-top:2px}
+.rows summary .lab{font-size:10px;padding:4px 6px}
+.rows summary .chev{width:20px;height:20px;transition:transform .2s var(--ease);stroke:var(--mute);fill:none;stroke-width:2}
+.rows details[open]>summary .chev{transform:rotate(180deg)}
+.rows summary:hover b{color:var(--pink)}
+.rows summary:focus-visible{outline-offset:-3px}
+.rows .body{padding:0 4px 18px 26px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(16px,3vw,40px)}
+.rows .body p{margin:0 0 10px}
+.rows .body h3{margin:12px 0 6px;font:700 11px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.rows .body h3:first-child{margin-top:0}
+.rows .body ol{margin:0;padding-left:20px}
+.rows .body li{margin:0 0 6px}
+.rows .body dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0;font-size:15px}
+.rows .body dt{font:700 11px/1.7 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.rows .body dd{margin:0}
+.rows .src{list-style:none;padding:0;margin:0;font-size:14px}
+.rows .src li{margin:0 0 6px}
+.rows .src a{text-decoration-color:var(--pink);text-underline-offset:3px}
+.rows .src small{color:var(--mute)}
+.rows .prec{font-size:14px;color:var(--yellow)}
+.rows .warn{font-size:14px;color:var(--yellow);margin-top:10px}
+.rows .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.none{padding:40px 0;color:var(--mute);font-size:18px}
+.none[hidden],.group[hidden],.rows>li[hidden]{display:none}
+
+footer{background:#000;padding:40px 0 calc(30px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--mute)}
+footer a:hover{color:var(--bone)}
+@media (max-width:760px){
+  .top nav{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 18px),transparent);mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 18px),transparent)}
+  .rows details>summary{grid-template-columns:10px minmax(0,1fr) 18px}
+  .rows summary .lab{grid-column:2;justify-self:start;margin-top:4px}
+  .rows summary .chev{grid-row:1;grid-column:3}
+  .rows .body{grid-template-columns:1fr;padding-left:22px}
+  .bar{position:static}
+  .bar .line1 .search{flex:1 1 100%}
+  .bar .line1>label:not(.search){flex:1 1 0;min-width:0}
+  .bar select{width:100%;font-size:15px;padding:0 6px}
+  html{scroll-padding-top:calc(var(--top) + 12px)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#list">Skip to the list</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Leonida Intel home"><b>Leonida</b><i>Intel</i></a>
+    <nav aria-label="Site">
+      <a href="./#intel">Intel</a><a href="./#patches">Patches</a><a href="map.html">Map</a><a href="spots.html" aria-current="page">List</a><a href="./#tv">SX TV</a><a href="./#wire">The Wire</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <h1 id="h1"><span class="s">Leonida</span><span class="p">Every spot</span></h1>
+    <p class="lede" id="lede">Every place on the map in one list: free and hidden cars, weapons, money, secrets, missions and shops. Search it, filter it, open any spot for the steps, then see it on the map.</p>
+    <div class="acts"><a class="btn" href="map.html">Open the 3D map</a><a class="btn ghost" href="./#intel">Back to the intel board</a></div>
+    <div class="legend" aria-label="What the labels mean">
+      <span><span class="lab Reported">Reported</span> a named outlet said it</span>
+      <span><span class="lab Unverified">Unverified</span> fan sites only, treat as a lead</span>
+      <span><span class="lab Tested">Tested</span> we did it in game</span>
+    </div>
+  </div>
+</section>
+
+<div class="bar" role="search" aria-label="Filter the list">
+  <div class="wrap">
+    <div class="line1">
+      <label class="search"><span class="vh">Search every spot</span><input id="q" type="search" placeholder="Search: Emerus, tank, safe code, Key Lento…" autocomplete="off"></label>
+      <label><span class="vh">Region</span><select id="region"><option value="">All regions</option></select></label>
+      <label><span class="vh">Label</span><select id="status"><option value="">All labels</option><option value="Official">Official</option><option value="Tested">Tested</option><option value="Reported">Reported</option><option value="Unverified">Unverified</option><option value="Patched">Patched</option></select></label>
+      <label><span class="vh">Sort</span><select id="sort"><option value="name">A to Z</option><option value="region">By region</option><option value="label">Most certain first</option></select></label>
+    </div>
+    <div class="chips" id="cats" role="group" aria-label="Category"></div>
+    <p class="status" id="count" role="status" aria-live="polite"></p>
+  </div>
+</div>
+
+<div class="wrap" id="list">
+  <div id="groups"></div>
+  <p class="none" id="none" hidden>Nothing matches. Try fewer words, or <button class="btn ghost" type="button" id="reset">clear the filters</button></p>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Leonida Intel is an unofficial fan desk from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks. Place facts: the outlets linked on each spot.</p>
+  </div>
+</footer>
+<script src="data/map.js"></script>
+<script src="data/feed.js"></script>
+<script src="spots.js"></script>
+<script>document.querySelector('.top nav [aria-current="page"]')?.scrollIntoView({ block: 'nearest', inline: 'center' });</script>
+</body>
+</html>

@@ -39,10 +39,14 @@ Built for years of small edits, with no libraries and no build step for the page
 - **When Rockstar ships an update**, add it to `content/patches.json`: every map card read before that date shows "read before update X; check in game" until someone re-checks it.
 - **Finding positions:** the outline is the real Florida coast as a stand-in, so place a pin where the named town sits relative to the coast (Vice City ≈ Miami, the Keys ≈ the Florida Keys). Open Rockstar's official map (Downloads on rockstargames.com/VI) side by side.
 - **Changing the shape** (rare): `node tools/map/make-outline.mjs <Natural Earth states.geojson> <lakes.geojson>` regenerates `content/map/outline.json`.
-- **Tests:** `node --test tools/test-map.mjs`.
+- **Tests:** `node --test tools/test-map.mjs` (20 with the updater tests).
 
 - **City detail (streets, freeways, 3D buildings):** real Miami from OpenStreetMap (ODbL), stored in `content/map/city.json` and copied to `dist/data/city.js` by `node tools/build-map.mjs`. It loads after the map draws. To refresh it (rarely, maybe once a year): `node tools/map/make-city.mjs <some-temp-folder>`, then `node tools/build-map.mjs`. Keep the OpenStreetMap credit on the page.
 - **Research batches:** new spots go in `content/map/places.json` with a source each. Pins sit in the district a guide names (`precision: "area"`); never `spot` unless we stood there in game.
+- **The editor's check:** `node tools/audit-map.mjs` catches what the builder lets through: text cut off at a length cap, broken characters, two cards for the same spot, a pin far from its region or out at sea, and a label that disagrees with its sources. Add `--links` to open every source link (slow). GitHub runs it on every scan. It must say `0 error(s), 0 warning(s)`.
+- **Before adding a spot, search for it first** (on the List page or in places.json). If it is already there, add your source and any new steps to that card instead of making a second one. Two things in the same building go next to each other on the map.
+- **When a label is lower than its best source** (an outlet confirms the item but only fan guides say where), keep the lower label and add `"statusNote"`: one sentence saying why. It shows on the card.
+- **The List page** (`spots.html`) and the intel board's Map spots tab read the same `dist/data/map.js`, so every spot appears on the map, the list and the board automatically. The board's three examples per category are the `FEATURED` list at the top of the map-spots block in `dist/site.js`; a test fails if one of them is deleted.
 
 ## Daily Shorts
 See `creator/README.md` (the weekly batch loop) and `creator/queue-*.md` (this week's 7 clips).

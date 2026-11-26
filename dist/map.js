@@ -25,6 +25,9 @@ const CATS = {
   service: { label: 'Shops', color: '#7ab8ff' },
 };
 const REG = Object.fromEntries(MAP.regions.map((r) => [r.id, r]));
+// Bigger places win when names would collide.
+const KIND_RANK = { county: 0, town: 1, key: 2, lake: 3, park: 4, island: 5, district: 6 };
+const AREAS_BY_RANK = [...MAP.areas].sort((a, b) => (KIND_RANK[a.kind] ?? 9) - (KIND_RANK[b.kind] ?? 9));
 const dateFmt = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
 const D = (v) => new Date(/^\d{4}-\d{2}-\d{2}$/.test(v || '') ? v + 'T12:00:00' : v);
 
@@ -108,24 +111,37 @@ function fitAll(list = placed, animate = true, pitch = cam.pitch) {
   // Exact fit: try camera distances and keep the closest one where every pin (base and beam top)
   // and, for the full view, the whole coastline land inside the free area with a margin.
   const pts = list.length ? list.map((p) => p.w) : [];
-  if (!list.length || list.length === placed.length) { for (const r of land) for (let i = 0; i < r.length; i += 4) pts.push(r[i]); for (const r of MAP.regions) pts.push(W(r.anchor)); }
+  const labelPts = new Set();
+  if (!list.length || list.length === placed.length) { for (const r of land) for (let i = 0; i < r.length; i += 4) pts.push(r[i]); for (const r of MAP.regions) { const q = W(r.anchor); labelPts.add(q); pts.push(q); } }
   if (!pts.length) return;
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
   const save = { ...cam }, m = 28;
+  // The hint line only takes room when it is actually shown (it is hidden on phones).
+  const hintH = el('hint').hidden || getComputedStyle(el('hint')).display === 'none' ? 0 : 34;
   Object.assign(cam, { x: (x0 + x1) / 2, y: (y0 + y1) / 2, pitch });
   const fits = (d) => {
     cam.dist = d;
     const beam = d * 0.075;
-    for (const [x, y] of pts) for (const z of [0, beam]) {
-      const q = proj(x, y, z);
-      if (!q || q[0] < free.l + m || q[0] > free.r - m || q[1] < free.t + m || q[1] > free.b - m - (el('hint').hidden ? 0 : 34)) return false;
+    for (const pt of pts) for (const z of [0, beam]) {
+      const q = proj(pt[0], pt[1], z), mx = labelPts.has(pt) ? m + Math.min(64, (free.r - free.l) * 0.07) : m;
+      if (!q || q[0] < free.l + mx || q[0] > free.r - mx || q[1] < free.t + m || q[1] > free.b - m - hintH) return false;
     }
     return true;
   };
-  let lo = 60, hi = MAX_D;
-  if (!fits(hi)) lo = hi; else for (let k = 0; k < 22; k++) { const mid = (lo + hi) / 2; fits(mid) ? (hi = mid) : (lo = mid); }
-  const to = { x: cam.x, y: cam.y, dist: Math.max(lo, hi), pitch };
+  const search = () => { let lo = 60, hi = MAX_D; if (!fits(hi)) return hi; for (let k = 0; k < 22; k++) { const mid = (lo + hi) / 2; fits(mid) ? (hi = mid) : (lo = mid); } return hi; };
+  // A tilted view squeezes the far side, so the fitted shape sits low. Centre its on-screen box, then fit again.
+  for (let it = 0; it < 4; it++) {
+    cam.dist = search();
+    let sx0 = Infinity, sx1 = -Infinity, sy0 = Infinity, sy1 = -Infinity;
+    for (const [x, y] of pts) for (const z of [0, cam.dist * 0.075]) { const q = proj(x, y, z); if (!q) continue; sx0 = Math.min(sx0, q[0]); sx1 = Math.max(sx1, q[0]); sy0 = Math.min(sy0, q[1]); sy1 = Math.max(sy1, q[1]); }
+    const dx = (free.l + free.r) / 2 - (sx0 + sx1) / 2, dy = (free.t + free.b - hintH) / 2 - (sy0 + sy1) / 2;
+    if (!isFinite(dx) || (Math.abs(dx) < 3 && Math.abs(dy) < 3)) break;
+    const a = unproj(CX(), CY()), b = unproj(CX() - dx, CY() - dy);
+    if (!a || !b) break;
+    cam.x += b[0] - a[0]; cam.y += b[1] - a[1];
+  }
+  const to = { x: cam.x, y: cam.y, dist: search(), pitch };
   Object.assign(cam, save);
   fly(to, animate);
 }
@@ -271,6 +287,32 @@ function drawBuildings() {
   }
   ctx.lineJoin = 'round';
 }
+// Region names: drawn after the pins, with a dark outline, so beams never cover them.
+function drawRegionLabels() {
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  // Region names never overlap: a name that would land on one already drawn moves down, then up, a line at a time.
+  const regBoxes = [];
+  for (const r of MAP.regions) {
+    const p = proj(...W(r.anchor), 2); if (!p || p[2] > cam.dist * 2.4) continue;
+    const size = Math.max(11, Math.min(34, 22 * focal() / p[2]));
+    ctx.font = `400 ${size}px Anton, Impact, sans-serif`;
+    const tw = ctx.measureText(r.name.toUpperCase()).width, bh = size * 1.05;
+    const hit = (y) => regBoxes.some((b) => Math.abs(b[0] - p[0]) < (b[2] + tw) / 2 + 4 && Math.abs(b[1] - y) < (b[3] + bh) / 2);
+    for (const dy of [0, bh, -bh, 2 * bh, -2 * bh]) if (!hit(p[1] + dy)) { p[1] += dy; break; }
+    regBoxes.push([p[0], p[1], tw, bh]);
+    const dim = state.region && state.region !== r.id;
+    ctx.font = `400 ${size}px Anton, Impact, sans-serif`;
+    ctx.globalAlpha = (dim ? 0.25 : 1) * Math.min(1, Math.max(0.35, (cam.dist - 60) / 260)); // fade only when zoomed in close
+    ctx.shadowColor = 'rgba(255,46,126,0.8)'; ctx.shadowBlur = 14;
+    const gr = ctx.createLinearGradient(p[0] - size * 3, 0, p[0] + size * 3, 0);
+    gr.addColorStop(0, '#ff2e7e'); gr.addColorStop(1, '#ff8a1f');
+    ctx.lineWidth = Math.max(3, size * 0.16); ctx.strokeStyle = 'rgba(11,10,12,0.9)'; ctx.lineJoin = 'round';
+    ctx.strokeText(r.name.toUpperCase(), p[0], p[1]);
+    ctx.fillStyle = gr; ctx.fillText(r.name.toUpperCase(), p[0], p[1]);
+    ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+  }
+}
 function render(t) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, cw, ch);
@@ -307,28 +349,18 @@ function render(t) {
   drawCity();
   drawBuildings();
 
-  // region labels
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  for (const r of MAP.regions) {
-    const p = proj(...W(r.anchor), 2); if (!p || p[2] > cam.dist * 2.4) continue;
-    const size = Math.max(11, Math.min(34, 22 * focal() / p[2]));
-    const dim = state.region && state.region !== r.id;
-    ctx.font = `400 ${size}px Anton, Impact, sans-serif`;
-    ctx.globalAlpha = (dim ? 0.25 : 0.92) * (size >= 34 ? 0.45 : 1);
-    ctx.shadowColor = 'rgba(255,46,126,0.8)'; ctx.shadowBlur = 14;
-    const gr = ctx.createLinearGradient(p[0] - size * 3, 0, p[0] + size * 3, 0);
-    gr.addColorStop(0, '#ff2e7e'); gr.addColorStop(1, '#ff8a1f');
-    ctx.fillStyle = gr; ctx.fillText(r.name.toUpperCase(), p[0], p[1]);
-    ctx.shadowBlur = 0; ctx.globalAlpha = 1;
-  }
   // area labels when zoomed in
   // place names fade in by size: towns first, then keys, parks and water, then districts and islands
   const SHOW = { county: 520, town: 380, key: 140, park: 160, lake: 200, island: 60, district: 45 };
+  ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.font = '700 11px "DM Sans", system-ui, sans-serif';
-  for (const a of MAP.areas) {
+  const placedNames = [];
+  for (const a of AREAS_BY_RANK) {
     const lim = SHOW[a.kind] || 380; if (cam.dist > lim) continue;
     const p = proj(...W(a.pos), 0.05); if (!p || p[2] > cam.dist * 2.2 || p[0] < 0 || p[0] > cw || p[1] < 0 || p[1] > ch) continue;
+    const tw = ctx.measureText(a.name.toUpperCase()).width + 8;
+    if (placedNames.some((b) => Math.abs(b[0] - p[0]) < (b[2] + tw) / 2 && Math.abs(b[1] - p[1]) < 15)) continue;
+    placedNames.push([p[0], p[1], tw]);
     ctx.globalAlpha = Math.min(0.85, (lim - cam.dist) / (lim * 0.4));
     ctx.fillStyle = a.kind === 'lake' ? '#7ab8ff' : a.kind === 'park' ? '#4dff88' : '#fff3e4';
     ctx.strokeStyle = 'rgba(11,10,12,0.85)'; ctx.lineWidth = 3;
@@ -371,6 +403,8 @@ function render(t) {
     hitList.push({ p, x: top[0], y: top[1], bx: base[0], by: base[1] });
   }
   ctx.globalCompositeOperation = 'source-over';
+  drawRegionLabels();
+  ctx.textAlign = 'left';
   // name tags for the selected pin and, when close, for every pin
   ctx.font = '700 12px "DM Sans", system-ui, sans-serif'; ctx.textAlign = 'left';
   const near = cam.dist < 130 ? [...hitList].filter((it) => { const q = proj(it.p.w[0], it.p.w[1]); return q && q[2] < cam.dist * 2.2; }).sort((a, b) => (a.x - CX()) ** 2 + (a.y - CY()) ** 2 - (b.x - CX()) ** 2 - (b.y - CY()) ** 2).slice(0, 10) : [];
@@ -532,7 +566,7 @@ function select(p, fromMap = false, focus = false) {
   const lastRead = p.sources.map((s) => s.read).filter(Boolean).sort().pop();
   let warn = p.status === 'Tested' ? '' : 'Not tested by us yet.';
   if (latest && lastRead && D(latest.date) > D(lastRead) && !(p.checked && p.checked.version === latest.version)) warn = `Read before update ${latest.version} (${dateFmt.format(D(latest.date))}). It may have changed; check in game.`;
-  el('card-warn').textContent = warn;
+  el('card-warn').textContent = [p.statusNote ? 'Why ' + p.status + ': ' + p.statusNote : '', warn].filter(Boolean).join(' ');
   el('card-out').textContent = '';
   el('card-street').hidden = !p.w;
   card.hidden = false;

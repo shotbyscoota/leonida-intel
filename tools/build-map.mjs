@@ -44,6 +44,7 @@ export function validate(data, outline) {
     if (p.pos !== null && !inBox(p.pos)) e(w, 'pos must be [lon, lat] inside the map, or null if no source says where');
     if (p.precision === 'spot' && !(p.status === 'Tested' || p.status === 'Official')) e(w, "precision 'spot' is only for places we stood on ourselves (Tested) or Rockstar placed (Official)");
     if (!p.summary) e(w, 'summary missing');
+    if (p.statusNote != null && (typeof p.statusNote !== 'string' || !p.statusNote.trim())) e(w, 'statusNote must be a sentence saying why the label is what it is');
     if (!Array.isArray(p.sources) || !p.sources.length) e(w, 'needs at least one source');
     for (const s of p.sources || []) {
       if (!s.publisher) e(w, 'every source needs a publisher');
@@ -100,6 +101,7 @@ export function build(data, outline) {
         summary: t(p.summary, 400), how: (p.how || []).map((x) => t(x, 300)), reward: t(p.reward, 160), needs: t(p.needs, 200),
         sources: p.sources.map((s) => ({ publisher: t(s.publisher, 60), url: safeUrl(s.url), read: s.read || '' })),
       };
+      if (p.statusNote) o.statusNote = t(p.statusNote, 200);
       if (p.checked) o.checked = { on: t(p.checked.on, 12), version: t(p.checked.version, 20), platform: t(p.checked.platform, 40), clip: safeUrl(p.checked.clip) };
       return o;
     }),

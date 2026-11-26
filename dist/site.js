@@ -108,8 +108,41 @@ for (const cat of ['official', 'patch', 'cheat', 'glitch', 'secret']) {
     panel.after(h('div', { class: 'more-row', 'data-for': panel.id, hidden: panel.hidden ? '' : null }, btn));
   }
 }
+/* ---------- map spots: the map's places, by category, linked to the full list ---------- */
+const MAPDATA = window.LEONIDA_MAP;
+const SPOT_CATS = [['vehicle', 'Vehicles', '#19e3d0'], ['weapon', 'Weapons', '#ff2e7e'], ['money', 'Money', '#4dff88'], ['secret', 'Secrets', '#ffd23f'], ['mission', 'Missions', '#ff8a1f'], ['service', 'Shops', '#7ab8ff'], ['landmark', 'Landmarks', '#fff3e4']];
+const RANKS = { Official: 0, Tested: 1, Reported: 2, Unverified: 3, Patched: 4 };
+const FEATURED = {
+  vehicle: ['royal-ruby-emerus', 'paul-walker-car', 'rhino-tank'],
+  weapon: ['assassin-nipper', 'hauners-h-at-balsero-bunker', 'kingfishers-w-22'],
+  money: ['brooks-boatworks', 'large-bank-vaults', 'ambrosia-raceway'],
+  secret: ['ufo-abduction-kelly-county', 'vice-city-retro-portal', 'skunk-ape'],
+  mission: ['gellhorn-bunker', 'kirk-skunk-ape-hunts', 'freddie-doomsday-compound'],
+  service: ['jasons-house', 'moses-garage', 'ammu-nation-stores'],
+  landmark: ['vice-city-casino', 'heath-tower', 'catalan-key-lighthouse'],
+};
+{
+  const panel = el('p-spots'), all = MAPDATA?.places || [];
+  if (!all.length) panel.append(h('p', { class: 'none', text: 'The map list did not load.' }));
+  else {
+    panel.append(h('div', { class: 'row' }, h('p', { text: `All ${all.length} spots on the Leonida map, each with its steps and sources. Pick a category for the full list, or open the 3D map.` }),
+      h('a', { class: 'btn', href: 'spots.html', text: 'Open the full list' }), h('a', { class: 'btn ghost', href: 'map.html', text: 'Open the 3D map' })));
+    for (const [id, label, color] of SPOT_CATS) {
+      const list = all.filter((p) => p.cat === id);
+      if (!list.length) continue;
+      // Hand-picked examples per tile (the ones people search for); any that disappear fall back to the best-sourced spots.
+      const picks = (FEATURED[id] || []).map((x) => list.find((p) => p.id === x)).filter(Boolean);
+      const rest = [...list].filter((p) => !picks.includes(p)).sort((a, b) => RANKS[a.status] - RANKS[b.status] || b.sources.length - a.sources.length);
+      const top = [...picks, ...rest].slice(0, 3);
+      panel.append(h('a', { class: 'tile', href: 'spots.html#cat=' + id, style: `--c:${color}` },
+        h('h3', {}, label, h('b', { text: String(list.length) })),
+        h('ul', {}, ...top.map((p) => h('li', { text: p.name }))),
+        h('span', { class: 'go', text: `See all ${list.length} ${label.toLowerCase()} →` })));
+    }
+  }
+}
 const intelTabs = $$('#intel-tabs [role="tab"]');
-intelTabs.forEach((t) => { const n = INTEL.filter((i) => i.cat === t.dataset.cat).length; if (n) t.append(' ', h('small', { text: '(' + n + ')' })); });
+intelTabs.forEach((t) => { const n = t.dataset.cat === 'spots' ? (MAPDATA?.places || []).length : INTEL.filter((i) => i.cat === t.dataset.cat).length; if (n) t.append(' ', h('small', { text: '(' + n + ')' })); });
 tablist(intelTabs);
 
 /* ---------- patch log ---------- */

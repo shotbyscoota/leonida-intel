@@ -76,3 +76,19 @@ test('only land borders are drawn as borders; every shore segment stays coastlin
   for (const [ri, list] of Object.entries(b)) if (ri !== '0') assert.fail('islands have no land borders: ring ' + ri + ' ' + list);
   assert.ok(build(real, outline).outline.border, 'the page payload carries the border list');
 });
+
+test('the intel board examples point at spots that exist', () => {
+  const site = readFileSync(join(root, 'dist/site.js'), 'utf8');
+  const block = site.match(/const FEATURED = \{([\s\S]*?)\n\};/);
+  assert.ok(block, 'FEATURED list found in dist/site.js');
+  const ids = [...block[1].matchAll(/'([a-z0-9-]+)'/g)].map((m) => m[1]);
+  const have = new Set(real.places.map((p) => p.id));
+  for (const id of ids) assert.ok(have.has(id), `featured spot ${id} is missing from places.json`);
+});
+
+test('a label note explains a label, and is plain text', () => {
+  const d = base(); d.places[0] = { ...d.places[0], statusNote: '' };
+  assert.match(validate(d, outline).join(), /statusNote/);
+  d.places[0].statusNote = 'Dexerto confirms it; <b>only</b> fan guides say where.';
+  assert.equal(build(d, outline).places[0].statusNote, 'Dexerto confirms it; only fan guides say where.');
+});

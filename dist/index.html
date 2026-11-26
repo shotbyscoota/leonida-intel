@@ -456,6 +456,14 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
 .board .none{grid-column:1/-1;color:var(--mute);margin:0}
 .board[hidden],.more-row[hidden]{display:none}
 .board .x{display:none}.board.all .x{display:flex}
+.board.spots .tile{--c:var(--bone);border:2px solid var(--line);border-top:4px solid var(--c);background:var(--ink);padding:16px 18px;display:flex;flex-direction:column;gap:8px;text-decoration:none;transition:border-color .2s,transform .2s var(--ease)}
+.board.spots .tile:hover{transform:translateY(-2px);border-color:var(--c)}
+.board.spots .tile h3{margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:10px;font:400 30px/1 var(--poster);text-transform:uppercase}
+.board.spots .tile h3 b{font-weight:400;color:var(--c)}
+.board.spots .tile ul{margin:0;padding-left:18px;color:var(--mute);font-size:14px}
+.board.spots .tile .go{margin-top:auto;font:700 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+.board.spots .row{grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.board.spots .row p{margin:0;color:var(--mute);flex:1 1 300px}
 .more-intel{margin-top:22px;min-height:48px;padding:0 20px;border:3px solid var(--bone);background:none;color:var(--bone);font:700 14px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
 .more-intel:hover{background:var(--bone);color:var(--ink)}
 #patches{background:var(--sunset);color:var(--ink)}
@@ -535,7 +543,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
   <div class="wrap">
     <a class="brand" href="#hero" aria-label="Leonida Intel, back to top"><b>Leonida</b><i>Intel</i></a>
     <nav id="nav" aria-label="Sections">
-      <a href="#intel">Intel</a><a href="#patches">Patches</a><a href="map.html">Map</a><a href="#tv">SX TV</a><a href="#wire">The Wire</a><a href="#facts">Rap sheet</a><a href="#prep">Kit</a>
+      <a href="#intel">Intel</a><a href="#patches">Patches</a><a href="map.html">Map</a><a href="spots.html">List</a><a href="#tv">SX TV</a><a href="#wire">The Wire</a><a href="#facts">Rap sheet</a><a href="#prep">Kit</a>
     </nav>
     <div class="heat" title="Heat = new checked intel in the last 24 hours">
       <small>Heat</small>
@@ -603,12 +611,14 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
       <button role="tab" id="t-cheat" aria-selected="false" aria-controls="p-cheat" tabindex="-1" data-cat="cheat">Cheats &amp; unlocks</button>
       <button role="tab" id="t-glitch" aria-selected="false" aria-controls="p-glitch" tabindex="-1" data-cat="glitch">Glitches</button>
       <button role="tab" id="t-secret" aria-selected="false" aria-controls="p-secret" tabindex="-1" data-cat="secret">Secrets &amp; tips</button>
+      <button role="tab" id="t-spots" aria-selected="false" aria-controls="p-spots" tabindex="-1" data-cat="spots">Map spots</button>
     </div>
     <div role="tabpanel" id="p-official" aria-labelledby="t-official" class="board"></div>
     <div role="tabpanel" id="p-patch" aria-labelledby="t-patch" class="board" hidden></div>
     <div role="tabpanel" id="p-cheat" aria-labelledby="t-cheat" class="board" hidden></div>
     <div role="tabpanel" id="p-glitch" aria-labelledby="t-glitch" class="board" hidden></div>
     <div role="tabpanel" id="p-secret" aria-labelledby="t-secret" class="board" hidden></div>
+    <div role="tabpanel" id="p-spots" aria-labelledby="t-spots" class="board spots" hidden></div>
     <p class="fine" id="intel-fine">Headlines are the outlet's own words and link to the original. A cheat or glitch is only Tested when the desk recorded the input, the game version and the platform. Glitches found before the latest update are marked until someone re-tests them.</p>
   </div>
 </section>
@@ -831,6 +841,7 @@ dialog.vid .x{min-width:48px;min-height:48px;border:0;background:var(--pink);col
 </dialog>
 
 <script src="data/feed.js"></script>
+<script src="data/map.js"></script>
 <script src="site.js"></script>
 </body>
 </html>
