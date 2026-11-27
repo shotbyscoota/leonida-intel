@@ -1,6 +1,7 @@
 /* Leonida Intel · The map.
-   A neon 3D outline map drawn on a plain 2D canvas: no libraries, no CDN, no WebGL, so it keeps
-   working for years in any browser. Data: window.LEONIDA_MAP (data/map.js, built from content/map/
+   Leonida's real geography (coast, water, roads, rails and buildings from the Open GTA 6 Map data,
+   CC BY 4.0) drawn in neon on a plain 2D canvas, in 3D or flat 2D: no libraries, no CDN, no WebGL, so it
+   keeps working for years in any browser. Data: window.LEONIDA_MAP (data/map.js, built from content/map/
    by tools/build-map.mjs) and, optionally, window.LEONIDA_FEED (data/feed.js) for the latest patch
    and fresh leads. Every string from the data is set with textContent, never parsed as HTML.
    Renders only when something changes (no idle animation loop), so it is light on phones. */
@@ -31,51 +32,58 @@ const AREAS_BY_RANK = [...MAP.areas].sort((a, b) => (KIND_RANK[a.kind] ?? 9) - (
 const dateFmt = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
 const D = (v) => new Date(/^\d{4}-\d{2}-\d{2}$/.test(v || '') ? v + 'T12:00:00' : v);
 
-/* ---------- world coordinates: km on a flat plane around the middle of the state ---------- */
-const LON0 = -82.4, LAT0 = 27.6, KX = 111.32 * Math.cos(LAT0 * Math.PI / 180), KY = 110.57;
-const W = ([lon, lat]) => [(lon - LON0) * KX, (lat - LAT0) * KY];
-const land = MAP.outline.land.map((r) => r.map(W));
-const borders = land.map((_, i) => new Set((MAP.outline.border || {})[i] || []));
-const lakes = (MAP.outline.lakes || []).map((l) => ({ name: l.name, ring: l.ring.map(W) }));
-let bx0 = Infinity, bx1 = -Infinity, by0 = Infinity, by1 = -Infinity;
-for (const r of land) for (const [x, y] of r) { bx0 = Math.min(bx0, x); bx1 = Math.max(bx1, x); by0 = Math.min(by0, y); by1 = Math.max(by1, y); }
-const places = MAP.places.map((p) => ({ ...p, w: p.pos ? W(p.pos) : null }));
-const placed = places.filter((p) => p.w);
-
-/* ---------- city layer: real streets, coast and buildings (OpenStreetMap, ODbL), loaded after first paint ---------- */
-// data/city.js is about 2 MB, so the map draws first and the city fades in when it arrives.
-let CITY = null, cityFade = 0, cityT0 = 0;
-const METRO = (() => { const a = W([-80.55, 25.40]), b = W([-80.03, 26.35]); return { x0: a[0], y0: a[1], x1: b[0], y1: b[1] }; })();
+/* ---------- world coordinates: km on the game map, north up ---------- */
+// Positions are Open GTA 6 Map units (0 to 1024 across the map, y grows south; 1 unit = 32 m in game),
+// the same numbers as that project's data, so any pin can be checked against it. The page works in km.
+const U = 0.032, MX0 = 400, MY0 = 488, QK = 1 / (MAP.world.q || 20);
+const W = ([x, y]) => [(x - MX0) * U, (MY0 - y) * U];
+/** A delta-encoded ring or line (integers in 1/20 unit) as a flat km array, with its bounding box. */
 function decodeLine(a) {
   const n = a.length >> 1, o = new Float32Array(n * 2); let X = 0, Y = 0, x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   for (let i = 0; i < n; i++) {
     X += a[2 * i]; Y += a[2 * i + 1];
-    const x = (X / 1e5 - LON0) * KX, y = (Y / 1e5 - LAT0) * KY;
+    const x = (X * QK - MX0) * U, y = (MY0 - Y * QK) * U;
     o[2 * i] = x; o[2 * i + 1] = y;
     if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
   }
-  // Bounding box, so a frame can skip a line far from the view without projecting any of its points.
+  // Bounding box, so a frame can skip a shape far from the view without projecting any of its points.
   o.bb = [x0, y0, x1, y1];
   return o;
 }
-function decodeCity(c) {
-  const L = (k) => (c[k] || []).map(decodeLine);
-  const bld = (c.bld || []).map(([hm, a]) => {
+/** Polygons: an outer ring, then holes (lakes in the land, islands in the shallows). */
+const decodePolys = (list) => (list || []).map((poly) => { const rings = poly.map(decodeLine); rings.bb = rings[0].bb; return rings; });
+const coarse = decodePolys(MAP.world.coarse);
+const [mbx0, mby0, mbx1, mby1] = MAP.world.bbox;
+const bx0 = (mbx0 - MX0) * U, bx1 = (mbx1 - MX0) * U, by0 = (MY0 - mby1) * U, by1 = (MY0 - mby0) * U;
+const places = MAP.places.map((p) => ({ ...p, w: p.pos ? W(p.pos) : null, mw: (p.more || []).map((m) => ({ label: m.label, w: W(m.pos) })) }));
+const placed = places.filter((p) => p.w);
+const EXACT = { spot: 1, mapped: 1 };
+
+/* ---------- the full map: land, water, roads, rails and buildings, loaded after first paint ---------- */
+// data/leonida.js is about 0.8 MB, so the light outline draws first and the full map fades in.
+let WORLD = null, cityFade = 0, cityT0 = 0;
+function decodeWorld(c) {
+  const L = (list) => (list || []).map(decodeLine);
+  const bld = [];
+  for (const list of [c.bld, c.blk]) for (const [hm, a] of list || []) {
     let pts = decodeLine(a); const n = pts.length >> 1;
+    if (n < 3) continue;
     let ar = 0, cx = 0, cy = 0;
     for (let i = 0; i < n; i++) { const j = (i + 1) % n; ar += pts[2 * i] * pts[2 * j + 1] - pts[2 * j] * pts[2 * i + 1]; cx += pts[2 * i]; cy += pts[2 * i + 1]; }
-    if (ar < 0) { const r = new Float32Array(pts.length); for (let i = 0; i < n; i++) { r[2 * i] = pts[2 * (n - 1 - i)]; r[2 * i + 1] = pts[2 * (n - 1 - i) + 1]; } pts = r; }
+    if (ar < 0) { const r = new Float32Array(pts.length); for (let i = 0; i < n; i++) { r[2 * i] = pts[2 * (n - 1 - i)]; r[2 * i + 1] = pts[2 * (n - 1 - i) + 1]; } r.bb = pts.bb; pts = r; }
     cx /= n; cy /= n; let r = 0;
     for (let i = 0; i < n; i++) r = Math.max(r, Math.hypot(pts[2 * i] - cx, pts[2 * i + 1] - cy));
-    return { h: hm / 1000, pts, n, cx, cy, r, tall: hm, cls: hm >= 100 ? 2 : hm >= 40 ? 1 : 0, dep: 0 };
-  });
-  return { hw: L('hw'), pri: L('pri'), art: L('art'), st: L('st'), coast: L('coast'), air: L('air'),
-    park: (c.park || []).map(([t, a]) => ({ t, pts: decodeLine(a) })), bld, source: c.source };
+    bld.push({ h: hm / 1000, pts, n, cx, cy, r, cls: hm >= 120 ? 2 : hm >= 40 ? 1 : 0, dep: 0 });
+  }
+  const R = c.roads || {};
+  return { land: decodePolys(c.land), shallow: decodePolys(c.shallow), park: decodePolys(c.park), sand: decodePolys(c.sand),
+    urban: decodePolys(c.urban), paved: decodePolys(c.paved), hw: L(R.highway), main: L(R.main), st: L(R.street), minor: L(R.minor),
+    rail: L(c.rail), bld };
 }
-function loadCity() {
+function loadWorld() {
   const s = document.createElement('script');
-  s.src = 'data/city.js'; s.async = true;
-  s.onload = () => { if (window.LEONIDA_CITY) { CITY = decodeCity(window.LEONIDA_CITY); window.LEONIDA_CITY = null; cityT0 = performance.now(); cityFade = RM ? 1 : 0; draw(); } };
+  s.src = 'data/leonida.js'; s.async = true;
+  s.onload = () => { if (window.LEONIDA_WORLD) { WORLD = decodeWorld(window.LEONIDA_WORLD); window.LEONIDA_WORLD = null; cityT0 = performance.now(); cityFade = RM ? 1 : 0; draw(); } };
   document.body.append(s);
 }
 
@@ -83,8 +91,11 @@ function loadCity() {
 // ctx is the canvas being drawn on: the map itself, or for a moment the city cache (see below).
 const canvas = el('map'); let ctx = canvas.getContext('2d');
 let cw = 0, ch = 0, dpr = 1;
-const cam = { x: (bx0 + bx1) / 2, y: (by0 + by1) / 2 - 20, dist: 900, yaw: -0.18, pitch: 0.92 };
-const PITCH3D = 0.92, MIN_D = 1.2, MAX_D = 1600;
+const cam = { x: (bx0 + bx1) / 2, y: (by0 + by1) / 2, dist: 30, yaw: -0.18, pitch: 0.92 };
+// 3D: tilted, buildings stand up. 2D: straight down, north up, flat like a paper map.
+const PITCH3D = 0.92, MIN_D = 0.06, MAX_D = 70;
+let view = '3d';
+try { if (localStorage.getItem('leonida-map-view') === '2d') view = '2d'; } catch (e) { /* storage blocked: start in 3D */ }
 // The free part of the canvas: not covered by the filter panel or the open card. The camera
 // centres and fits inside it, so a selected pin is never hidden behind a panel.
 let free = { l: 0, r: 0, t: 0, b: 0 }, blocks = [], freeVer = 0;
@@ -99,7 +110,7 @@ function measureFree() {
   if (!wide) free.r = Math.min(cw - 58, ctrl.w ? ctrl.l - 6 : cw - 58);
   // Panels and buttons that sit on top of the canvas. Names are never drawn under them, where a
   // button's edge would cut straight through the letters.
-  blocks = [box(el('hud')), ctrl, box(el('compass')), ...(el('card').hidden ? [] : [box(el('card'))])].filter((b) => b.w > 0);
+  blocks = [box(el('hud')), ctrl, box(el('compass')), box(el('credit')), ...(el('card').hidden ? [] : [box(el('card'))])].filter((b) => b.w > 0);
   freeVer++;
 }
 /** True when a label box is on the canvas and clear of every panel and button. */
@@ -142,12 +153,12 @@ function unproj(sx, sy) {
   const yr = b * P.dist / den, depth = P.dist + yr * P.sp, xr = a * depth;
   return [P.x + xr * P.c + yr * P.s, P.y - xr * P.s + yr * P.c];
 }
-function fitAll(list = placed, animate = true, pitch = cam.pitch) {
+function fitAll(list = placed, animate = true, pitch = view === '2d' ? 0 : PITCH3D) {
   // Exact fit: try camera distances and keep the closest one where every pin (base and beam top)
   // and, for the full view, the whole coastline land inside the free area with a margin.
   const pts = list.length ? list.map((p) => p.w) : [];
   const labelPts = new Set();
-  if (!list.length || list.length === placed.length) { for (const r of land) for (let i = 0; i < r.length; i += 4) pts.push(r[i]); for (const r of MAP.regions) { const q = W(r.anchor); labelPts.add(q); pts.push(q); } }
+  if (!list.length || list.length === placed.length) { for (const poly of coarse) { const r = poly[0]; for (let i = 0; i < r.length; i += 16) pts.push([r[i], r[i + 1]]); } for (const r of MAP.regions) { const q = W(r.anchor); labelPts.add(q); pts.push(q); } }
   if (!pts.length) return;
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
@@ -164,7 +175,7 @@ function fitAll(list = placed, animate = true, pitch = cam.pitch) {
     }
     return true;
   };
-  const search = () => { let lo = 60, hi = MAX_D; if (!fits(hi)) return hi; for (let k = 0; k < 22; k++) { const mid = (lo + hi) / 2; fits(mid) ? (hi = mid) : (lo = mid); } return hi; };
+  const search = () => { let lo = 0.3, hi = MAX_D; if (!fits(hi)) return hi; for (let k = 0; k < 22; k++) { const mid = (lo + hi) / 2; fits(mid) ? (hi = mid) : (lo = mid); } return hi; };
   // A tilted view squeezes the far side, so the fitted shape sits low. Centre its on-screen box, then fit again.
   for (let it = 0; it < 4; it++) {
     cam.dist = search();
@@ -223,10 +234,10 @@ function frame(t) {
     else zoomAt(zoomTo.at, Math.exp(left * (1 - Math.exp(-dt / 70))));
     dirty = true;
   }
-  if (CITY && cityFade < 1) { cityFade = Math.min(1, (performance.now() - cityT0) / 700); dirty = true; }
+  if (WORLD && cityFade < 1) { cityFade = Math.min(1, (performance.now() - cityT0) / 700); dirty = true; }
   if (job && runJob(7)) dirty = true;
   if (dirty) { dirty = false; render(t); }
-  if (anim || zoomTo || job || dirty || (CITY && cityFade < 1)) loop(); else lastT = 0;
+  if (anim || zoomTo || job || dirty || (WORLD && cityFade < 1)) loop(); else lastT = 0;
 }
 function draw() { dirty = true; loop(); }
 
@@ -237,30 +248,21 @@ const visible = (p) => state.cats.has(p.cat) && (!state.region || p.region === s
 
 /* ---------- render ---------- */
 let selected = null, hover = null, hitList = [];
-// Rings are drawn segment by segment, including the closing segment back to the first point.
-// A segment with an end behind the camera is skipped on its own: there is never a closePath()
-// across a gap, which would draw a false straight line across the map.
-// pick: 'coast' (shore only), 'border' (land borders only) or 'all'.
-function path(ring, z = 0, pick = 'all', borders = null) {
-  const n = ring.length, pts = ring.map(([x, y]) => proj(x, y, z));
-  let any = false, pen = -1;
-  ctx.beginPath();
-  for (let i = 0; i < n; i++) {
-    const isB = !!borders && borders.has(i);
-    if ((pick === 'coast' && isB) || (pick === 'border' && !isB)) { pen = -1; continue; }
-    const a = pts[i], b = pts[(i + 1) % n];
-    if (!a || !b) { pen = -1; continue; }
-    if (pen !== i) ctx.moveTo(a[0], a[1]);
-    ctx.lineTo(b[0], b[1]); pen = i + 1; any = true;
+/** Adds polygons near the view to the current path; which: 'all', 'outer' (coast) or 'holes' (lakes,
+ * rivers, canals). True if any was added. Rings come wound one way and holes the other (see the
+ * importer), so a nonzero fill cuts the holes out and overlapping shapes simply join. */
+function addPolys(list, thin = 1, which = 'all') {
+  let any = false;
+  for (const poly of list) {
+    if (!nearView(poly[0])) continue;
+    for (let i = which === 'holes' ? 1 : 0, n = which === 'outer' ? 1 : poly.length; i < n; i++) if (line(poly[i], 0, true, thin)) any = true;
   }
   return any;
 }
-/** Closed fill, only when the whole ring is in front of the camera (a clipped fill would smear). */
-function fillRing(ring) {
-  const pts = ring.map(([x, y]) => proj(x, y));
-  if (pts.some((p) => !p)) return false;
-  ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath();
-  return true;
+function fillPolys(list, color, a, thin = 1) {
+  if (a <= 0.01) return;
+  ctx.beginPath();
+  if (addPolys(list, thin)) { ctx.globalAlpha = a; ctx.fillStyle = color; ctx.fill('nonzero'); ctx.globalAlpha = 1; }
 }
 function glow(color, widths) {
   for (const [w, a] of widths) { if (a < 0.012) continue; ctx.globalAlpha = a; ctx.lineWidth = w; ctx.strokeStyle = color; ctx.stroke(); }
@@ -283,31 +285,40 @@ function line(pts, z = 0, close = false, thin = 0) {
   return any;
 }
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
-// Pin pictures, per category: a head (diamond of radius 8 with a halo of 17.6) in a 40 x 40 box, and a
-// beam strip 16 wide (outer glow 12, middle 6, core 1.3, as the old three glow passes). Remade if the
-// pixel ratio changes.
+// Pin pictures, per category, drawn once and stamped: a head (a diamond of radius 8 with a halo of 17.6)
+// in a 40 x 40 box, the same head hollow (for a pin whose spot is only approximate), a beam strip 16 wide
+// (outer glow 12, middle 6, core 1.3) and the ground dot that marks the exact spot (a bone ring around
+// the category colour, 12 x 12). Remade if the pixel ratio changes.
 let pinSpr = null, pinSprDpr = 0;
 function pinSprites() {
   if (pinSpr && pinSprDpr === dpr) return pinSpr;
   pinSpr = {}; pinSprDpr = dpr;
+  const cv = (w, hh) => { const c = document.createElement('canvas'); c.width = Math.ceil(w * dpr); c.height = Math.ceil(hh * dpr); const c2 = c.getContext('2d'); c2.scale(dpr, dpr); return [c, c2]; };
+  const diamond = (c2, r) => { c2.beginPath(); c2.moveTo(20, 20 - r); c2.lineTo(20 + r, 20); c2.lineTo(20, 20 + r); c2.lineTo(20 - r, 20); c2.closePath(); };
   for (const [id, c] of Object.entries(CATS)) {
-    const head = document.createElement('canvas'); head.width = head.height = Math.ceil(40 * dpr);
-    const h2 = head.getContext('2d'); h2.scale(dpr, dpr); h2.fillStyle = c.color;
+    const [head, h2] = cv(40, 40); h2.fillStyle = c.color;
     h2.globalAlpha = 0.08 / 0.95; h2.beginPath(); h2.arc(20, 20, 17.6, 0, Math.PI * 2); h2.fill();
-    h2.globalAlpha = 1; h2.beginPath(); h2.moveTo(20, 12); h2.lineTo(28, 20); h2.lineTo(20, 28); h2.lineTo(12, 20); h2.closePath(); h2.fill();
-    const beam = document.createElement('canvas'); beam.width = Math.ceil(16 * dpr); beam.height = Math.ceil(4 * dpr);
-    const b2 = beam.getContext('2d'); b2.scale(dpr, dpr); b2.fillStyle = c.color;
+    h2.globalAlpha = 1; diamond(h2, 8); h2.fill();
+    const [hollow, o2] = cv(40, 40); o2.fillStyle = c.color; o2.strokeStyle = c.color;
+    o2.globalAlpha = 0.06; o2.beginPath(); o2.arc(20, 20, 17.6, 0, Math.PI * 2); o2.fill();
+    o2.globalAlpha = 1; o2.lineWidth = 2.2; diamond(o2, 7); o2.stroke();
+    const [beam, b2] = cv(16, 4); b2.fillStyle = c.color;
     for (const [w, a] of [[12, 0.1], [6, 0.22], [1.3, 0.9]]) { b2.globalAlpha = a; b2.fillRect(8 - w / 2, 0, w, 4); }
-    pinSpr[id] = { head, beam };
+    const [dot, d2] = cv(12, 12);
+    d2.fillStyle = 'rgba(11,10,12,0.85)'; d2.beginPath(); d2.arc(6, 6, 5.6, 0, Math.PI * 2); d2.fill();
+    d2.fillStyle = '#fff3e4'; d2.beginPath(); d2.arc(6, 6, 4.4, 0, Math.PI * 2); d2.fill();
+    d2.fillStyle = c.color; d2.beginPath(); d2.arc(6, 6, 2.8, 0, Math.PI * 2); d2.fill();
+    pinSpr[id] = { head, hollow, beam, dot };
   }
   return pinSpr;
 }
 const RING = Array.from({ length: 29 }, (_, i) => [Math.cos(i / 28 * Math.PI * 2), Math.sin(i / 28 * Math.PI * 2)]);
 /** Adds a pin's certainty ring to the current path (a new sub-path after any gap behind the camera). */
-const ringRad = (p) => p.precision === 'region' ? 22 : p.precision === 'area' ? (p.region === 'vice-city' ? 1.2 : 3) : 0.15;
+// km: next to a named landmark ~130 m, a town or district ~600 m, a region ~3 km. An exact pin has none.
+const ringRad = (p) => p.precision === 'region' ? 3 : p.precision === 'area' ? 0.6 : p.precision === 'near' ? 0.13 : 0;
 /** A ring is only worth drawing when it reads on screen: a few px across, and not wider than the view
  * (a 22 km ring seen from street level is just a curve far off screen, and costly to stroke). */
-const ringFits = (p, base) => { const r = ringRad(p) * pj().f / base[2]; return r >= 2.5 && r <= Math.max(cw, ch) * 0.7; };
+const ringFits = (p, base) => { const r = ringRad(p) * pj().f / base[2]; return r >= 4 && r <= Math.max(cw, ch) * 0.7; };
 function pinRing(p) {
   const rad = ringRad(p);
   let pen = false, any = false;
@@ -342,58 +353,56 @@ function nearView(pts) {
     a * ((a >= 0 ? b[2] : b[0]) - cam.x) + c * ((c >= 0 ? b[3] : b[1]) - cam.y) + k < 0);
 
 }
-const metroNear = () => !!CITY && cam.x > METRO.x0 - 60 && cam.x < METRO.x1 + 60 && cam.y > METRO.y0 - 60 && cam.y < METRO.y1 + 60;
 function strokeLines(list, color, w, a, test = true) {
   if (a <= 0.01) return; ctx.beginPath(); let any = false;
   for (const pts of list) { if (test && !nearView(pts)) continue; if (line(pts, 0, false, 1)) any = true; }
   if (any) { ctx.globalAlpha = a; ctx.lineWidth = w; ctx.strokeStyle = color; ctx.stroke(); ctx.globalAlpha = 1; }
 }
-// Highways, main roads and runways: statewide and cheap, drawn live on every frame.
-function drawCityBase() {
-  if (!CITY) return;
-  const d = cam.dist, A = cityFade, zk = Math.min(3, Math.max(0.6, 60 / d));
-  setViewRadius();
+// Highways: the whole state, cheap, drawn live on every frame so they stay sharp while the map moves.
+function drawRoadsLive() {
+  if (!WORLD) return;
+  const d = cam.dist, A = cityFade, zk = Math.min(3, Math.max(0.7, 2.4 / d));
   ctx.lineJoin = 'bevel'; ctx.lineCap = 'butt'; ctx.globalCompositeOperation = 'lighter';
-  strokeLines(CITY.pri, '#fff3e4', 1, 0.16 * clamp01((900 - d) / 500) * A, d < 500);
-  strokeLines(CITY.air, '#fff3e4', Math.max(1.5, zk * 2.2), 0.4 * clamp01((400 - d) / 250) * A, d < 400);
-  ctx.beginPath(); let anyH = false; for (const pts of CITY.hw) { if (d < 400 && !nearView(pts)) continue; if (line(pts, 0, false, 1)) anyH = true; }
-  if (anyH) glow('#ffb547', [[Math.max(4, zk * 5), 0.08 * A], [Math.max(1.2, zk * 1.6), 0.75 * A]]);
+  ctx.beginPath(); let anyH = false; for (const pts of WORLD.hw) { if (!nearView(pts)) continue; if (line(pts, 0, false, 1)) anyH = true; }
+  if (anyH) glow('#ffb547', [[Math.max(3, zk * 4), 0.08 * A], [Math.max(1, zk * 1.3), 0.7 * A]]);
   ctx.globalAlpha = 1; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
 }
-// Vice City detail: water and parks, the detailed shore and the street grid, drawn into the hidden
-// picture as separate steps (a fill, one glow pass or one street layer each), so a frame never has to
-// carry all of it. The current path carries over between steps: only the job draws on that canvas.
-function cityDetailSteps(S, J) {
-  const d = cam.dist, detail = clamp01((260 - d) / 120), zk = Math.min(3, Math.max(0.6, 60 / d));
+// The detailed map, drawn into the hidden picture as separate steps (one layer or a few dozen shapes
+// each), so a frame never has to carry all of it: shallow water, beaches, parks, built-up ground,
+// runways, rails, main roads, streets and lanes. The current path carries over between steps: only the
+// job draws on that canvas.
+function worldSteps(S) {
+  const d = cam.dist, zk = Math.min(3, Math.max(0.7, 2.4 / d));
   const setup = (op) => { setViewRadius(); ctx.lineJoin = 'bevel'; ctx.lineCap = 'butt'; ctx.globalCompositeOperation = op; };
-  // Draw a few nearby polygons per step. A single path containing the entire
-  // metro area forces the browser to tessellate distant and overlapping shapes together.
-  if (detail > 0 && d < 140) {
-    for (const water of [true, false]) {
-      const shapes = CITY.park.filter(p => (p.t === 'w') === water && nearView(p.pts));
-      for (let i = 0; i < shapes.length; i += 24) {
-        S.push(heavy(3, () => {
-          setup('source-over');
-          ctx.fillStyle = water ? `rgba(30,110,220,${0.22 * detail})` : `rgba(77,255,136,${0.07 * detail})`;
-          ctx.beginPath();
-          for (let j = i; j < Math.min(i + 24, shapes.length); j++) line(shapes[j].pts, 0, true, 2);
-          ctx.fill();
-        }));
-      }
-    }
+  // a few dozen polygons per step: one path holding every shape forces the browser to tessellate
+  // distant and overlapping shapes together
+  const fills = (list, color, a) => {
+    if (a <= 0.01) return;
+    for (let i = 0; i < list.length; i += 30) S.push(heavy(2, () => { setup('source-over'); fillPolys(list.slice(i, i + 30), color, a, 2); }));
+  };
+  fills(WORLD.shallow, '#0f3a44', 0.55);
+  fills(WORLD.sand, '#e8c98a', 0.13);
+  fills(WORLD.park, '#4dff88', 0.09);
+  fills(WORLD.urban, '#fff3e4', 0.045);
+  fills(WORLD.paved, '#fff3e4', 0.12);
+  // the detailed coast (pink) and inland water (teal), one glow pass per step; the path carries over
+  if (d < COAST_FAR) {
+    let any = false, anyH = false;
+    S.push(heavy(2, () => { setup('lighter'); ctx.beginPath(); any = addPolys(WORLD.land, 1, 'outer'); }));
+    for (const [w, a] of [[6, 0.07], [3, 0.16], [1.3, 0.85]]) S.push(heavy(2, () => { if (any) { setup('lighter'); glow('#ff2e7e', [[w, a]]); } }));
+    S.push(heavy(2, () => { setup('lighter'); ctx.beginPath(); anyH = addPolys(WORLD.land, 1, 'holes'); if (anyH) glow('#19e3d0', [[3, 0.06]]); }));
+    S.push(heavy(2, () => { if (anyH) { setup('lighter'); glow('#19e3d0', [[1, 0.45]]); } }));
   }
-  if (detail > 0) {
-    let any = false;
-    S.push(() => { setup('lighter'); ctx.beginPath(); for (const pts of CITY.coast) if (nearView(pts) && line(pts, 0, false, 1)) any = true; });
-    for (const pass of [[6, 0.07], [3, 0.17], [1.4, 0.9]]) S.push(() => { if (any) { setup('lighter'); glow('#ff2e7e', [[pass[0], pass[1] * detail]]); } });
-  }
-  S.push(heavy(2, () => { setup('lighter'); strokeLines(CITY.art, '#fff3e4', Math.max(0.8, zk * 0.7), 0.22 * clamp01((150 - d) / 90)); }));
-  S.push(() => { setup('lighter'); strokeLines(CITY.st, '#fff3e4', Math.max(0.6, zk * 0.45), 0.16 * clamp01((40 - d) / 25)); });
+  S.push(() => { setup('lighter'); strokeLines(WORLD.rail, '#19e3d0', Math.max(0.8, zk * 0.6), 0.3 * clamp01((16 - d) / 8)); });
+  S.push(heavy(2, () => { setup('lighter'); strokeLines(WORLD.main, '#fff3e4', Math.max(0.9, zk * 0.9), 0.38 * clamp01((24 - d) / 10)); }));
+  S.push(heavy(2, () => { setup('lighter'); strokeLines(WORLD.st, '#fff3e4', Math.max(0.7, zk * 0.6), 0.24 * clamp01((12 - d) / 6)); }));
+  const minor = WORLD.minor;
+  for (let i = 0; i < minor.length; i += 1300) S.push(heavy(2, () => { setup('lighter'); strokeLines(minor.slice(i, i + 1300), '#fff3e4', Math.max(0.6, zk * 0.45), 0.15 * clamp01((6 - d) / 3)); }));
   S.push(() => { ctx.globalAlpha = 1; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.globalCompositeOperation = 'source-over'; });
 }
 
 /* ---------- city cache ---------- */
-// The dense part of the city (parks, the detailed shore, the street grid and 42,000 buildings) is a
+// The dense part of the map (water, parks, the street grid and 5,500 buildings) is a
 // picture in a canvas of its own. While the map moves, that picture is laid onto the new view in thin
 // horizontal bands (within a band the ground plane is close to a flat, affine stretch), which costs a
 // few image copies instead of redrawing the city. A fresh picture is drawn in a second, hidden canvas a
@@ -410,7 +419,9 @@ const heavy = (w, fn) => Object.assign(fn, { w });
 const cache = { P: null, M: [0, 0], q: '', ok: false, d: 0, w: 0, h: 0 };
 const old = { P: null, M: [0, 0], q: '', ok: false, d: 0, w: 0, h: 0, t: 0 };   // the picture fading out
 let VIEW = { x0: 0, y0: 0, x1: 0, y1: 0 };
-const cityDetailOn = () => !!CITY && metroNear() && cam.dist < 260;
+const cityDetailOn = () => !!WORLD;
+// Closer than this (km) the detailed coast is drawn in the picture; further out the light outline glows live.
+const COAST_FAR = 14;
 /** Starts a fresh city picture for the current camera ('full' at rest, 'live' = quicker, while moving). */
 function startJob(q) {
   const mx = Math.round(cw * MARGIN), my = Math.round(ch * MARGIN), W = cw + 2 * mx, H = ch + 2 * my;
@@ -433,9 +444,9 @@ function startJob(q) {
 /** Draws the next steps of the hidden picture for up to `ms` milliseconds; true when it is finished. */
 function runJob(ms) {
   const J = job, t = performance.now(), save = { x: cam.x, y: cam.y, dist: cam.dist, yaw: cam.yaw, pitch: cam.pitch }, main = ctx, view = VIEW;
-  Object.assign(cam, J.cam); PJ_OVR = J.P; ctx = J.B.c2; VIEW = J.view;
+  Object.assign(cam, J.cam); PJ_OVR = J.P; ctx = J.B.c2; VIEW = J.view; EXH = hk();
   try {
-    if (!J.steps) { J.steps = []; setViewRadius(); cityDetailSteps(J.steps, J); planBuildings(J); }
+    if (!J.steps) { J.steps = []; setViewRadius(); worldSteps(J.steps); planBuildings(J); }
     let u = 0;
     while (J.i < J.steps.length) {
       const w = J.steps[J.i].w || 1;
@@ -550,13 +561,16 @@ const ROOF = '#6a5288', ROOF_SMALL = '#4b3b66', BASE_SMALL = '#0d0816', SHADOW =
 const SH = [-LIGHT[0] * 0.5, -LIGHT[1] * 0.5];
 // Window rows: a faint lit line along each floor of a tall wall, warm or cool by the block's class.
 const WIN = ['rgba(255,214,150,', 'rgba(140,240,255,', 'rgba(255,150,200,'];
-const FULL_BUDGET = 2600, EX = 2.4;
+const FULL_BUDGET = 2600;
+// Height scale: a little taller than life in 3D, so blocks read from above; nothing in 2D (flat footprints).
+const hk = () => 1.5 * clamp01((cam.pitch - 0.1) / 0.5);
+let EXH = 1.5;
 let BX = new Float32Array(64), BY = new Float32Array(64), RX = new Float32Array(64), RY = new Float32Array(64);
 function planBuildings(J) {
-  if (!CITY || cam.dist > 60) return;
-  const fade = clamp01((60 - cam.dist) / 25), live = J.q === 'live';
+  if (!WORLD || cam.dist > 7) return;
+  const fade = clamp01((7 - cam.dist) / 2.5), live = J.q === 'live';
   if (fade < 0.02) return;
-  const minR = live ? 1.3 : 0.6, big = [], small = [[], [], []], tiny = [[], [], []], S = J.steps, all = CITY.bld;
+  const minR = live ? 1.3 : 0.6, big = [], small = [[], [], []], tiny = [[], [], []], S = J.steps, all = WORLD.bld;
   // sort into tiers, a batch of buildings per step
   const sortN = live ? 15000 : 6000;
   for (let i0 = 0; i0 < all.length; i0 += sortN) S.push(() => {
@@ -567,7 +581,7 @@ function planBuildings(J) {
       if (dx * dx + dy * dy > VR2) continue;
       const xr = dx * P.c - dy * P.s, yr = dx * P.s + dy * P.c, depth = P.dist + yr * P.sp;
       if (depth < P.near * 2) continue;
-      const f = P.f / depth, x = P.cx + xr * f, y = P.cy - yr * P.cp * f, rp = b.r * f, hp = b.h * EX * f;
+      const f = P.f / depth, x = P.cx + xr * f, y = P.cy - yr * P.cp * f, rp = b.r * f, hp = b.h * EXH * f;
       if (x + rp < VIEW.x0 - 8 || x - rp > VIEW.x1 + 8 || y + rp < VIEW.y0 - 8 || y - rp - hp > VIEW.y1 + 8) continue;
       if (rp < minR && hp < minR * 3) continue;   // the quick picture made while moving leaves out the tiniest
       if (rp < 1.3 && hp < 3) tiny[b.cls].push(b);
@@ -584,7 +598,7 @@ function planBuildings(J) {
     // line(..., true) already returns to the first corner; closePath() on a path this big is very slow in Chrome.
     for (let k = 0; k < 3; k++) chunks(tiny[k], 650, (part) => {
       ctx.globalCompositeOperation = 'source-over'; ctx.beginPath();
-      for (const b of part) line(b.pts, b.h * EX, true);
+      for (const b of part) line(b.pts, b.h * EXH, true);
       ctx.globalAlpha = fade * (k ? 0.75 : 0.42); ctx.fillStyle = EDGE[k]; ctx.fill(); ctx.globalAlpha = 1;
     });
     // small: a dark footprint on the ground under a lit roof, so even a small block stands up off the
@@ -594,7 +608,7 @@ function planBuildings(J) {
       for (const b of part) line(b.pts, 0, true);
       ctx.globalAlpha = fade * 0.9; ctx.fillStyle = BASE_SMALL; ctx.fill();
       ctx.beginPath();
-      for (const b of part) line(b.pts, b.h * EX, true);
+      for (const b of part) line(b.pts, b.h * EXH, true);
       ctx.globalAlpha = fade; ctx.fillStyle = ROOF_SMALL; ctx.fill();
       ctx.globalAlpha = fade * (k ? 0.9 : 0.45); ctx.lineWidth = k ? 1.1 : 0.7; ctx.strokeStyle = EDGE[k]; ctx.stroke();
       ctx.globalAlpha = 1; ctx.lineJoin = 'round';
@@ -611,7 +625,7 @@ function drawShadows(list, fade) {
   const P = pj();
   ctx.beginPath();
   for (const b of list) {
-    const n = Math.min(b.n, 120), Q = b.pts, H = b.h * EX, ox = SH[0] * H, oy = SH[1] * H;
+    const n = Math.min(b.n, 120), Q = b.pts, H = b.h * EXH, ox = SH[0] * H, oy = SH[1] * H;
     let m = 0;
     for (let i = 0; i < n; i++) { HX[m] = Q[2 * i]; HY[m++] = Q[2 * i + 1]; HX[m] = Q[2 * i] + ox; HY[m++] = Q[2 * i + 1] + oy; }
     // monotone chain hull over the 2n ground points
@@ -636,10 +650,10 @@ const rnd = (b) => { const v = Math.sin(b.cx * 12.9898 + b.cy * 78.233) * 43758.
 // costliest part for the GPU); the full picture at rest has them.
 function drawBlocks(list, fade, quick = false) {
   const P = pj();
-  if (!quick) drawShadows(list, fade);
+  if (!quick && EXH > 0.05) drawShadows(list, fade);
   ctx.globalCompositeOperation = 'source-over'; ctx.lineJoin = 'miter';
   for (let bi = list.length - 1; bi >= 0; bi--) {
-    const b = list[bi], n = b.n, Q = b.pts, H = b.h * EX;
+    const b = list[bi], n = b.n, Q = b.pts, H = b.h * EXH;
     if (BX.length < n) { BX = new Float32Array(n * 2); BY = new Float32Array(n * 2); RX = new Float32Array(n * 2); RY = new Float32Array(n * 2); }
     let ok = true;
     for (let i = 0; i < n; i++) {
@@ -714,8 +728,8 @@ function drawRegionLabels() {
   // Region names never overlap: a name that would land on one already drawn moves down, then up, a line at a time.
   const regBoxes = [];
   for (const r of MAP.regions) {
-    const p = proj(...W(r.anchor), 2); if (!p || p[2] > cam.dist * 2.4) continue;
-    const size = Math.round(Math.max(11, Math.min(34, 22 * focal() / p[2])));
+    const p = proj(...W(r.anchor), 0.05); if (!p || p[2] > cam.dist * 2.4) continue;
+    const size = Math.round(Math.max(11, Math.min(34, 0.75 * focal() / p[2])));
     const sp = regionSprite(r.name.toUpperCase(), size), tw = sp.tw, bh = size * 1.05;
     const hit = (x, y) => regBoxes.some((b) => Math.abs(b[0] - x) < (b[2] + tw) / 2 + 4 && Math.abs(b[1] - y) < (b[3] + bh) / 2);
     let at = null;
@@ -729,7 +743,7 @@ function drawRegionLabels() {
     if (!at) continue;
     regBoxes.push([at[0], at[1], tw, bh]);
     const dim = state.region && state.region !== r.id;
-    ctx.globalAlpha = (dim ? 0.25 : 1) * Math.min(1, Math.max(0.35, (cam.dist - 60) / 260)); // fade only when zoomed in close
+    ctx.globalAlpha = (dim ? 0.25 : 1) * Math.min(1, Math.max(0.3, (cam.dist - 3) / 12)); // fade only when zoomed in close
     ctx.drawImage(sp.cv, snap(at[0] - sp.w / 2), snap(at[1] - sp.h / 2), sp.w, sp.h);
   }
   ctx.globalAlpha = 1;
@@ -739,36 +753,40 @@ function render(t) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, cw, ch);
   ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-  const zoomK = Math.min(1.6, Math.max(0.6, 500 / cam.dist));
+  const zoomK = Math.min(1.6, Math.max(0.6, 16 / cam.dist));
+  setViewRadius();
 
-  // sea grid, 50 km
+  // sea grid, 2 km
   ctx.globalCompositeOperation = 'lighter';
-  ctx.strokeStyle = 'rgba(25,227,208,0.07)'; ctx.lineWidth = 1;
-  const g0x = Math.floor((bx0 - 300) / 50) * 50, g1x = bx1 + 300, g0y = Math.floor((by0 - 250) / 50) * 50, g1y = by1 + 250;
+  ctx.strokeStyle = 'rgba(25,227,208,0.06)'; ctx.lineWidth = 1;
+  const g0x = Math.floor((bx0 - 10) / 2) * 2, g1x = bx1 + 10, g0y = Math.floor((by0 - 8) / 2) * 2, g1y = by1 + 8;
   ctx.beginPath();
-  for (let x = g0x; x <= g1x; x += 50) for (let y = g0y; y < g1y; y += 50) { const a = proj(x, y), b = proj(x, y + 50); if (a && b) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } }
-  for (let y = g0y; y <= g1y; y += 50) for (let x = g0x; x < g1x; x += 50) { const a = proj(x, y), b = proj(x + 50, y); if (a && b) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } }
+  for (let x = g0x; x <= g1x; x += 2) for (let y = g0y; y < g1y; y += 2) { const a = proj(x, y), b = proj(x, y + 2); if (a && b) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } }
+  for (let y = g0y; y <= g1y; y += 2) for (let x = g0x; x < g1x; x += 2) { const a = proj(x, y), b = proj(x + 2, y); if (a && b) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } }
   ctx.stroke();
 
-  // land: a faint fill, a "floor" outline below sea level and struts, then the neon coast
-  const wall = 7;
+  // land: a solid night fill (lakes cut out), in 3D a faint "floor" outline below sea level with struts,
+  // then the neon coast. The light outline until the full map arrives, and when zoomed far out.
+  // Close in, the detailed coast glows inside the map picture (see worldSteps): its thousands of
+  // corners stroked three times over cost a frame on their own (measured), so only the land fill stays
+  // live, with fewer corners while the map moves.
+  const far = !WORLD || cam.dist >= COAST_FAR, shore = far ? coarse : WORLD.land, thinF = live ? 6 : 1;
   ctx.globalCompositeOperation = 'source-over';
-  for (const r of land) { if (fillRing(r)) { ctx.fillStyle = 'rgba(255,46,126,0.045)'; ctx.fill(); } }
+  fillPolys(shore, '#171021', 1, thinF);
+  // lakes and rivers get the shallow-water colour (left empty, the page behind would show through)
+  ctx.beginPath();
+  if (addPolys(shore, thinF, 'holes')) { ctx.fillStyle = '#0c2a33'; ctx.fill('nonzero'); }
   ctx.globalCompositeOperation = 'lighter';
-  if (cam.pitch > 0.25) {
-    land.forEach((r, i) => { if (path(r, -wall, 'coast', borders[i])) glow('#19e3d0', [[3, 0.08], [1, 0.35]]); });
+  const tilt = clamp01((cam.pitch - 0.25) / 0.4);
+  if (tilt > 0) {
+    const wall = 0.16;
+    ctx.beginPath(); let anyW = false;
+    for (const poly of coarse) { if (!nearView(poly[0])) continue; if (line(poly[0], -wall, true, 2)) anyW = true; }
+    if (anyW) glow('#19e3d0', [[3, 0.08 * tilt], [1, 0.3 * tilt]]);
     ctx.beginPath();
-    for (const r of land) for (let i = 0; i < r.length; i += r.length > 100 ? 6 : 3) { const a = proj(r[i][0], r[i][1], 0), b = proj(r[i][0], r[i][1], -wall); if (a && b) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } }
-    ctx.strokeStyle = 'rgba(25,227,208,0.18)'; ctx.lineWidth = 1; ctx.stroke();
+    for (const poly of coarse) { const r = poly[0], n = r.length >> 1; if (n < 24 || !nearView(r)) continue; for (let i = 0; i < n; i += 12) { const a = proj(r[2 * i], r[2 * i + 1], 0), b = proj(r[2 * i], r[2 * i + 1], -wall); if (a && b) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } } }
+    ctx.strokeStyle = `rgba(25,227,208,${0.16 * tilt})`; ctx.lineWidth = 1; ctx.stroke();
   }
-  // Near Vice City the detailed shore takes over, so the coarse state outline steps back.
-  const coastA = 1 - 0.85 * (metroNear() ? clamp01((260 - cam.dist) / 120) : 0);
-  land.forEach((r, i) => { if (path(r, 0, 'coast', borders[i])) glow('#ff2e7e', [[9, 0.07 * coastA], [4.5, 0.18 * coastA], [1.6, 0.95 * coastA]]); });
-  ctx.setLineDash([6, 6]);
-  land.forEach((r, i) => { if (borders[i].size && path(r, 0, 'border', borders[i])) glow('#b7aeb9', [[1.2, 0.45]]); });
-  ctx.setLineDash([]);
-  for (const l of lakes) { if (path(l.ring)) { glow('#19e3d0', [[6, 0.1], [1.4, 0.85]]); } }
-  drawCityBase();
   if (cityDetailOn()) {
     pj();
     const valid = picOk(cache), exact = valid && sameCam(cache.P);
@@ -777,25 +795,39 @@ function render(t) {
     if (!live) { if (!(exact && cache.q === 'full') && !(job && job.q === 'full' && job.d === dpr && sameCam(job.P))) startJob('full'); }
     else if (!job && !(valid && cacheFits())) startJob('live');
   } else job = null;
+  setViewRadius();
+  // far out: the light outline's coast glows live (the picture has none at that distance)
+  if (far) {
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.beginPath();
+    if (addPolys(coarse, 1, 'outer')) glow('#ff2e7e', [[6, 0.07], [3, 0.16], [1.3, 0.85]]);
+    // lakes, rivers and canals: a quieter water line, so the coast reads first
+    ctx.beginPath();
+    if (addPolys(coarse, 2, 'holes')) glow('#19e3d0', [[3, 0.06], [1, 0.45]]);
+  }
+  drawRoadsLive();
 
-  // pins, far to near
+  // pins, far to near. Every pin stands on its exact point: a ground dot marks the spot and a stem rises
+  // to the head. In 2D the stem is a short needle on the screen with its tip on the spot. A pin whose
+  // spot is only approximate has a hollow head and no dot; its ring shows how far off it may be.
   hitList = [];
   const pulse = selected && !RM ? (Math.sin((t || 0) / 260) + 1) / 2 : 0;
-  const beam = cam.dist * 0.075;
+  const up = clamp01(cam.pitch / 0.5), beam = cam.dist * 0.075, NEEDLE = 24;
   const items = [];
   for (const p of placed) {
     if (!visible(p)) continue;
-    const base = proj(p.w[0], p.w[1], 0), top = proj(p.w[0], p.w[1], beam);
-    if (!base || !top) continue;
+    const base = proj(p.w[0], p.w[1], 0);
+    if (!base) continue;
+    const t3 = up > 0 ? proj(p.w[0], p.w[1], beam) : null;
+    const top = t3 ? [base[0] + (t3[0] - base[0]) * up, base[1] - NEEDLE + (t3[1] - base[1] + NEEDLE) * up] : [base[0], base[1] - NEEDLE];
     if (Math.max(base[0], top[0]) < -30 || Math.min(base[0], top[0]) > cw + 30 || Math.max(base[1], top[1]) < -30 || Math.min(base[1], top[1]) > ch + 30) continue;
-    items.push({ p, base, top });
+    items.push({ p, base, top, exact: !!EXACT[p.precision] || p.precision === 'near' });
   }
   items.sort((a, b) => b.base[2] - a.base[2]);
-  ctx.globalCompositeOperation = 'lighter';
   for (const { p, base, top } of items) hitList.push({ p, x: top[0], y: top[1], bx: base[0], by: base[1] });
-  // Pins are drawn in batches: one path per colour and haze step for rings, beams, heads and halos.
-  // Light is added ('lighter'), and a sum is the same in any order, so batching changes nothing on
-  // screen; it turns about six drawing calls per pin into six per batch.
+  // Pins are drawn in batches per colour and haze step: rings, then stems, ground dots and heads, each
+  // stamped from a small pre-drawn picture (a GPU canvas copies pictures very cheaply, while a path
+  // with hundreds of glowing shapes can cost a frame on its own).
   const batches = new Map(), solo = [];
   for (const it of items) {
     if (it.p === selected || it.p === hover) { solo.push(it); continue; }
@@ -806,57 +838,82 @@ function render(t) {
     let B = batches.get(key); if (!B) batches.set(key, B = { cat: it.p.cat, col: CATS[it.p.cat].color, fog, list: [] });
     B.list.push(it);
   }
-  // Beams and heads are stamped from small pre-drawn pictures (one per colour): a GPU canvas copies
-  // pictures very cheaply, while a path with hundreds of glowing shapes can cost a frame on its own.
-  const PS = pinSprites();
+  const PS = pinSprites(), dotK = Math.min(1.15, Math.max(0.7, zoomK * 0.8));
+  ctx.globalCompositeOperation = 'source-over';
   for (const { cat, col, fog, list } of batches.values()) {
-    // certainty ring on the ground: wide and dashed when only the region is known. Faint, so it is left
-    // out while the map moves and comes back when it stops.
-    if (cam.dist < 500 && !live) {
+    // certainty rings on the ground, faint, left out while the map moves
+    if (cam.dist < 20 && !live) {
       for (const dashed of [false, true]) {
         ctx.beginPath(); let any = false;
-        for (const { p, base } of list) if ((p.precision === 'region') === dashed && ringFits(p, base) && pinRing(p)) any = true;
-        if (any) { ctx.setLineDash(dashed ? [4, 5] : []); ctx.strokeStyle = col; ctx.globalAlpha = 0.22 * fog; ctx.lineWidth = 1.2; ctx.stroke(); }
+        for (const { p, base } of list) if ((p.precision === 'region') === dashed && ringRad(p) && ringFits(p, base) && pinRing(p)) any = true;
+        if (any) { ctx.setLineDash(dashed ? [4, 5] : []); ctx.strokeStyle = col; ctx.globalAlpha = 0.28 * fog; ctx.lineWidth = 1.2; ctx.stroke(); }
       }
       ctx.setLineDash([]);
     }
     const S = PS[cat], bw = 12 * Math.max(0.45, fog);
-    // beam: the glow strip stretched from the ground to the head. Laid over, not added: a dense cluster
-    // (a hundred pins in Vice City seen from the whole state) then stays coloured instead of burning white.
-    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = fog;
+    // stem: the glow strip stretched from the ground to the head
+    ctx.globalAlpha = fog;
     for (const { base, top } of list) {
       const vx = top[0] - base[0], vy = top[1] - base[1], len = Math.hypot(vx, vy) || 1, ux = vx / len, uy = vy / len, nx = -uy * bw / 16, ny = ux * bw / 16;
       ctx.setTransform(dpr * nx, dpr * ny, dpr * ux * len / 4, dpr * uy * len / 4, dpr * (base[0] - nx * 8), dpr * (base[1] - ny * 8));
       ctx.drawImage(S.beam, 0, 0, 16, 4);
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    // head with its halo
+    // the ground dot on the exact spot
+    ctx.globalAlpha = 0.5 + 0.5 * fog;
+    for (const { base, exact } of list) if (exact) { const z = dotK * Math.max(0.6, fog); ctx.drawImage(S.dot, base[0] - 6 * z, base[1] - 6 * z, 12 * z, 12 * z); }
+    // head: solid when the spot is known, hollow when it is approximate
     ctx.globalAlpha = 0.4 + 0.6 * fog;
-    for (const { top, pk: k } of list) { const z = 4.5 * k * zoomK / 8; ctx.drawImage(S.head, top[0] - 20 * z, top[1] - 20 * z, 40 * z, 40 * z); }
-    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'lighter';
+    for (const { top, pk: k, exact } of list) { const z = 4.5 * k * zoomK / 8; ctx.drawImage(exact ? S.head : S.hollow, top[0] - 20 * z, top[1] - 20 * z, 40 * z, 40 * z); }
+    ctx.globalAlpha = 1;
   }
-  // the selected and hovered pins, full size and bright, on top
-  for (const { p, base, top } of solo) {
+  // the selected and hovered pins, full size and bright, on top; the selected one gets a crosshair on its spot
+  ctx.globalCompositeOperation = 'lighter';
+  for (const { p, base, top, exact } of solo) {
     const col = CATS[p.cat].color, isSel = selected === p;
     ctx.beginPath();
-    if (pinRing(p)) { ctx.setLineDash(p.precision === 'region' ? [4, 5] : []); ctx.strokeStyle = col; ctx.globalAlpha = isSel ? 0.6 : 0.3; ctx.lineWidth = 1.2; ctx.stroke(); ctx.setLineDash([]); }
+    if (ringRad(p) && pinRing(p)) { ctx.setLineDash(p.precision === 'region' ? [4, 5] : []); ctx.strokeStyle = col; ctx.globalAlpha = isSel ? 0.6 : 0.3; ctx.lineWidth = 1.2; ctx.stroke(); ctx.setLineDash([]); }
     ctx.beginPath(); ctx.moveTo(base[0], base[1]); ctx.lineTo(top[0], top[1]);
     glow(col, isSel ? [[10, 0.12], [5, 0.3], [2, 1]] : [[6, 0.1], [3, 0.22], [1.3, 0.9]]);
+    if (isSel) {
+      const r0 = 7 + (exact ? pulse * 5 : 0);
+      ctx.beginPath(); ctx.arc(base[0], base[1], r0, 0, Math.PI * 2); ctx.strokeStyle = '#fff3e4'; ctx.globalAlpha = 0.9; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath();
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { ctx.moveTo(base[0] + dx * (r0 + 3), base[1] + dy * (r0 + 3)); ctx.lineTo(base[0] + dx * (r0 + 10), base[1] + dy * (r0 + 10)); }
+      ctx.stroke(); ctx.globalAlpha = 1;
+    }
     const r = (isSel ? 7 + pulse * 3 : 7) * zoomK;
     ctx.beginPath(); ctx.moveTo(top[0], top[1] - r); ctx.lineTo(top[0] + r, top[1]); ctx.lineTo(top[0], top[1] + r); ctx.lineTo(top[0] - r, top[1]); ctx.closePath();
-    ctx.fillStyle = col; ctx.globalAlpha = 0.95; ctx.fill();
-    ctx.beginPath(); ctx.arc(top[0], top[1], r * 2.2, 0, Math.PI * 2); ctx.globalAlpha = isSel ? 0.22 : 0.08; ctx.fill(); ctx.globalAlpha = 1;
+    if (exact) { ctx.fillStyle = col; ctx.globalAlpha = 0.95; ctx.fill(); } else { ctx.strokeStyle = col; ctx.globalAlpha = 0.95; ctx.lineWidth = 2.4; ctx.stroke(); }
+    ctx.beginPath(); ctx.arc(top[0], top[1], r * 2.2, 0, Math.PI * 2); ctx.fillStyle = col; ctx.globalAlpha = isSel ? 0.22 : 0.08; ctx.fill(); ctx.globalAlpha = 1;
+    if (exact) { ctx.globalCompositeOperation = 'source-over'; ctx.drawImage(PS[p.cat].dot, base[0] - 7, base[1] - 7, 14, 14); ctx.globalCompositeOperation = 'lighter'; }
   }
+  // the other spots of the selected entry (wrecks, labs, parts): numbered dots on their exact points
+  moreHits = [];
+  if (selected && selected.mw.length && visible(selected)) {
+    const col = CATS[selected.cat].color;
+    ctx.globalCompositeOperation = 'source-over'; ctx.font = '700 10px "DM Sans", system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    selected.mw.forEach((m, i) => {
+      const q = proj(m.w[0], m.w[1], 0); if (!q || q[0] < -20 || q[0] > cw + 20 || q[1] < -20 || q[1] > ch + 20) return;
+      ctx.beginPath(); ctx.arc(q[0], q[1], 9, 0, Math.PI * 2); ctx.fillStyle = 'rgba(11,10,12,0.9)'; ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = col; ctx.stroke();
+      ctx.fillStyle = '#fff3e4'; ctx.fillText(String(i + 2), q[0], q[1] + 0.5);
+      moreHits.push({ label: m.label, x: q[0], y: q[1] });
+      hitList.push({ p: selected, x: q[0], y: q[1], bx: q[0], by: q[1], more: true });
+    });
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  }
+  ctx.globalCompositeOperation = 'source-over';
 
   // area labels when zoomed in, drawn over the pins so a glow never washes a name out
   // place names fade in by size: towns first, then keys, parks and water, then districts and islands
-  const SHOW = { county: 520, town: 380, key: 140, park: 160, lake: 200, island: 60, district: 45 };
+  const SHOW = { county: 40, town: 16, key: 9, park: 8, lake: 12, island: 6, district: 5 };
   ctx.globalCompositeOperation = 'source-over'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.font = '700 11px "DM Sans", system-ui, sans-serif';
   const spaced = 'letterSpacing' in ctx; if (spaced) ctx.letterSpacing = '1px';
   const placedNames = []; nameBoxes = [];
   for (const a of AREAS_BY_RANK) {
-    const lim = SHOW[a.kind] || 380; if (cam.dist > lim) continue;
+    const lim = SHOW[a.kind] || 16; if (cam.dist > lim) continue;
     const p = proj(...(a.w || (a.w = W(a.pos))), 0.05); if (!p || p[2] > cam.dist * 2.2 || p[0] < 0 || p[0] > cw || p[1] < 0 || p[1] > ch) continue;
     const tw = ctx.measureText(a.name.toUpperCase()).width + 8;
     if (!roomFor(p[0] - tw / 2, p[1] - 9, tw, 18)) continue;
@@ -877,14 +934,15 @@ function render(t) {
   // sits beside its pin (right, or left when the right is covered), and never goes under a panel.
   ctx.font = '700 12px "DM Sans", system-ui, sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
   if (!TAGM) { const m = ctx.measureText('H\u00d1gjpy()'); TAGM = { asc: Math.ceil(m.actualBoundingBoxAscent || 10), desc: Math.ceil(m.actualBoundingBoxDescent || 3) }; }
-  const near = cam.dist < 130 ? [...hitList].filter((it) => { const q = proj(it.p.w[0], it.p.w[1]); return q && q[2] < cam.dist * 2.2; }).sort((a, b) => (a.x - CX()) ** 2 + (a.y - CY()) ** 2 - (b.x - CX()) ** 2 - (b.y - CY()) ** 2).slice(0, 10) : [];
+  const near = cam.dist < 4 ? [...hitList].filter((it) => { const q = proj(it.p.w[0], it.p.w[1]); return q && q[2] < cam.dist * 2.2; }).sort((a, b) => (a.x - CX()) ** 2 + (a.y - CY()) ** 2 - (b.x - CX()) ** 2 - (b.y - CY()) ** 2).slice(0, 10) : [];
   const over = (x, y, w, hh) => (r) => x < r[0] + r[2] && x + w > r[0] && y < r[1] + r[3] && y + hh > r[1];
   const taken = [], free4 = (x, y, w, hh) => !taken.some(over(x, y, w, hh)) && !nameBoxes.some(over(x, y, w, hh));
-  const tags = [...hitList.filter((it) => it.p === selected), ...near.filter((it) => it.p !== selected)].slice(0, cw < 600 ? 6 : 10);
+  const selIt = hitList.find((it) => it.p === selected && !it.more);
+  const tags = [...(selIt ? [selIt] : []), ...moreHits.map((m) => ({ p: selected, x: m.x + 2, y: m.y, label: m.label, more: true })), ...near.filter((it) => it.p !== selected)].slice(0, cw < 600 ? 8 : 14);
   const th = TAGM.asc + TAGM.desc + 9;
   for (const it of tags) {
     const isSel = it.p === selected;
-    const label = it.p.name.length > 34 ? it.p.name.slice(0, 32) + '\u2026' : it.p.name, w = Math.ceil(ctx.measureText(label).width) + 17;
+    const text = it.label || it.p.name, label = text.length > 34 ? text.slice(0, 32) + '\u2026' : text, w = Math.ceil(ctx.measureText(label).width) + 17;
     const y = Math.round(it.y - th / 2);
     let x = null;
     for (const cx of [Math.round(it.x + 12), Math.round(it.x - 12 - w)]) if (roomFor(cx, y, w, th) && (isSel || free4(cx, y, w, th))) { x = cx; break; }
@@ -892,11 +950,11 @@ function render(t) {
     taken.push([x, y, w, th]);
     ctx.fillStyle = 'rgba(11,10,12,0.9)'; ctx.fillRect(x, y, w, th);
     ctx.fillStyle = CATS[it.p.cat].color; ctx.fillRect(x, y, 3, th);
-    ctx.fillStyle = isSel ? '#ffd23f' : '#fff3e4'; ctx.fillText(label, x + 10, y + 5 + TAGM.asc);
+    ctx.fillStyle = isSel && !it.more ? '#ffd23f' : '#fff3e4'; ctx.fillText(label, x + 10, y + 5 + TAGM.asc);
   }
   el('needle').style.transform = `rotate(${-cam.yaw}rad)`;
 }
-let TAGM = null, nameBoxes = [];
+let TAGM = null, nameBoxes = [], moreHits = [];
 
 /* ---------- size ---------- */
 function resize() {
@@ -948,8 +1006,7 @@ canvas.addEventListener('pointermove', (e) => {
   moved += Math.abs(pt[0] - lx) + Math.abs(pt[1] - ly);
   if (drag.mode === 'turn') {
     cam.yaw += (pt[0] - lx) * 0.006;
-    cam.pitch = Math.min(1.12, Math.max(0, cam.pitch + (pt[1] - ly) * 0.004));
-    el('tilt').setAttribute('aria-pressed', String(cam.pitch > 0.3));
+    if (view === '3d') cam.pitch = Math.min(1.12, Math.max(0.35, cam.pitch + (pt[1] - ly) * 0.004));
   } else panBy([lx, ly], pt);
   drag.last = pt; busy(); draw();
 });
@@ -977,7 +1034,7 @@ function zoomAt(pt, k) {
   if (before && after) { cam.x += before[0] - after[0]; cam.y += before[1] - after[1]; }
   clampCam();
 }
-function clampCam() { cam.x = Math.min(bx1 + 150, Math.max(bx0 - 150, cam.x)); cam.y = Math.min(by1 + 150, Math.max(by0 - 150, cam.y)); }
+function clampCam() { cam.x = Math.min(bx1 + 6, Math.max(bx0 - 6, cam.x)); cam.y = Math.min(by1 + 6, Math.max(by0 - 6, cam.y)); }
 // A trackpad pinch arrives as a wheel event with ctrlKey and small steps, so it gets a stronger rate.
 canvas.addEventListener('wheel', (e) => { e.preventDefault(); const rate = e.deltaMode === 1 ? 0.05 : e.deltaMode === 2 ? 0.5 : e.ctrlKey ? 0.012 : 0.0016; zoomBy(Math.exp(Math.max(-1, Math.min(1, e.deltaY * rate))), local(e)); }, { passive: false });
 canvas.addEventListener('dblclick', (e) => { const pt = local(e), g = unproj(...pt); if (g) fly({ x: g[0], y: g[1], dist: Math.max(MIN_D, cam.dist * 0.45) }); });
@@ -997,9 +1054,10 @@ canvas.addEventListener('keydown', (e) => {
 
 /* ---------- tooltip ---------- */
 const tip = el('tip');
+const PRECW = { spot: 'checked on the spot', mapped: 'exact spot', near: 'next to it', area: 'approximate', region: 'rough area' };
 function showTip(p, pt) {
   if (!p || !pt) { tip.hidden = true; return; }
-  tip.textContent = p.name; tip.hidden = false;
+  tip.textContent = p.name + ' \u00b7 ' + PRECW[p.precision]; tip.hidden = false;
   const it = hitList.find((x) => x.p === p);
   tip.style.left = (it ? it.x : pt[0]) + 'px'; tip.style.top = (it ? it.y : pt[1]) + 'px';
   tip.style.borderColor = CATS[p.cat].color;
@@ -1010,8 +1068,20 @@ el('zin').addEventListener('click', () => zoomBy(0.6));
 el('zout').addEventListener('click', () => zoomBy(1.6));
 el('rot').addEventListener('click', () => fly({ yaw: cam.yaw + Math.PI / 4 }));
 el('compass').addEventListener('click', () => fly({ yaw: 0 }));
-el('tilt').addEventListener('click', () => { const on = cam.pitch < 0.3; el('tilt').setAttribute('aria-pressed', String(on)); if (selected) fly({ pitch: on ? PITCH3D : 0 }); else fitAll(placed.filter(visible), true, on ? PITCH3D : 0); });
-el('home').addEventListener('click', () => fitAll(placed.filter(visible)));
+/** 3D: tilted, the buildings stand up. 2D: straight down and north up, like a paper map. */
+function setView(v, animate = true) {
+  view = v;
+  for (const b of document.querySelectorAll('#view button')) b.setAttribute('aria-pressed', String(b.dataset.v === v));
+  try { localStorage.setItem('leonida-map-view', v); } catch (e) { /* storage blocked: the switch still works */ }
+  // Seen from far out, the flat view covers less ground than the tilted one: fit the state again.
+  // Closer in, keep the same spot in the middle of the screen.
+  if (cam.dist > 12 && !selected) fitAll(placed.filter(visible), animate, v === '2d' ? 0 : PITCH3D);
+  else fly(v === '2d' ? { pitch: 0, yaw: 0 } : { pitch: PITCH3D }, animate);
+  draw();
+}
+for (const b of document.querySelectorAll('#view button')) b.addEventListener('click', () => { if (view !== b.dataset.v) setView(b.dataset.v); });
+canvas.addEventListener('keydown', (e) => { if (e.key === 'v' || e.key === 'V') setView(view === '3d' ? '2d' : '3d'); });
+el('home').addEventListener('click', () => fitAll(placed.filter(visible), true, view === '2d' ? 0 : PITCH3D));
 
 /* ---------- latest patch, for staleness warnings ---------- */
 const latest = FEED.latestPatch && FEED.latestPatch.version ? FEED.latestPatch : null;
@@ -1019,9 +1089,11 @@ const latest = FEED.latestPatch && FEED.latestPatch.version ? FEED.latestPatch :
 /* ---------- detail card ---------- */
 const card = el('card');
 const PREC = {
-  spot: 'Position: checked on the spot.',
-  area: 'Position: approximate. The pin sits in the town or district the source names; use the in-game map for the exact spot.',
-  region: 'Position: rough. The source only names the region, so the pin marks the general area (dashed ring).',
+  spot: () => 'Position: checked on the spot.',
+  mapped: (p) => `Position: exact. Taken from the community map data (Open GTA 6 Map): "${p.mapRef.name}".`,
+  near: (p) => `Position: next to it. The pin is on "${p.mapRef.name}", right beside the spot.`,
+  area: () => 'Position: approximate. Only the town or district is known, so the pin sits in its middle (the ring).',
+  region: () => 'Position: rough. Only the region is known (dashed ring).',
 };
 function select(p, fromMap = false, focus = false) {
   selected = p || null;
@@ -1033,7 +1105,7 @@ function select(p, fromMap = false, focus = false) {
   el('card-cat').textContent = cat.label.replace(/s$/, ''); el('card-cat').style.setProperty('--c', cat.color);
   el('card-name').textContent = p.name;
   el('card-where').textContent = [p.area, REG[p.region]?.name || (p.region === null ? 'region not confirmed' : '')].filter(Boolean).join(' · ');
-  el('card-prec').textContent = p.w ? PREC[p.precision] : 'Not on the map yet: no source says exactly where.';
+  el('card-prec').textContent = p.w ? PREC[p.precision](p) + (p.mw.length ? ` It has ${p.mw.length + 1} spots: numbered on the map while this card is open.` : '') : 'Not on the map yet: no source says exactly where.';
   el('card-summary').textContent = p.summary;
   const how = el('card-how'); how.replaceChildren();
   if (p.how?.length) how.append(h('h3', { text: 'How' }), h('ol', {}, ...p.how.map((x) => h('li', { text: x }))));
@@ -1041,6 +1113,7 @@ function select(p, fromMap = false, focus = false) {
   if (p.reward) dl.append(h('dt', { text: 'You get' }), h('dd', { text: p.reward }));
   if (p.needs) dl.append(h('dt', { text: 'Needs' }), h('dd', { text: p.needs }));
   if (p.checked) dl.append(h('dt', { text: 'Tested' }), h('dd', { text: `${p.checked.on} on ${p.checked.platform}, v${p.checked.version}` }));
+  if (p.mw.length) dl.append(h('dt', { text: 'Spots' }), h('dd', {}, h('ol', {}, ...[p.mapRef?.name || p.name, ...p.mw.map((m) => m.label)].map((x) => h('li', { text: x })))));
   const src = el('card-src'); src.replaceChildren(...p.sources.map((s) => h('li', {}, safe(s.url) ? h('a', { href: s.url, target: '_blank', rel: 'noopener', text: s.publisher }) : s.publisher, s.read ? h('small', { text: ' · read ' + dateFmt.format(D(s.read)) }) : null)));
   const lastRead = p.sources.map((s) => s.read).filter(Boolean).sort().pop();
   let warn = p.status === 'Tested' ? '' : 'Not tested by us yet.';
@@ -1052,7 +1125,11 @@ function select(p, fromMap = false, focus = false) {
   history.replaceState(null, '', '#p=' + p.id);
   measureFree();
   if (p.w && !fromMap) {
-    fly({ x: p.w[0], y: p.w[1], dist: p.precision === 'region' ? 160 : p.region === 'vice-city' ? 3.2 : 24, pitch: cam.pitch < 0.3 ? cam.pitch : PITCH3D });
+    // close enough to see the spot among the streets; wide enough to show every numbered spot of the entry
+    let x0 = p.w[0], x1 = p.w[0], y0 = p.w[1], y1 = p.w[1];
+    for (const m of p.mw) { x0 = Math.min(x0, m.w[0]); x1 = Math.max(x1, m.w[0]); y0 = Math.min(y0, m.w[1]); y1 = Math.max(y1, m.w[1]); }
+    const span = Math.max(x1 - x0, y1 - y0), near = p.precision === 'region' ? 8 : p.precision === 'area' ? 2.4 : 0.9;
+    fly({ x: span ? (x0 + x1) / 2 : p.w[0], y: span ? (y0 + y1) / 2 : p.w[1], dist: Math.max(near, span * 1.7), pitch: view === '2d' ? 0 : PITCH3D, yaw: view === '2d' ? 0 : cam.yaw });
   } else draw();
   if (focus) card.focus();
 }
@@ -1060,8 +1137,7 @@ el('card-x').addEventListener('click', () => { select(null); canvas.focus(); });
 // Street level: fly right down onto the pin, tilted, so the blocks around it stand up.
 el('card-street').addEventListener('click', () => {
   if (!selected || !selected.w) return;
-  el('tilt').setAttribute('aria-pressed', 'true');
-  fly({ x: selected.w[0], y: selected.w[1], dist: selected.region === 'vice-city' ? 1.6 : 6, pitch: 1.02 });
+  fly({ x: selected.w[0], y: selected.w[1], dist: 0.3, pitch: view === '2d' ? 0 : 1.02 });
 });
 el('card-big').addEventListener('click', () => {
   const on = !card.classList.contains('big');
@@ -1120,12 +1196,13 @@ resize();
 refresh();
 const fromHash = (location.hash.match(/^#p=([a-z0-9-]+)$/) || [])[1];
 const start = fromHash && places.find((p) => p.id === fromHash);
-// First view: downtown Vice City, tilted, close enough that the blocks stand up. A shared link to a
-// spot starts from the whole state instead, so the flight shows where that spot is.
-const VC = W([-80.192, 25.777]);
-if (start) fitAll(placed, false); else Object.assign(cam, { x: VC[0], y: VC[1], dist: cw > 860 ? 9 : 7, yaw: -0.18, pitch: PITCH3D });
+// First view: downtown Vice City, tilted, close enough that the blocks stand up (or straight down in 2D).
+// A shared link to a spot starts from the whole state instead, so the flight shows where that spot is.
+const VC = W([496, 506]);
+for (const b of document.querySelectorAll('#view button')) b.setAttribute('aria-pressed', String(b.dataset.v === view));
+if (start) fitAll(placed, false, view === '2d' ? 0 : PITCH3D); else Object.assign(cam, { x: VC[0], y: VC[1], dist: cw > 860 ? 3.2 : 2.6, yaw: view === '2d' ? 0 : -0.18, pitch: view === '2d' ? 0 : PITCH3D });
 if (start) select(start);
 addEventListener('hashchange', () => { const id = (location.hash.match(/^#p=([a-z0-9-]+)$/) || [])[1]; const p = id && places.find((x) => x.id === id); if (p && p !== selected) select(p); });
 if (document.fonts?.ready) document.fonts.ready.then(() => { sprites.clear(); TAGM = null; draw(); });
-setTimeout(loadCity, 60);
+setTimeout(loadWorld, 60);
 })();

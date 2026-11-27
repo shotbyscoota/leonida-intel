@@ -13,7 +13,11 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const data = JSON.parse(readFileSync(join(root, 'content/map/places.json'), 'utf8'));
-const outline = JSON.parse(readFileSync(join(root, 'content/map/outline.json'), 'utf8'));
+const world = JSON.parse(readFileSync(join(root, 'content/map/leonida.json'), 'utf8'));
+// land outlines (outer rings) in map units; 1 unit = 32 m
+const KM = 0.032;
+const decode = (a) => { const o = []; let X = 0, Y = 0; for (let i = 0; i < a.length; i += 2) { X += a[i]; Y += a[i + 1]; o.push([X / world.q, Y / world.q]); } return o; };
+const landRings = world.land.map((poly) => decode(poly[0]));
 const cfg = JSON.parse(readFileSync(join(root, 'content/config.json'), 'utf8'));
 const out = [];
 const err = (id, m) => out.push(['ERROR', id, m]);
@@ -25,9 +29,9 @@ const LIMITS = { name: 80, area: 80, summary: 400, reward: 160, needs: 200 };
 const ENDS = /[.!?)"'”’…]$/;
 const words = (s) => s.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/).filter(Boolean);
 
-// point in polygon (lon/lat) against the land rings, for "pin in open sea"
+// point in polygon (map units) against the land rings, for "pin in open sea"
 const inRing = (p, r) => { let c = false; for (let i = 0, j = r.length - 1; i < r.length; j = i++) { const [xi, yi] = r[i], [xj, yj] = r[j]; if ((yi > p[1]) !== (yj > p[1]) && p[0] < (xj - xi) * (p[1] - yi) / (yj - yi) + xi) c = !c; } return c; };
-const distToLand = (p) => { let best = Infinity; for (const r of outline.land) for (const q of r) best = Math.min(best, Math.hypot((q[0] - p[0]) * 98, (q[1] - p[1]) * 111)); return best; };
+const distToLand = (p) => { let best = Infinity; for (const r of landRings) for (const q of r) best = Math.min(best, Math.hypot(q[0] - p[0], q[1] - p[1]) * KM); return best; };
 const WATERY = /\b(sea|ocean|wreck|shipwreck|underwater|open water|offshore|reef|boat|bay|sound|straits?|island|key|keys|marina|lighthouse|jet ?ski|kraken|merman|kayak|squalo|airboat)\b/i;
 
 const regions = Object.fromEntries(data.regions.map((r) => [r.id, r]));
@@ -67,14 +71,14 @@ for (const p of data.places) {
   // positions
   if (p.pos) {
     const r = regions[p.region];
-    const onLand = outline.land.some((ring) => inRing(p.pos, ring));
+    const onLand = landRings.some((ring) => inRing(p.pos, ring));
     const d = onLand ? 0 : distToLand(p.pos);
-    const coarse = p.region === 'leonida-keys' || (p.pos[0] > -80.6 && p.pos[0] < -80.0 && p.pos[1] > 25.35 && p.pos[1] < 26.4);
-    if (!onLand && !coarse && d > 3 && !WATERY.test(p.name + ' ' + p.area + ' ' + p.summary)) warn(id, `pin is ${d.toFixed(1)} km out at sea and nothing in the text says water`);
+    if (!onLand && d > 0.25 && !WATERY.test(p.name + ' ' + p.area + ' ' + p.summary + ' ' + (p.mapRef?.name || ''))) warn(id, `pin is ${d.toFixed(2)} km out in the water and nothing in the text says water`);
     if (r) {
-      const km = Math.hypot((r.anchor[0] - p.pos[0]) * 98, (r.anchor[1] - p.pos[1]) * 111);
-      if (km > 260) warn(id, `pin is ${Math.round(km)} km from the ${r.name} label: wrong region?`);
+      const km = Math.hypot(r.anchor[0] - p.pos[0], r.anchor[1] - p.pos[1]) * KM;
+      if (km > 9) warn(id, `pin is ${km.toFixed(1)} km from the ${r.name} label: wrong region?`);
     }
+    for (const m of p.more || []) if (Math.hypot(m.pos[0] - p.pos[0], m.pos[1] - p.pos[1]) * KM > 12) warn(id, `extra spot "${m.label}" is over 12 km from the pin`);
   } else if (p.precision !== 'region') warn(id, 'no pin but precision is not region');
   if (p.region === null && p.pos) noRegion.push(id);
 }
@@ -83,7 +87,7 @@ const P = data.places;
 for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) {
   const a = new Set(words(P[i].name).filter((w) => w.length > 2)), b = new Set(words(P[j].name).filter((w) => w.length > 2));
   const inter = [...a].filter((w) => b.has(w)).length, uni = new Set([...a, ...b]).size;
-  const close = P[i].pos && P[j].pos && Math.hypot((P[i].pos[0] - P[j].pos[0]) * 98, (P[i].pos[1] - P[j].pos[1]) * 111) < 3;
+  const close = P[i].pos && P[j].pos && Math.hypot(P[i].pos[0] - P[j].pos[0], P[i].pos[1] - P[j].pos[1]) * KM < 0.3;
   if (DIFFERENT.has(`${P[i].id} / ${P[j].id}`)) continue;
   if (uni && inter / uni >= 0.6 && (close || P[i].cat === P[j].cat)) warn(`${P[i].id} / ${P[j].id}`, `look like the same spot ("${P[i].name}" / "${P[j].name}")`);
 }

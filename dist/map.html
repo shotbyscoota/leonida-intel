@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Leonida Map · Leonida Intel</title>
-<meta name="description" content="A neon 3D map of Leonida for GTA VI: weapons, fast cars, secrets and money spots, each with its source and a clear label. Unofficial fan map.">
+<meta name="description" content="A 3D and 2D map of Leonida for GTA VI, drawn from open community map data: weapons, cars, secrets and money spots pinned on their in-game locations, each with its source and a clear label. Unofficial fan map.">
 <meta name="theme-color" content="#0b0a0c">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Leonida map: secrets, weapons and fast cars">
@@ -86,9 +86,16 @@ canvas#map.over{cursor:pointer}
 .ctrl button:hover{border-color:var(--pink);color:var(--pink)}
 .ctrl button[aria-pressed="true"]{border-color:var(--yellow);color:var(--yellow)}
 .ctrl svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ctrl .seg{display:flex;flex-direction:column;border:2px solid var(--line);background:rgba(11,10,12,.85)}
+.ctrl .seg button{width:42px;height:34px;border:0;background:none;font:700 13px/1 var(--body);letter-spacing:.04em;color:var(--mute)}
+.ctrl .seg button+button{border-top:2px solid var(--line)}
+.ctrl .seg button:hover{color:var(--pink)}
+.ctrl .seg button[aria-pressed="true"]{background:var(--yellow);color:var(--ink)}
+.credit{position:absolute;z-index:3;left:var(--side);bottom:calc(6px + env(safe-area-inset-bottom,0px));margin:0;max-width:min(330px,calc(100% - 2 * var(--side) - 60px));padding:3px 7px;background:rgba(11,10,12,.75);font:600 10.5px/1.35 var(--body);color:var(--mute)}
+.credit a{color:var(--bone);text-underline-offset:2px}
 .compass{position:absolute;z-index:4;right:var(--side);top:16px;width:46px;height:46px;border:2px solid var(--line);background:rgba(11,10,12,.85);display:grid;place-items:center;cursor:pointer}
 .compass b{font:400 14px/1 var(--poster);color:var(--pink);display:block;transition:transform .2s}
-.hint{position:absolute;z-index:3;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font:700 11px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);text-align:center;pointer-events:none;width:min(560px,70%)}
+.hint{position:absolute;z-index:3;left:50%;bottom:calc(34px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font:700 11px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);text-align:center;pointer-events:none;width:min(720px,62%)}
 .tip{position:absolute;z-index:5;pointer-events:none;background:var(--ink);border:2px solid var(--pink);padding:6px 9px;font:700 13px/1.2 var(--body);white-space:nowrap;transform:translate(-50%,calc(-100% - 14px))}
 .tip[hidden]{display:none}
 
@@ -173,7 +180,7 @@ footer a:hover{color:var(--bone)}
   .hud .headrow{display:flex;align-items:end;gap:10px}
   .card{top:auto;bottom:0;left:0;right:0;width:100%;max-height:62%;border-width:2px 0 0;box-shadow:none;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   .ctrl{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
-  .compass{top:auto;bottom:calc(12px + 5 * 52px + env(safe-area-inset-bottom,0px))}
+  .compass{top:auto;bottom:calc(12px + 292px + env(safe-area-inset-bottom,0px))}
   .hint{display:none}
   .method{grid-template-columns:1fr}
 }
@@ -193,8 +200,8 @@ footer a:hover{color:var(--bone)}
 
 <main id="main">
 <section class="stage" aria-label="Interactive map of Leonida">
-  <canvas id="map" tabindex="0" role="img" aria-label="Neon 3D map of Leonida with pins for weapons, vehicles, secrets and money spots. Drag to move, scroll or pinch to zoom, right-drag to turn. Every pin is also in the list below the map."></canvas>
-  <noscript><p class="noscript">The 3D map needs JavaScript. Every place is listed below the map.</p></noscript>
+  <canvas id="map" tabindex="0" role="img" aria-label="Map of Leonida, in 3D or 2D, with pins for weapons, vehicles, secrets and money spots on their in-game locations. Drag to move, scroll or pinch to zoom, right-drag to turn, V to switch between 3D and 2D. Every pin is also in the list below the map."></canvas>
+  <noscript><p class="noscript">The map needs JavaScript. Every place is listed below the map.</p></noscript>
 
   <div class="hud" id="hud">
     <div class="headrow">
@@ -211,13 +218,14 @@ footer a:hover{color:var(--bone)}
 
   <button class="compass" type="button" id="compass" aria-label="Face north"><b id="needle">N</b></button>
   <div class="ctrl" role="group" aria-label="Map view">
+    <div class="seg" id="view" role="group" aria-label="3D or 2D map"><button type="button" data-v="3d" aria-pressed="true">3D</button><button type="button" data-v="2d" aria-pressed="false">2D</button></div>
     <button type="button" id="zin" aria-label="Zoom in"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
     <button type="button" id="zout" aria-label="Zoom out"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
     <button type="button" id="rot" aria-label="Turn the map"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg></button>
-    <button type="button" id="tilt" aria-pressed="true" aria-label="3D view (tilt)"><svg viewBox="0 0 24 24"><path d="M3 17l9 4 9-4M3 12l9 4 9-4M12 3l9 4-9 4-9-4z"/></svg></button>
     <button type="button" id="home" aria-label="Show all of Leonida"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
   </div>
-  <p class="hint" id="hint">Drag to move · scroll to zoom · right-drag to turn · click a pin</p>
+  <p class="hint" id="hint">Drag to move · scroll to zoom · right-drag to turn · V for 3D / 2D · click a pin</p>
+  <p class="credit" id="credit">Map data: <a href="https://github.com/fbritoferreira/gta6" target="_blank" rel="noopener">Open GTA 6 Map</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>, simplified, with illustrative building heights</p>
   <div class="tip" id="tip" hidden></div>
 
   <aside class="card" id="card" hidden aria-labelledby="card-name" tabindex="-1">
@@ -239,7 +247,7 @@ footer a:hover{color:var(--bone)}
 <section class="below" id="places" aria-labelledby="places-h">
   <div class="wrap">
     <h2 class="poster" id="places-h">Every spot</h2>
-    <p class="lede">The same places as the map, in a list. Pick one to fly to it. Positions are approximate: each pin sits in the town or district its source names. For steps, filters and search, use <a href="spots.html">the full list page</a>.</p>
+    <p class="lede">The same places as the map, in a list. Pick one to fly to it. Most pins sit on the exact in-game spot; a hollow pin sits in the town or district its source names. For steps, filters and search, use <a href="spots.html">the full list page</a>.</p>
     <div class="grid" id="plist"></div>
   </div>
 </section>
@@ -264,13 +272,14 @@ footer a:hover{color:var(--bone)}
   <div class="wrap method">
     <div>
       <h2 class="poster" id="how-h">How the map is made</h2>
-      <p><b>The city detail is real Miami.</b> Vice City is Rockstar's take on Miami, so the streets, freeways and buildings you see when you zoom in are real-world data from OpenStreetMap (© OpenStreetMap contributors, ODbL). Rockstar's streets differ; pins sit in the district a guide names, not on an exact in-game doorstep.</p>
-      <p><b>The shape is a stand-in.</b> Leonida is Rockstar's version of Florida, so the outline is the real Florida coastline (Natural Earth, public domain) drawn in neon, with the far panhandle trimmed and Lake Okeechobee standing in for Lake Leonida. It is not Rockstar's map art and it is not to scale with the game.</p>
-      <p><b>The pins are from written guides.</b> Each spot comes from a guide linked on its card, with the date we read it. Reported means a named gaming outlet said it; Unverified means only fan sites did. The ring around a pin shows how sure the position is: small for a named town or district, wide when only the region is known.</p>
+      <p><b>The map is Leonida itself.</b> The coast, water, roads, rails and buildings come from <a href="https://github.com/fbritoferreira/gta6" target="_blank" rel="noopener">Open GTA 6 Map</a>, an open fan project whose coastline was traced from Rockstar's free printable Leonida map. We use it under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> and drew it in our own neon style; it is not Rockstar's map art. We simplified the shapes, filled the city blocks between the real streets with buildings, and gave every building a height by district (the data has none). The streets are real; the skyline is a likeness, not a measurement.</p>
+      <p><b>Pins on the exact spot.</b> Pins use the same game coordinates as that data. A solid pin with a dot under it sits on the exact point a community mapper recorded for that thing, and its card names the record. A hollow pin only knows the town or district, and its ring shows how far off it may be. Some place names come from <a href="https://github.com/rolux/gtadb.org" target="_blank" rel="noopener">GTADB.ORG</a>'s landmark data (CC BY 4.0).</p>
+      <p><b>The facts are from written guides.</b> Each spot comes from a guide linked on its card, with the date we read it. Reported means a named gaming outlet said it; Unverified means only fan sites did.</p>
     </div>
     <div>
+      <p><b>3D or 2D.</b> Use the 3D and 2D buttons (or press V on the map). 3D tilts the map so the blocks stand up and you can turn it; 2D looks straight down with north up, like a paper map.</p>
       <p><b>The labels match the rest of the site.</b> Reported means a named outlet said it. Tested means we did it ourselves on the game version shown. When Rockstar releases an update, older spots get a warning until someone re-checks them.</p>
-      <p><b>Want the exact map?</b> Rockstar's own Leonida map is a free download on the <a href="https://www.rockstargames.com/VI/media" target="_blank" rel="noopener">GTA VI site</a>. Use it next to this one.</p>
+      <p><b>Want Rockstar's own map?</b> The official Leonida map is a free download on the <a href="https://www.rockstargames.com/VI/media" target="_blank" rel="noopener">GTA VI site</a>. Use it next to this one.</p>
       <p><a class="btn ghost" href="./#intel">Back to the intel board</a></p>
     </div>
   </div>
@@ -279,7 +288,7 @@ footer a:hover{color:var(--bone)}
 
 <footer>
   <div class="wrap">
-    <p>Leonida Intel is an unofficial fan desk from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks. Coastline: Natural Earth (public domain). Streets and buildings: © OpenStreetMap contributors, ODbL. Place facts: the outlets linked on each card.</p>
+    <p>Leonida Intel is an unofficial fan desk from SX Exclusive. Not made, approved or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto and GTA VI are their trademarks. Map data: Open GTA 6 Map (fbritoferreira) and GTADB.ORG, CC BY 4.0, simplified, with illustrative building heights. Place facts: the outlets linked on each card.</p>
   </div>
 </footer>
 

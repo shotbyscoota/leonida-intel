@@ -28,6 +28,8 @@ const D = (v) => new Date(/^\d{4}-\d{2}-\d{2}$/.test(v || '') ? v + 'T12:00:00' 
 const latest = FEED.latestPatch && FEED.latestPatch.version ? FEED.latestPatch : null;
 const PREC = {
   spot: 'Position: checked on the spot.',
+  mapped: 'Position: exact, from the community map data (Open GTA 6 Map).',
+  near: 'Position: next to it, pinned at the named landmark beside the spot.',
   area: 'Position: approximate, in the town or district the source names.',
   region: 'Position: rough, only the region is known.',
 };
